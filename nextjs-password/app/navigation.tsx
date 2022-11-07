@@ -1,21 +1,20 @@
 import Link from 'next/link'
-import LoginPage from '../Components/login/LoginPage'
 
 export default function navigation() {
   const menu_items = [
     { name: 'Dashboard', url: '/' },
-    { name: 'Login', url: '/login' },
+    { name: 'Login', url: '/auth/login' },
   ]
 
   return (
     <div className='flex justify-center text-4xl sticky top-0 bg-black'>
       <div className='flex flex-row mt-8 mb-6 space-x-8'>
         {menu_items.map((item) => (
-          <div key={item.name} className="hover:text-gray-400">
-            {item.name == 'Login' ? <><LoginPage/></> :
-            <Link href={item.url}>{item.name}</Link>
-        }
-          </div>
+          <>
+            <div key={item.name} className='hover:text-gray-400'>
+              <Link href={item.url}>{item.name}</Link>
+            </div>
+          </>
         ))}
       </div>
     </div>

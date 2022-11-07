@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.199.0",
-    "@next-auth/dynamodb-adapter": "^1.0.5",
     "@heroicons/react": "^2.0.13",
+    "@next-auth/dynamodb-adapter": "^1.0.5",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
+    "aws-crt": "^1.14.5",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
     "next": "13.0.2",
