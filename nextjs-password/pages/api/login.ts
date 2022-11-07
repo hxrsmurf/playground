@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const querystring = require('querystring')
 
 type Data = {
-  name: string
+  url: string
 }
 
 export default function handler(
@@ -12,7 +12,6 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   const spotify_id = process.env.SPOTIFY_ID
-  const spotify_secret = process.env.SPOTIFY_SECRET
   const options = {
     response_type: 'code',
     client_id: spotify_id,

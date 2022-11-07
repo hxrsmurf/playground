@@ -9,10 +9,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const spotify_code = req.query.code
+  const spotify_code = (req.query.code)?.toString()
   const spotify_id = process.env.SPOTIFY_ID
   const spotify_secret = process.env.SPOTIFY_SECRET
-  if (!spotify_code) res.status(401).send({ message: 'Invalid callback code.' })
+  if (!spotify_code) res.status(401).send({ name: 'Invalid callback code.' })
 
   const auth_options = {
     url: 'https://accounts.spotify.com/api/token',
@@ -38,14 +38,14 @@ export default async function handler(
         new Buffer(spotify_id + ':' + spotify_secret).toString('base64'),
     },
     body: new URLSearchParams({
-      code: spotify_code,
-      redirect_uri: 'http://localhost:3000/api/callback',
-      grant_type: 'authorization_code',
+      'code': spotify_code || false.toString(),
+      'redirect_uri': 'http://localhost:3000/api/callback',
+      'grant_type': 'authorization_code'
     }),
   })
 
   const result = await auth_token.json()
 
   res.setHeader('set-cookie', 'access_token=' + result.access_token)
-  res.redirect('/login')
+  res.redirect('/nowplaying')
 }

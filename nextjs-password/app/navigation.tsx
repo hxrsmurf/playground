@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function navigation() {
   const menu_items = [
     { name: 'Dashboard', url: '/' },
-    { name: 'Login', url: '/auth/login' },
+    { name: 'Login', url: '/login' },
   ]
 
   return (
