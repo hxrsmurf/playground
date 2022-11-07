@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import LoginPage from '../Components/login/LoginPage'
 
 export default function navigation() {
   const menu_items = [
@@ -11,7 +12,9 @@ export default function navigation() {
       <div className='flex flex-row mt-8 mb-6 space-x-8'>
         {menu_items.map((item) => (
           <div key={item.name} className="hover:text-gray-400">
+            {item.name == 'Login' ? <><LoginPage/></> :
             <Link href={item.url}>{item.name}</Link>
+        }
           </div>
         ))}
       </div>
