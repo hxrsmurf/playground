@@ -7,8 +7,8 @@ export default function navigation() {
   ]
 
   return (
-    <div className='flex justify-center'>
-      <div className='flex flex-row mt-8 space-x-8'>
+    <div className='flex justify-center text-4xl sticky top-0 bg-black'>
+      <div className='flex flex-row mt-8 mb-6 space-x-8'>
         {menu_items.map((item) => (
           <div key={item.name}>
             <Link href={item.url}>{item.name}</Link>
