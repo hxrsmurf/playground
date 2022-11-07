@@ -10,7 +10,7 @@ export default function navigation() {
     <div className='flex justify-center text-4xl sticky top-0 bg-black'>
       <div className='flex flex-row mt-8 mb-6 space-x-8'>
         {menu_items.map((item) => (
-          <div key={item.name}>
+          <div key={item.name} className="hover:text-gray-400">
             <Link href={item.url}>{item.name}</Link>
           </div>
         ))}
