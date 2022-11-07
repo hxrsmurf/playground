@@ -20,11 +20,9 @@ export default async function RootLayout({
       */}
       <head />
       <body>
-        <SessionProvider session={session}>
-          <Navigation />
-          <Footer />
-          {children}
-        </SessionProvider>
+        <Navigation />
+        <Footer />
+        {children}
       </body>
     </html>
   )
