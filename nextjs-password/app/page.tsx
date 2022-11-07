@@ -1,4 +1,4 @@
-import Features from './main/Features'
+import Features from './main/features'
 import First from './main/first'
 
 export default function Home() {
