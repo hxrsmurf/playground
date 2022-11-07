@@ -1,4 +1,5 @@
 import './globals.css'
+import First from './main/first'
 import Navigation from './navigation'
 
 export default function RootLayout({
@@ -15,6 +16,7 @@ export default function RootLayout({
       <head />
       <body>
         <Navigation />
+        <First/>
         {children}
       </body>
     </html>
