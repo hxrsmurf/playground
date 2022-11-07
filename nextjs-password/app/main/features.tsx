@@ -19,7 +19,7 @@ export default function features() {
   ]
   return (
     <div className='bg-blue-600 text-white'>
-      <div className='text-3xl flex justify-center py-16'>
+      <div className='text-3xl flex justify-center py-24'>
         <div className='grid grid-cols-1 place-content-center space-y-12'>
           <div className='text-center font-bold'>Features</div>
           <div className='grid grid-flow-col grid-cols-4 text-center'>
