@@ -1,6 +1,7 @@
 import './globals.css'
 import Features from './main/Features'
 import First from './main/first'
+import Footer from './main/footer'
 import Navigation from './navigation'
 
 export default function RootLayout({
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Navigation />
         <First />
         <Features />
+        <Footer/>
       </body>
     </html>
   )
