@@ -27,6 +27,7 @@ export default function loginnav({ item }) {
   const handleLogout = async () => {
     await fetch('http://localhost:3000/api/logout')
     setisLoading(true)
+    router.push('/')
   }
 
   useEffect(() => {
@@ -44,6 +45,29 @@ export default function loginnav({ item }) {
 
   if (isLoading) return <div>Loading navigation...</div>
   if (data === undefined || loginUrl === undefined) return <></>
-  if (!data.access_token) return <Link href={loginUrl}>{item.name}</Link>
-  if (data) return <div onClick={() => handleLogout()}>Logout</div>
+  if (!data.access_token) {
+    return (
+      <>
+        <Link href={loginUrl}>{item.name}</Link>
+      </>
+    )
+  }
+  if (data)
+    return (
+      <div className='flex flex-row space-x-8'>
+        <div>
+          <Link href='/dashboard' className='hover:text-gray-400'>
+            Dashboard
+          </Link>
+        </div>
+        <div>
+          <div
+            onClick={() => handleLogout()}
+            className='hover:text-gray-400 hover:cursor-pointer'
+          >
+            Logout
+          </div>
+        </div>
+      </div>
+    )
 }
