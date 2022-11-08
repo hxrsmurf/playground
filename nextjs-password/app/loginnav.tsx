@@ -25,8 +25,10 @@ export default function loginnav({ item }) {
   const router = useRouter()
 
   const handleLogout = async () => {
-    router.push('/api/logout')
+    await fetch('http://localhost:3000/api/logout')
+    setisLoading(true)
   }
+
   useEffect(() => {
     setisLoading(true)
     const query = async () => {
@@ -38,7 +40,7 @@ export default function loginnav({ item }) {
     query()
 
     setisLoading(false)
-  }, [])
+  }, [isLoading])
 
   if (isLoading) return <div>Loading navigation...</div>
   if (data === undefined || loginUrl === undefined) return <></>

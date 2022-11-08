@@ -47,5 +47,5 @@ export default async function handler(
   const result = await auth_token.json()
 
   res.setHeader('set-cookie', 'access_token=' + result.access_token)
-  res.redirect('/nowplaying')
+  res.redirect('/')
 }

@@ -11,6 +11,6 @@ export default function handler(
 ) {
   //https://stackoverflow.com/a/62367655
   res.setHeader('set-cookie', 'access_token=null;expires=Thu, 01 Jan 1970 00:00:00 GMT')
-  res.redirect('/logout')
+  console.log('Logout')
   res.status(200).send({message:'Successfully logged out'})
 }
