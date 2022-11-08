@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Loginnav from './loginnav'
 
 export default function navigation() {
   const menu_items = [
@@ -12,7 +13,15 @@ export default function navigation() {
         {menu_items.map((item) => (
           <>
             <div key={item.name} className='hover:text-gray-400'>
-              <Link href={item.url}>{item.name}</Link>
+              {!(item.name == 'Login') ? (
+                <>
+                  <Link href={item.url}>{item.name}</Link>
+                </>
+              ) : (
+                <>
+                  <Loginnav item={item} />
+                </>
+              )}
             </div>
           </>
         ))}

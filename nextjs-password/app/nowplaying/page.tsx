@@ -24,7 +24,6 @@ export default function page() {
     if (data) {
       spotifyApi.setAccessToken(data)
       spotifyApi.getMe().then((me: { body: any }) => {
-        console.log(me.body)
         setProfile(me.body)
       })
     }
