@@ -17,7 +17,7 @@ async function getLoginUrl() {
   return spotify_url.url
 }
 
-export default function loginnav({ item }) {
+export default function loginnav({ item }: any) : any{
   const [isLoading, setisLoading] = useState(false)
   const [data, setData] = useState<Data>()
   const [loginUrl, setLoginUrl] = useState<Url>()
@@ -44,14 +44,15 @@ export default function loginnav({ item }) {
   }, [isLoading])
 
   if (isLoading) return <div>Loading navigation...</div>
-  if (data === undefined || loginUrl === undefined) return <></>
-  if (!data.access_token) {
+  if (data === undefined || loginUrl === undefined) return <>Loading...</>
+  if (!data.access_token || data.access_token == 'none') {
     return (
       <>
         <Link href={loginUrl}>{item.name}</Link>
       </>
     )
   }
+  console.log(data)
   if (data)
     return (
       <div className='flex flex-row space-x-8'>

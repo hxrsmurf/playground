@@ -20,7 +20,7 @@ export default function navigation() {
                 </>
               ) : (
                 <>
-                  <Loginnav item={item} />
+                <Loginnav item={item} />
                 </>
               )}
             </div>
