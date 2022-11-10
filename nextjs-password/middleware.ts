@@ -18,6 +18,7 @@ export function middleware(request: NextRequest) {
   // The outgoing response will have a `Set-Cookie:vercel=fast;path=/test` header.
 
   response.cookies.set('access_token', 'none')
+  response.cookies.set('email', 'none')
 
   return response
 }

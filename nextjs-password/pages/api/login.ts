@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { db_record_login_logout } from '../../database/logs'
 
 const querystring = require('querystring')
 
@@ -11,6 +12,8 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  const ip = req.socket.remoteAddress
+  db_record_login_logout(ip, 'login')
   const spotify_id = process.env.SPOTIFY_ID
   const options = {
     response_type: 'code',
