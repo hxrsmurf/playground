@@ -2,23 +2,13 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// https://nextjs.org/docs/advanced-features/middleware#using-cookies
 export function middleware(request: NextRequest) {
-  // Assume a "Cookie:nextjs=fast" header to be present on the incoming request
-  // Getting cookies from the request using the `RequestCookies` API
-  const cookie = request.cookies.get('access_token')?.value
-  console.log(cookie) // => 'fast'
   const allCookies = request.cookies.getAll()
-  console.log(allCookies) // => [{ name: 'vercel', value: 'fast' }]
-
-  request.cookies.delete('access_token')
-
-  // Setting cookies on the response using the `ResponseCookies` API
   const response = NextResponse.next()
-  console.log(cookie) // => { name: 'vercel', value: 'fast', Path: '/test' }
-  // The outgoing response will have a `Set-Cookie:vercel=fast;path=/test` header.
-
-  response.cookies.set('access_token', 'none')
-  response.cookies.set('email', 'none')
+  response.cookies.delete('email')
+  response.cookies.delete('access_token')
+  response.cookies.delete('masterPassword')
 
   return response
 }
