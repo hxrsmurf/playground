@@ -29,7 +29,6 @@ export default function determine() {
     console.log('LoADING state', isLoggedIn)
     return (
       <>
-        <div>You are logged in</div>
         <div>
           <MasterForm />
         </div>

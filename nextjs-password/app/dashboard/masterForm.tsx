@@ -39,7 +39,14 @@ export default function MasterForm() {
     return (
       <>
         <div>Logged in with master password</div>
-        <div><button className='outline-dotted bg-gray-400 mt-3' onClick={()=> handleClearMaster() }>Clear master</button></div>
+        <div>
+          <button
+            className='rounded-full mt-3 bg-blue-400 min-w-full min-h-[70px]'
+            onClick={() => handleClearMaster()}
+          >
+            Clear master
+          </button>
+        </div>
       </>
     )
 
