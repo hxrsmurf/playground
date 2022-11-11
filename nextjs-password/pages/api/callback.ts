@@ -52,7 +52,7 @@ export default async function handler(
     'email=' + profile.email + ';path=/',
   ])
 
-  res.redirect('/')
+  res.redirect('/dashboard')
 }
 
 async function getProfile(access_token: string) {
