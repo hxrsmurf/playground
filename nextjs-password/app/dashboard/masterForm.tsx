@@ -6,6 +6,7 @@ import { useState } from 'react'
 export default function MasterForm() {
   const [password, setPassword] = useState()
   const [isMasterSet, setisMasterSet] = useState(false)
+  const [blankMasterPassword, setBlankMasterPassword] = useState(false)
   const router = useRouter()
 
   const handleInputPassword = (e: any) => {
@@ -15,6 +16,7 @@ export default function MasterForm() {
   const handleClearMaster = () => {
     setPassword(undefined)
     setisMasterSet(false)
+    setBlankMasterPassword(false)
     router.refresh()
   }
 
@@ -29,10 +31,14 @@ export default function MasterForm() {
       const result = await query.json()
     }
 
-    console.log('Submitting password:', password)
-    submitData()
-    setPassword(undefined)
-    setisMasterSet(true)
+    if (password == undefined || password.length == 0) {
+      setBlankMasterPassword(true)
+    } else {
+      submitData()
+      setPassword(undefined)
+      setBlankMasterPassword(false)
+      setisMasterSet(true)
+    }
   }
 
   if (isMasterSet)
@@ -60,6 +66,13 @@ export default function MasterForm() {
                 <label htmlFor='password' className='text-black'>
                   Password for Master Key
                 </label>
+                {blankMasterPassword ? (
+                  <>
+                    <div className='text-red-600'>Blank password</div>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <div className='mt-1 flex rounded-md'>
                   <input
                     type='password'
