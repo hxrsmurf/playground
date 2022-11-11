@@ -1,5 +1,5 @@
+import Link from 'next/link'
 import Determine from './determine'
-import Form from './form'
 
 export default async function page() {
   return (
@@ -9,6 +9,10 @@ export default async function page() {
           <div className='font-bold'>Dashboard</div>
           <div>
             <Determine />
+          </div>
+          <div className='flex grid-cols-2 space-x-8 justify-center'>
+            <Link href='/dashboard/passwords'>Passwords</Link>
+            <div>Settings</div>
           </div>
         </div>
       </div>
