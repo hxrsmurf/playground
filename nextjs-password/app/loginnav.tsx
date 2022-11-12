@@ -52,7 +52,6 @@ export default function loginnav({ item }: any) : any{
       </>
     )
   }
-  console.log(data)
   if (data)
     return (
       <div className='flex flex-row space-x-8'>

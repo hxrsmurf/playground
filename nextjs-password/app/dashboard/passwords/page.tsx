@@ -45,7 +45,6 @@ export default function page() {
   const handleViewPassword = (e) => {
     setViewPassword(true)
     setPassword(e)
-    console.log(password)
   }
 
   if (showNewPassword)
@@ -72,9 +71,10 @@ export default function page() {
                     {currentPasswords.map((password, id) => (
                       <div
                         key={id}
+                        className='cursor-pointer'
                         onClick={() => handleViewPassword(password)}
                       >
-                        {password.Title.S}
+                        {password.Title}
                       </div>
                     ))}
                   </div>

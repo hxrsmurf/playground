@@ -31,9 +31,14 @@ export async function customAES256Key(string: string, key: string) {
   return encrypted.toString()
 }
 
-export async function decryptCustomAES256Key(string: string, key: string) {
-  const decrypted_key = decryptServerSideMasterKey(key, process.env.CRYPTO_SECRET)
-  const encrypted = CryptoJS.AES.decrypt(string, decrypted_key)
+export async function encryptWithCustomAES256Key(string: string, key: string) {
+  const encrypted = CryptoJS.AES.encrypt(string, key)
+  return encrypted.toString()
+}
+
+export async function decryptCustomAES256Key(string: string, title: string, key: string) {
+  const decrypted_key = await decryptServerSideMasterKey(key)
+  const encrypted = CryptoJS.AES.decrypt(string, key)
   const original = encrypted.toString(CryptoJS.enc.Utf8)
   return original
 }
