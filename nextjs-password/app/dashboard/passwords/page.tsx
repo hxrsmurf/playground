@@ -16,6 +16,7 @@ export default function page() {
   const [showNewPassword, setShowNewPassword]: any = useState()
   const [loadingSubmitPassword, setLoadingSubmitPassword]: any = useState(false)
   const [currentPasswords, setCurrentPasswords]: any = useState()
+  const [pageLoading, setPageLoading]: any = useState(true)
 
   const handleShowNewPassword = () => {
     setShowNewPassword(true)
@@ -40,16 +41,19 @@ export default function page() {
   }
 
   useEffect(() => {
+    setPageLoading(true)
     const query = async () => {
       const req = await fetch('http://localhost:3000/api/password')
       const res = await req.json()
       setCurrentPasswords(res.message)
     }
     query()
+    setPageLoading(false)
   }, [])
 
   const [viewPassword, setViewPassword]: any = useState(false)
   const [password, setPassword]: any = useState()
+
   const handleViewPassword = (e: any) => {
     setViewPassword(true)
     setPassword(e)
@@ -59,6 +63,15 @@ export default function page() {
     return (
       <>
         <NewPasswordForm handleSubmitNewPassword={handleSubmitNewPassword} />
+      </>
+    )
+
+  if (pageLoading)
+    return (
+      <>
+        <div className='bg-[#f1f5f8] text-black flex grid-cols-3 justify-center space-x-72 text-3xl py-32'>
+          <div>Loading...</div>
+        </div>
       </>
     )
 
@@ -79,20 +92,9 @@ export default function page() {
                     {currentPasswords.map(
                       (
                         password: {
-                          Title:
-                            | string
-                            | number
-                            | boolean
-                            | ReactElement<
-                                any,
-                                string | JSXElementConstructor<any>
-                              >
-                            | ReactFragment
-                            | ReactPortal
-                            | null
-                            | undefined
+                          Title: any
                         },
-                        id: Key | null | undefined
+                        id: any
                       ) => (
                         <div
                           key={id}
@@ -111,7 +113,7 @@ export default function page() {
 
           {viewPassword ? (
             <>
-              <ViewPasswordModal id={password} />
+              <ViewPasswordModal password_id={password} />
             </>
           ) : (
             <></>

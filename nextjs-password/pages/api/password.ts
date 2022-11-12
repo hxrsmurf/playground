@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import {
-  GetItemCommandInput,
   PutItemCommand,
   PutItemCommandInput,
   QueryCommand,
@@ -11,8 +10,8 @@ import { TEMPORARY_REDIRECT_STATUS } from 'next/dist/shared/lib/constants'
 import { uuid } from 'uuidv4'
 import { client } from '../../database/dynamodb'
 import {
-  aes256String,
   decryptCustomAES256Key,
+  decryptServerSideMasterKey,
   encryptWithCustomAES256Key,
   sha256Email,
 } from '../../utils/encryption'
@@ -40,13 +39,12 @@ export default async function handler(
         },
       },
     }
-    const client_command = await client.send(new QueryCommand(params))
-    const result = await client_command
+    const result = await client.send(new QueryCommand(params))
     const items = result.Items
     let new_items: any[] = []
+    const master_password: any = req.cookies.masterPassword
 
-    // Decrypt the Passwords
-    if (req.cookies.masterPassword === undefined) {
+    if (master_password === undefined) {
       console.log('No master password set')
     } else {
       console.log('Master password is set')
@@ -60,7 +58,29 @@ export default async function handler(
         })
         new_items.push(temp_array)
       })
-      res.status(200).send({ message: new_items })
+
+      const decrypted_title_array = new_items.map(async (item) => {
+        if (item.Title) {
+          const decrypted_master = await decryptServerSideMasterKey(
+            master_password
+          )
+
+          const decrypted_value = await decryptCustomAES256Key(
+            item.Title,
+            decrypted_master
+          )
+
+          return [...new_items, (item['Title'] = decrypted_value)]
+        }
+
+        return [...new_items]
+      })
+
+      Promise.all(decrypted_title_array).then((data) => {
+        data.map((d) => {
+          res.status(200).send({ message: d })
+        })
+      })
     }
   }
 
@@ -70,6 +90,7 @@ export default async function handler(
       sk: { S: uuid() },
       user: { S: await email },
     }
+    const master_password: any = req.cookies.masterPassword
 
     const data = req.body
     Object.values(data).map(async (d: any) => {
@@ -77,7 +98,7 @@ export default async function handler(
       const value = d.value
       const encrypted_value = await encryptWithCustomAES256Key(
         value,
-        req.cookies.masterPassword!
+        master_password
       )
       item[title] = { S: encrypted_value }
     })
