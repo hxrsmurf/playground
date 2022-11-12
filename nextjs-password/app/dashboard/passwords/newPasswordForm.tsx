@@ -21,14 +21,14 @@ const passwordFields = [
 ]
 
 export default function newPasswordForm({ handleSubmitNewPassword }: any) {
-  const [passwordData, setPasswordData] = useState([])
-  const [title, setTitle] = useState()
-  const [username, setUsername] = useState()
-  const [password, setPassword] = useState()
-  const [url, setURL] = useState()
-  const [notes, setNotes] = useState()
+  const [passwordData, setPasswordData]: any = useState([])
+  const [title, setTitle]: any = useState()
+  const [username, setUsername]: any = useState()
+  const [password, setPassword]: any = useState()
+  const [url, setURL]: any = useState()
+  const [notes, setNotes]: any = useState()
 
-  const handleInputUpdate = (e) => {
+  const handleInputUpdate = (e: any) => {
     const id = e.target.id
     const value = e.target.value
     const item = {

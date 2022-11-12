@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const id = req.body
-  const master_key = req.cookies.masterPassword
+  const master_key = req.cookies.masterPassword!
   const decrypted = await decryptCustomAES256Key(id, 'blah', master_key)
   res.status(200).json({ message: decrypted })
 }

@@ -11,8 +11,8 @@ export async function db_record_login_logout(
     TableName: process.env.AWS_TABLE_NAME,
     Item: {
       pk: { S: 'logs' },
-      sk: { S: date },
-      ip: { S: ip },
+      sk: { S: date.toString() },
+      ip: { S: ip! },
       type: { S: type },
     },
   }

@@ -18,7 +18,7 @@ import {
 } from '../../utils/encryption'
 
 type Data = {
-  message: object
+  message: any
 }
 
 export default async function handler(
@@ -26,7 +26,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const method = req.method
-  const email = await sha256Email(req.cookies.email)
+  const email = await sha256Email(req.cookies.email!)
 
   if (method == 'GET') {
     const params: QueryCommandInput = {
@@ -72,12 +72,12 @@ export default async function handler(
     }
 
     const data = req.body
-    Object.values(data).map(async (d) => {
+    Object.values(data).map(async (d: any) => {
       const title = d.name
       const value = d.value
       const encrypted_value = await encryptWithCustomAES256Key(
         value,
-        req.cookies.masterPassword
+        req.cookies.masterPassword!
       )
       item[title] = { S: encrypted_value }
     })

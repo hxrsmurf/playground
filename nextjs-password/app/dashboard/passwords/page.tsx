@@ -1,19 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from 'react'
 import NewPasswordForm from './newPasswordForm'
 import ViewPasswordModal from './viewPasswordModal'
 
 export default function page() {
-  const [showNewPassword, setShowNewPassword] = useState()
-  const [loadingSubmitPassword, setLoadingSubmitPassword] = useState(false)
-  const [currentPasswords, setCurrentPasswords] = useState()
+  const [showNewPassword, setShowNewPassword]: any = useState()
+  const [loadingSubmitPassword, setLoadingSubmitPassword]: any = useState(false)
+  const [currentPasswords, setCurrentPasswords]: any = useState()
 
   const handleShowNewPassword = () => {
     setShowNewPassword(true)
   }
 
-  const handleSubmitNewPassword = (passwordData) => {
+  const handleSubmitNewPassword = (passwordData: any) => {
     setLoadingSubmitPassword(true)
     const submitData = async () => {
       const query = await fetch('http://localhost:3000/api/password', {
@@ -40,9 +48,9 @@ export default function page() {
     query()
   }, [])
 
-  const [viewPassword, setViewPassword] = useState(false)
-  const [password, setPassword] = useState()
-  const handleViewPassword = (e) => {
+  const [viewPassword, setViewPassword]: any = useState(false)
+  const [password, setPassword]: any = useState()
+  const handleViewPassword = (e: any) => {
     setViewPassword(true)
     setPassword(e)
   }
@@ -68,15 +76,33 @@ export default function page() {
               ) : (
                 <>
                   <div className='grid grid-flow-row'>
-                    {currentPasswords.map((password, id) => (
-                      <div
-                        key={id}
-                        className='cursor-pointer'
-                        onClick={() => handleViewPassword(password)}
-                      >
-                        {password.Title}
-                      </div>
-                    ))}
+                    {currentPasswords.map(
+                      (
+                        password: {
+                          Title:
+                            | string
+                            | number
+                            | boolean
+                            | ReactElement<
+                                any,
+                                string | JSXElementConstructor<any>
+                              >
+                            | ReactFragment
+                            | ReactPortal
+                            | null
+                            | undefined
+                        },
+                        id: Key | null | undefined
+                      ) => (
+                        <div
+                          key={id}
+                          className='cursor-pointer'
+                          onClick={() => handleViewPassword(password)}
+                        >
+                          {password.Title}
+                        </div>
+                      )
+                    )}
                   </div>
                 </>
               )}

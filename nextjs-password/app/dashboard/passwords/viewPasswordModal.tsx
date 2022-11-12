@@ -3,8 +3,8 @@
 import { useState } from 'react'
 
 export default function viewPasswordModal({ id }: any) {
-  const [testing, setTesting] = useState()
-  const handleClick = (e) => {
+  const [testing, setTesting]: any = useState()
+  const handleClick = (e: any) => {
     const doIt = async () => {
       const query = await fetch('http://localhost:3000/api/decrypt', {
         method: 'POST',

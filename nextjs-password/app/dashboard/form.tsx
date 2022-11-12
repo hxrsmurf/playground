@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
 
 export default function form() {
   const [password, setPassword] = useState()
@@ -9,12 +9,15 @@ export default function form() {
     setPassword(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
 
     const submitData = async () => {
-        const query = await fetch('http://localhost:3000/api/password', {method: 'POST', body: password})
-        const result = await query.json()
+      const query = await fetch('http://localhost:3000/api/password', {
+        method: 'POST',
+        body: password,
+      })
+      const result = await query.json()
     }
 
     console.log('Submitting password:', password)

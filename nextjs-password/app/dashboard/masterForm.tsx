@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function MasterForm() {
-  const [password, setPassword] = useState()
+  const [password, setPassword]: any = useState()
   const [isMasterSet, setisMasterSet] = useState(false)
   const [blankMasterPassword, setBlankMasterPassword] = useState(false)
   const router = useRouter()
@@ -20,7 +20,7 @@ export default function MasterForm() {
     router.refresh()
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
 
     const submitData = async () => {

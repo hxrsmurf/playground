@@ -7,7 +7,7 @@ export async function submitPassword(password: string, user: string) {
     TableName: process.env.AWS_TABLE_NAME,
     Item: {
       pk: { S: 'passwords' },
-      sk: { S: date },
+      sk: { S: date.toString() },
       password: { S: password },
       user: {S: user}
     },
