@@ -3,6 +3,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  trailingSlash: false,
   images: {
     remotePatterns: [
       {
