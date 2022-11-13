@@ -3,7 +3,11 @@ import Link from 'next/link'
 const links = [
   {
     name: 'Playlists',
-    url: '/dashboard'
+    url: '/dashboard',
+  },
+  {
+    name: 'Now Playing',
+    url: '/now-playing',
   },
   {
     name: 'Top Artists',
