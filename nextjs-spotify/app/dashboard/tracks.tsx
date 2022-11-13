@@ -12,7 +12,7 @@ export default function tracks({ id }: any) {
     setLoading(true)
     const fetchPlaylistTracks = async () => {
       const query = await fetch(
-        'http://localhost:3000/api/spotify/playlists/' + id
+        '/api/spotify/playlists/' + id
       )
       const result = await query.json()
       const data = result.message

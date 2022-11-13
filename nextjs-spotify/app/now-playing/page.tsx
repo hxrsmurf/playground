@@ -9,7 +9,7 @@ export default function page() {
 
   useEffect(() => {
     const fetchPlayer = async () => {
-      const query = await fetch('http://localhost:3000/api/spotify/player')
+      const query = await fetch('/api/spotify/player')
       const result = await query.json()
       setPlaying(result.data)
     }

@@ -9,7 +9,7 @@ export default function Home() {
   useEffect(() => {
     const fetchSpotifyLink = async () => {
       const query = await fetch(
-        'http://localhost:3000/api/auth/generateSpotifyLink'
+        '/api/auth/generateSpotifyLink'
       )
       const spotify_link = (await query.json()).link
       setSpotifyLink(spotify_link)

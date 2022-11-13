@@ -37,10 +37,7 @@ export default function page({ params }: any) {
   useEffect(() => {
     const fetchTop = async () => {
       const query = await fetch(
-        'http://localhost:3000/api/spotify/top/' +
-          params.type +
-          '?time_range=' +
-          range
+        '/api/spotify/top/' + params.type + '?time_range=' + range
       )
       const results = await query.json()
       console.log(results)

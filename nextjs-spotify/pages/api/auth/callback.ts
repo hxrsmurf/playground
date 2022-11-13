@@ -21,7 +21,7 @@ export default async function handler(
     },
     body: new URLSearchParams({
       code: code || false.toString(),
-      redirect_uri: 'http://localhost:3000/api/auth/callback',
+      redirect_uri: process.env.API_URL = '/api/auth/callback',
       grant_type: 'authorization_code',
     }),
   })

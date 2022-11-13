@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     response_type: 'code',
     client_id: spotify_id,
     scope: scopes_spaces,
-    redirect_uri: 'http://localhost:3000/api/auth/callback',
+    redirect_uri: process.env.API_URL + '/api/auth/callback',
   }
 
   const options_query = querystring.stringify(options)

@@ -10,7 +10,7 @@ export default function page() {
 
   useEffect(() => {
     const getProfile = async () => {
-      const query = await fetch('http://localhost:3000/api/spotify/me')
+      const query = await fetch('/api/spotify/me')
       const result = await query.json()
       setProfile(result)
     }

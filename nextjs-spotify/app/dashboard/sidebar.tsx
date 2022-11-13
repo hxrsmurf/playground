@@ -6,7 +6,7 @@ export default function sidebar({ setTracks }: any) {
   const [playlists, setPlaylists]: any = useState()
   useEffect(() => {
     const getPlaylists = async () => {
-      const query = await fetch('http://localhost:3000/api/spotify/playlists')
+      const query = await fetch('/api/spotify/playlists')
       const results = await query.json()
       setPlaylists(results.message.items)
       console.log(results.message.items)
