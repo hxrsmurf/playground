@@ -1,15 +1,31 @@
-import Link from 'next/link'
+'use client'
 
-export default async function Home() {
-  const query = await fetch(
-    'http://localhost:3000/api/auth/generateSpotifyLink'
-  )
-  const spotify_link = (await query.json()).link
-  console.log(spotify_link)
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+
+export default function Home() {
+  const [spotifyLink, setSpotifyLink]: any = useState()
+
+  useEffect(() => {
+    const fetchSpotifyLink = async () => {
+      const query = await fetch(
+        'http://localhost:3000/api/auth/generateSpotifyLink'
+      )
+      const spotify_link = (await query.json()).link
+      setSpotifyLink(spotify_link)
+    }
+    fetchSpotifyLink()
+  })
 
   return (
     <div className='flex justify-center'>
-      <Link href={spotify_link}>Login</Link>
+      {!spotifyLink ? (
+        <>Generating link...</>
+      ) : (
+        <>
+          <Link href={spotifyLink}>Login</Link>
+        </>
+      )}
     </div>
   )
 }
