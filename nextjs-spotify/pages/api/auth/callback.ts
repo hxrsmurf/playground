@@ -36,6 +36,7 @@ export default async function handler(
   ])
 
   res.redirect('/dashboard')
+  return
   res
     .status(200)
     .json({ access_token: access_token, refresh_token: refresh_token })
