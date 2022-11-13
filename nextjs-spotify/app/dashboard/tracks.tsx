@@ -27,7 +27,6 @@ export default function tracks({ id }: any) {
 
   return (
     <div>
-      <div>You clicked {id}</div>
       <div>
         {!playlistInformation ? (
           <>Loading playlist tracks 2...</>

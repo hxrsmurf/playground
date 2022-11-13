@@ -25,7 +25,6 @@ export default function page() {
       </div>
       <div className='flex justify-center ml-96'>
         <div>
-          <div>Dashboard for you</div>
           <div>{tracks ? <Tracks id={tracks} /> : <></>}</div>
         </div>
       </div>
