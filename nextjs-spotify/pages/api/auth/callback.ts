@@ -35,9 +35,6 @@ export default async function handler(
     'refresh_token=' + refresh_token + ';path=/',
   ])
 
-  res.redirect('/dashboard')
+  res.redirect('/now-playing')
   return
-  res
-    .status(200)
-    .json({ access_token: access_token, refresh_token: refresh_token })
 }
