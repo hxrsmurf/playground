@@ -8,8 +8,13 @@ export default async function handler(
   const access_token = req.cookies.access_token
   const refresh_token = req.cookies.refresh_token
   const spotify_base_url = 'https://api.spotify.com/v1/me/playlists'
+  var spotify_final_url = spotify_base_url
 
-  const query = await fetch(spotify_base_url, {
+  if (req.query.limit) {
+    spotify_final_url = spotify_base_url + '?limit=' + req.query.limit
+  }
+
+  const query = await fetch(spotify_final_url, {
     headers: {
       Authorization: 'Bearer ' + access_token,
       'Content-Type': 'application/json',

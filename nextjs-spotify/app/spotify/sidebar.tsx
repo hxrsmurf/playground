@@ -27,8 +27,11 @@ const links = [
 export default function sidebar() {
   return (
     <div className='space-y-6'>
-      {links.map((link) => (
-        <div className='grid grid-cols-3 text-left text-[#b3b3b3] hover:text-white cursor-pointer'>
+      {links.map((link: any, id: any) => (
+        <div
+          key={id}
+          className='grid grid-cols-3 text-left text-[#b3b3b3] hover:text-white cursor-pointer'
+        >
           <div>{link.icon}</div>
           <div className='col-span-2'>{link.name}</div>
         </div>
