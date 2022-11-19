@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import MainContent from './mainContent'
 import NowPlaying from './nowPlaying'
+import Settings from './settings'
 import Sidebar from './sidebar'
 import Top from './top'
 
@@ -29,8 +30,16 @@ export default function page() {
         <div className='min-w-[200px] ml-4'>
           <Sidebar content={setContent} />
         </div>
-        {content == 'main' || content == 'home' ? (
-          <MainContent />
+        {content == 'main' || content == 'home' || content == 'settings' ? (
+          <>
+            {content == 'settings' ? (
+              <Settings />
+            ) : (
+              <>
+                <MainContent />
+              </>
+            )}
+          </>
         ) : (
           <>
             <Top type={content} />

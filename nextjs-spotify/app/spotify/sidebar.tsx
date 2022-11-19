@@ -6,6 +6,7 @@ import Folder from '@heroicons/react/24/solid/FolderIcon'
 import Heart from '@heroicons/react/24/solid/HeartIcon'
 import MusicalNote from '@heroicons/react/24/solid/MusicalNoteIcon'
 import Bars3 from '@heroicons/react/24/solid/Bars3Icon'
+import Cog6Tooth from '@heroicons/react/24/solid/Cog6ToothIcon'
 import Playlists from './playlists'
 
 const links = [
@@ -40,6 +41,12 @@ const links = [
     id: 'tracks',
     url: '/top/tracks',
     icon: <Bars3 className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
+  },
+  {
+    name: 'Settings',
+    id: 'settings',
+    url: 'preferences',
+    icon: <Cog6Tooth className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
   },
 ]
 
