@@ -9,7 +9,6 @@ export default function albums() {
     const getAlbums = async () => {
       const query = await fetch('/api/spotify/albums')
       const results = await query.json()
-      console.log(results)
       setAlbums(results.message.items)
     }
     getAlbums()

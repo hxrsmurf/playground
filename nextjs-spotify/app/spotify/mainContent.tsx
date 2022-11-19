@@ -11,7 +11,6 @@ export default function mainContent() {
     const queryPlaylists = async () => {
       const res = await fetch('/api/spotify/playlists?limit=6')
       const resp = await res.json()
-      console.log(resp)
       setPlaylists(resp.message.items)
     }
 

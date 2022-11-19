@@ -9,7 +9,6 @@ export default function sidebar({ setTracks }: any) {
       const query = await fetch('/api/spotify/playlists')
       const results = await query.json()
       setPlaylists(results.message.items)
-      console.log(results.message.items)
     }
     getPlaylists()
   }, [])

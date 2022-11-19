@@ -19,7 +19,6 @@ export default async function handler(
     const results = await query.json()
     res.status(200).send({ data: results })
   } catch (err) {
-    console.log(query.body)
     res.status(200).send({ data: 'none' })
   }
 }

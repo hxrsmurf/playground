@@ -6,7 +6,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const access_token = req.cookies.access_token
-  console.log('Querinyg albums...')
   const spotify_base_url = 'https://api.spotify.com/v1/me/albums'
 
   const query = await fetch(spotify_base_url, {
@@ -17,8 +16,6 @@ export default async function handler(
   })
 
   const results = await query.json()
-
-  console.log(results)
 
   res.status(200).send({ message: results })
 }

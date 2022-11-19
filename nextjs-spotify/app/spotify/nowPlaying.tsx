@@ -38,7 +38,6 @@ export default function nowPlaying() {
     const getPlayer = async () => {
       const query = await fetch('/api/spotify/player')
       const resp = await query.json()
-      console.log(resp)
       setPlayer(resp.data)
     }
     getPlayer()

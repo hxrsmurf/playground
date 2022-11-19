@@ -22,7 +22,6 @@ const time_ranges = [
 ]
 
 export default function page({ params }: any) {
-  console.log(params)
   const [loading, setLoading]: any = useState(true)
   const [top, setTop]: any = useState()
   const [range, setRange]: any = useState('medium_term')
@@ -40,7 +39,6 @@ export default function page({ params }: any) {
         '/api/spotify/top/' + params.type + '?time_range=' + range
       )
       const results = await query.json()
-      console.log(results)
       setTop(results.data)
     }
     fetchTop()
