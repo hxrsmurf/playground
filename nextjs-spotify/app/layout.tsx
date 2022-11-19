@@ -1,5 +1,4 @@
 import './globals.css'
-import Navigation from './navigation'
 
 export default function RootLayout({
   children,
@@ -14,7 +13,6 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <Navigation />
         <div className='mt-4'>{children}</div>
       </body>
     </html>
