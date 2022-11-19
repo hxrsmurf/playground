@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import MainContent from './mainContent'
 import NowPlaying from './nowPlaying'
 import Sidebar from './sidebar'
+import Top from './top'
 
 export default function page() {
   const [loading, setLoading]: any = useState(true)
@@ -26,12 +27,18 @@ export default function page() {
     <>
       <div className='flex grid-cols-2 mt-8 space-x-32'>
         <div className='min-w-[200px] ml-4'>
-          <Sidebar />
+          <Sidebar content={setContent} />
         </div>
-        {content == 'main' ? <MainContent /> : <> other contnet</>}
+        {content == 'main' || content == 'home' ? (
+          <MainContent />
+        ) : (
+          <>
+            <Top type={content} setLoading={setLoading} />
+          </>
+        )}
       </div>
 
-      <div className='absolute bottom-0 min-w-full'>
+      <div className='fixed bottom-0 min-w-full'>
         <NowPlaying />
       </div>
     </>
