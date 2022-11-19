@@ -47,7 +47,7 @@ export default function nowPlaying() {
 
   return (
     <div className='grid grid-cols-3'>
-      <div className='grid grid-cols-3 max-w-[300px] space-x-4 ml-4 mb-4'>
+      <div className='grid grid-cols-3 max-w-[400px] space-x-4 ml-4'>
         {player.item ? (
           <>
             <div>
