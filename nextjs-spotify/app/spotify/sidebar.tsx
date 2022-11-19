@@ -7,7 +7,9 @@ import Heart from '@heroicons/react/24/solid/HeartIcon'
 import MusicalNote from '@heroicons/react/24/solid/MusicalNoteIcon'
 import Bars3 from '@heroicons/react/24/solid/Bars3Icon'
 import Cog6Tooth from '@heroicons/react/24/solid/Cog6ToothIcon'
+import Power from '@heroicons/react/24/solid/PowerIcon'
 import Playlists from './playlists'
+import { useRouter } from 'next/navigation'
 
 const links = [
   {
@@ -48,11 +50,24 @@ const links = [
     url: 'preferences',
     icon: <Cog6Tooth className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
   },
+  {
+    name: 'Logout',
+    id: 'logout',
+    url: 'logout',
+    icon: <Power className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
+  },
 ]
 
 export default function sidebar({ content }: any) {
+  const router = useRouter()
+
   const handleClick = (e: any) => {
-    content(e.target.id)
+    const id = e.target.id
+    if (id == 'logout') {
+      router.push('/api/auth/logout')
+    } else {
+      content(id)
+    }
   }
 
   return (
