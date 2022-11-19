@@ -23,7 +23,7 @@ const time_ranges = [
 
 export default function top({ type }: any) {
   const [top, setTop]: any = useState()
-  const [range, setRange]: any = useState('medium_term')
+  const [range, setRange]: any = useState('short_term')
   const [clickedType, setClickedType]: any = useState()
   const [loading, setLoading]: any = useState()
 
