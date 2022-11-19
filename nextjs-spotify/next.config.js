@@ -16,6 +16,11 @@ const nextConfig = {
         hostname: 'i.scdn.co',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: '*.fbcdn.net',
+        pathname: '**',
+      },
     ],
   },
 }

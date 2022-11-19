@@ -6,6 +6,7 @@ import NowPlaying from './nowPlaying'
 import Settings from './settings'
 import Sidebar from './sidebar'
 import Top from './top'
+import ProfileMenu from './profileMenu'
 
 export default function page() {
   const [loading, setLoading]: any = useState(true)
@@ -26,7 +27,7 @@ export default function page() {
 
   return (
     <>
-      <div className='flex grid-cols-2 mt-8 space-x-32'>
+      <div className='flex grid-cols-3 mt-8 space-x-32'>
         <div className='min-w-[200px] ml-4'>
           <Sidebar content={setContent} />
         </div>
@@ -45,6 +46,9 @@ export default function page() {
             <Top type={content} />
           </>
         )}
+        <div>
+          <ProfileMenu content={setContent}/>
+        </div>
       </div>
 
       <div className='fixed bottom-0 min-w-full pb-4'>

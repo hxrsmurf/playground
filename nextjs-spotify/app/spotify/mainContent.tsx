@@ -28,7 +28,7 @@ export default function mainContent() {
   if (!profileInfo) return <>Loading profile...</>
 
   return (
-    <div>
+    <div className='w-screen'>
       <div className='font-bold text-2xl'>Hello {profileInfo.display_name}</div>
       <div className='grid grid-cols-3 mt-6 space-x-12 space-y-8'>
         {playlists.map((playlist: any, id: any) => (

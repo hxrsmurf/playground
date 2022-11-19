@@ -50,12 +50,6 @@ const links = [
     url: 'preferences',
     icon: <Cog6Tooth className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
   },
-  {
-    name: 'Logout',
-    id: 'logout',
-    url: 'logout',
-    icon: <Power className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
-  },
 ]
 
 export default function sidebar({ content }: any) {
