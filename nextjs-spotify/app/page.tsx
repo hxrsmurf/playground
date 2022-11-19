@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 async function getSpotifyLink() {
-  const res = await fetch(process.env.API_URL + '/api/auth/generateSpotifyLink')
+  const res = await fetch('/api/auth/generateSpotifyLink')
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
@@ -9,8 +12,19 @@ async function getSpotifyLink() {
   return res.json()
 }
 
-export default async function Home() {
-  const spotify_link = await getSpotifyLink()
+export default function Home() {
+  const [spotify_link, setSpotifyLink]: any = useState()
+
+  useEffect(() => {
+    const generateLink = async () => {
+      const resp = await getSpotifyLink()
+      setSpotifyLink(resp)
+    }
+    generateLink()
+  }, [])
+
+  if (!spotify_link) return <></>
+
   return (
     <div className='flex justify-center color:white'>
       <Link href={spotify_link.link}>Login to Spotify</Link>

@@ -35,6 +35,6 @@ export default async function handler(
     'refresh_token=' + refresh_token + ';path=/',
   ])
 
-  res.redirect('/now-playing')
+  res.redirect('/spotify')
   return
 }
