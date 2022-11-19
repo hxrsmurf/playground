@@ -38,7 +38,7 @@ export default function page() {
         )}
       </div>
 
-      <div className='fixed bottom-0 min-w-full'>
+      <div className='fixed bottom-0 min-w-full pb-4'>
         <NowPlaying />
       </div>
     </>
