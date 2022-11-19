@@ -49,18 +49,26 @@ export default function nowPlaying() {
   return (
     <div className='grid grid-cols-3'>
       <div className='grid grid-cols-3 max-w-[300px] space-x-4 ml-4 mb-4'>
-        <div>
-          <Image
-            src={player.item.album.images[0].url}
-            width={75}
-            height={75}
-            alt=''
-          />
-        </div>
-        <div className='grid grid-rows-2'>
-          <div className='font-bold'>{player.item.name}</div>
-          <div className='text-[#b3b3b3]'>{player.item.artists[0].name}</div>
-        </div>
+        {player.item ? (
+          <>
+            <div>
+              <Image
+                src={player.item.album.images[0].url}
+                width={75}
+                height={75}
+                alt=''
+              />
+            </div>
+            <div className='grid grid-rows-2'>
+              <div className='font-bold'>{player.item.name}</div>
+              <div className='text-[#b3b3b3]'>
+                {player.item.artists[0].name}
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className='grid grid-cols-5 max-w-[400px]'>

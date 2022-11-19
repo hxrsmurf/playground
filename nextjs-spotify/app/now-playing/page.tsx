@@ -23,6 +23,10 @@ export default function page() {
       </>
     )
 
+  if (playing == 'none') {
+    return <>Nothing playing.</>
+  }
+
   return (
     <div className='flex justify-center mt-8'>
       <div className='grid grid-flow-row'>
