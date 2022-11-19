@@ -2,26 +2,29 @@
 
 import { useEffect, useState } from 'react'
 
-export default function playlists() {
-  const [playlists, setPlaylists]: any = useState()
+export default function albums() {
+  const [albums, setAlbums]: any = useState()
 
   useEffect(() => {
-    const getPlaylists = async () => {
-      const query = await fetch('/api/spotify/playlists')
+    const getAlbums = async () => {
+      const query = await fetch('/api/spotify/albums')
       const results = await query.json()
-      setPlaylists(results.message.items)
+      console.log(results)
+      setAlbums(results.message.items)
     }
-    getPlaylists()
+    getAlbums()
   }, [])
 
-  if (!playlists) return <></>
+  if (!albums) return <></>
+
   return (
     <div
       className='grid grid-flow-row text-[#b3b3b3]
     max-w-[200px]
     '
     >
-      {playlists.map((playlist: any, id: number) => (
+      <div className='font-bold'>Albums</div>
+      {albums.map((album: any, id: number) => (
         <div
           key={id}
           className='hover:text-white
@@ -32,7 +35,7 @@ export default function playlists() {
         mt-2
         '
         >
-          {playlist.name}
+          {album.album.name}
         </div>
       ))}
     </div>
