@@ -21,9 +21,11 @@ const time_ranges = [
   },
 ]
 
-export default function top({ type, setLoading }: any) {
+export default function top({ type }: any) {
   const [top, setTop]: any = useState()
   const [range, setRange]: any = useState('medium_term')
+  const [clickedType, setClickedType]: any = useState()
+  const [loading, setLoading]: any = useState()
 
   const handleClick = (e: any) => {
     const type = e.target.id
@@ -39,12 +41,13 @@ export default function top({ type, setLoading }: any) {
       )
       const results = await query.json()
       setTop(results.data)
+      setClickedType(type)
     }
     fetchTop()
     setLoading(false)
-  }, [range, type])
+  }, [range, type, clickedType, loading])
 
-  if (!top) return <>Loading...</>
+  if (!top) return <>Loading top...</>
 
   return (
     <div className='grid grid-flow-row auto-rows-max justify-center space-y-10'>
@@ -65,8 +68,10 @@ export default function top({ type, setLoading }: any) {
           <>Loading top {range}</>
         ) : (
           <>
-            <div className='flex justify-center mb-10'>Top {range}</div>
-            {type == 'tracks' ? (
+            <div className='flex justify-center mb-10'>
+              Top {range} for {type}
+            </div>
+            {clickedType == 'tracks' ? (
               <>
                 <div className='grid grid-cols-4 space-x-2 text-2xl font-bold underline'>
                   <div>Album Cover</div>

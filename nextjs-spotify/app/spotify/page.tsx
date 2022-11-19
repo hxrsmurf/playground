@@ -33,7 +33,7 @@ export default function page() {
           <MainContent />
         ) : (
           <>
-            <Top type={content} setLoading={setLoading} />
+            <Top type={content} />
           </>
         )}
       </div>
