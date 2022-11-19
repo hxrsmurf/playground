@@ -2,6 +2,7 @@ import HomeIcon from '@heroicons/react/24/solid/HomeIcon'
 import MagnifyingGlass from '@heroicons/react/24/solid/MagnifyingGlassIcon'
 import Folder from '@heroicons/react/24/solid/FolderIcon'
 import Heart from '@heroicons/react/24/solid/HeartIcon'
+import Playlists from './playlists'
 
 const links = [
   {
@@ -40,20 +41,7 @@ export default function sidebar() {
         <div className='col-span-2'>Liked Songs</div>
       </div>
       <div className='min-h-[1.2px] bg-[#b3b3b3]'></div>
-      <div className='grid grid-flow-row space-y-2'>
-        <div className='text-[#b3b3b3] hover:text-white cursor-default'>
-          Playlist 1
-        </div>
-        <div className='text-[#b3b3b3] hover:text-white cursor-default'>
-          Playlist 1
-        </div>
-        <div className='text-[#b3b3b3] hover:text-white cursor-default'>
-          Playlist 1
-        </div>
-        <div className='text-[#b3b3b3] hover:text-white cursor-default'>
-          Playlist 1
-        </div>
-      </div>
+      <Playlists />
     </div>
   )
 }
