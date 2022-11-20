@@ -1,4 +1,4 @@
-import { headers } from "next/headers"
+import { headers } from 'next/headers'
 
 export function getCookies() {
   const cookies = headers().get('cookie')

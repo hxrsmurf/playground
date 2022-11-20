@@ -12,6 +12,7 @@ import ArrowPathRounded from '@heroicons/react/24/solid/ArrowPathRoundedSquareIc
 import RectangeStack from '@heroicons/react/24/solid/RectangleStackIcon'
 import ComputerDesktop from '@heroicons/react/24/solid/ComputerDesktopIcon'
 import SpeakerWave from '@heroicons/react/24/solid/SpeakerWaveIcon'
+import { millisToMinutesAndSeconds } from '../../utils/conversions'
 
 const play_states = [
   {
@@ -54,13 +55,23 @@ const device_info = [
 
 export default function nowPlaying() {
   const [player, setPlayer]: any = useState()
+  const [progress, setProgress]: any = useState()
+  const [duration, setDuration]: any = useState()
+  const [elapsed, setElapsed]: any = useState()
+
   useEffect(() => {
     const getPlayer = async () => {
       const query = await fetch('/api/spotify/player')
       const resp = await query.json()
+      const ms_progress = resp.data.progress_ms
+      const ms_duration = resp.data.item.duration_ms
       setPlayer(resp.data)
+      setProgress(millisToMinutesAndSeconds(ms_progress))
+      setDuration(millisToMinutesAndSeconds(ms_duration))
+      setElapsed((ms_progress / ms_duration) * 100)
     }
     getPlayer()
+    setInterval(getPlayer, 500)
   }, [])
 
   if (!player) return <>Loading player...</>
@@ -92,19 +103,44 @@ export default function nowPlaying() {
         )}
       </div>
 
-      <div className='grid grid-cols-5 max-w-[400px]'>
-        {play_states.map((state, id) => (
-          <div key={id} className='flex items-center'>
-            {state.name == 'Play' ? (
+      <div className='grid grid-rows-2'>
+        <div className='grid grid-cols-5 max-w-[400px] ml-8'>
+          {play_states.map((state, id) => (
+            <div key={id} className='flex items-center justify-center object-center'>
+              {state.name == 'Play' ? (
+                <>
+                  {!player.is_playing ? (
+                    <>{state.icon}</>
+                  ) : (
+                    <>{state.alt_icon}</>
+                  )}
+                </>
+              ) : (
+                <>{state.icon}</>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className='flex items-center object-center'>
+          <div className='grid grid-flow-col space-x-4'>
+            {progress ? (
               <>
-                {!player.is_playing ? <>{state.icon}</> : <>{state.alt_icon}</>}
+                <div>{progress}</div>
+                <div className='bg-[#5e5e5e] h-3 min-w-[400px] flex items-center align-middle mt-2 rounded-lg'>
+                  <div
+                    className='bg-white h-3 rounded-lg'
+                    style={{ width: elapsed }}
+                  ></div>
+                </div>
+                <div>{duration}</div>
               </>
             ) : (
-              <>{state.icon}</>
+              <></>
             )}
           </div>
-        ))}
+        </div>
       </div>
+
       <div className='grid grid-cols-3'>
         {device_info.map((device: any, id: any) => (
           <div className='flex items-center justify-end mr-24'>
