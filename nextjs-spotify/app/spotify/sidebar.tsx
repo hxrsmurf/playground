@@ -81,7 +81,9 @@ export default function sidebar(data: any) {
         <div>
           <Heart className='h-6 w-6 text-[#b3b3b3] hover:text-white' />
         </div>
-        <div className='col-span-2'>Liked Songs</div>
+        <div className='col-span-2'>
+          <Link href='/spotify/collection/tracks'>Liked Songs</Link>
+        </div>
       </div>
       <div className='min-h-[1.2px] bg-[#b3b3b3]'></div>
       <Playlists />
