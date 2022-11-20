@@ -53,25 +53,41 @@ const device_info = [
   },
 ]
 
+
+// https://stackoverflow.com/questions/66120513/property-does-not-exist-on-type-window-typeof-globalthis
+declare global {
+  interface Window {
+    onSpotifyWebPlaybackSDKReady: any
+    Spotify: any
+  }
+}
+
 export default function nowPlaying() {
   const [player, setPlayer]: any = useState()
   const [progress, setProgress]: any = useState()
   const [duration, setDuration]: any = useState()
   const [elapsed, setElapsed]: any = useState()
   const [playback, setPlayback]: any = useState()
+  const [cookies, setCookies]: any = useState()
+  const [spotifyPlayer, setSpotifyPlayer]: any = useState()
 
   async function getPlayer() {
     const query = await fetch('/api/spotify/player')
     const resp = await query.json()
-    const ms_progress = resp.data.progress_ms
-    const ms_duration = resp.data.item.duration_ms
-    const current_playback = resp.data.is_playing
 
-    setPlayer(resp.data)
-    setPlayback(current_playback)
-    setProgress(millisToMinutesAndSeconds(ms_progress))
-    setDuration(millisToMinutesAndSeconds(ms_duration))
-    setElapsed((ms_progress / ms_duration) * 100)
+    try {
+      const ms_progress = resp.data.progress_ms
+      const ms_duration = resp.data.item.duration_ms
+      const current_playback = resp.data.is_playing
+
+      setPlayer(resp.data)
+      setPlayback(current_playback)
+      setProgress(millisToMinutesAndSeconds(ms_progress))
+      setDuration(millisToMinutesAndSeconds(ms_duration))
+      setElapsed((ms_progress / ms_duration) * 100)
+    } catch {
+      setPlayer('nothing')
+    }
   }
 
   const updatePlayer = async (state: string) => {
@@ -80,8 +96,41 @@ export default function nowPlaying() {
 
   useEffect(() => {
     getPlayer()
+
+    const cookieMonster = async () => {
+      const query = await fetch('/api/spotify/me')
+      const res = await query.json()
+      setCookies(res.access_token)
+    }
+
+    cookieMonster()
     setInterval(getPlayer, 500)
   }, [])
+
+  // https://github.com/spotify/spotify-web-playback-sdk-example/blob/main/src/WebPlayback.jsx
+  // https://developer.spotify.com/documentation/web-playback-sdk/quick-start/
+  useEffect(() => {
+    if (cookies) {
+      const access_token = cookies
+      const script = document.createElement('script')
+      script.src = 'https://sdk.scdn.co/spotify-player.js'
+      script.async = true
+
+      document.body.appendChild(script)
+
+      window.onSpotifyWebPlaybackSDKReady = async () => {
+        const _player = new window.Spotify.Player({
+          name: 'Web Playback SDK Player',
+          getOAuthToken: (cb:any ) => {
+            cb(access_token)
+          },
+          volume: 0.5,
+        })
+        setSpotifyPlayer(_player)
+        _player.connect()
+      }
+    }
+  }, [cookies])
 
   const handlePlayPause = () => {
     setPlayback(!player.is_playing ? true : false)
@@ -89,6 +138,9 @@ export default function nowPlaying() {
   }
 
   if (!player) return <>Loading player...</>
+  if (player == 'nothing') return <>Nothing playing</>
+  if (!cookies) return <></>
+  if (!spotifyPlayer) return <></>
 
   return (
     <div className='grid grid-cols-3'>
