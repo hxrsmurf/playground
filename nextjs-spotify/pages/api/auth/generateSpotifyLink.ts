@@ -12,6 +12,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     'user-read-recently-played',
     'user-library-read',
     'user-read-private',
+    'user-modify-playback-state',
+    'streaming'
   ]
   const scopes_spaces = scopes.join(' ')
   const spotify_id = process.env.SPOTIFY_ID

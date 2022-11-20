@@ -25,8 +25,8 @@ const play_states = [
   },
   {
     name: 'Play',
-    icon: <PlayIcon className='h-6 w-6' />,
-    alt_icon: <PauseIcon className='h-6 w-6' />,
+    icon: <PlayIcon className='h-6 w-6 text-black' />,
+    alt_icon: <PauseIcon className='h-6 w-6 text-black' />,
   },
   {
     name: 'Forward',
@@ -58,27 +58,41 @@ export default function nowPlaying() {
   const [progress, setProgress]: any = useState()
   const [duration, setDuration]: any = useState()
   const [elapsed, setElapsed]: any = useState()
+  const [playback, setPlayback]: any = useState()
+
+  async function getPlayer() {
+    const query = await fetch('/api/spotify/player')
+    const resp = await query.json()
+    const ms_progress = resp.data.progress_ms
+    const ms_duration = resp.data.item.duration_ms
+    const current_playback = resp.data.is_playing
+
+    setPlayer(resp.data)
+    setPlayback(current_playback)
+    setProgress(millisToMinutesAndSeconds(ms_progress))
+    setDuration(millisToMinutesAndSeconds(ms_duration))
+    setElapsed((ms_progress / ms_duration) * 100)
+  }
+
+  const updatePlayer = async (state: string) => {
+    const query = await fetch('/api/spotify/player/' + state)
+  }
 
   useEffect(() => {
-    const getPlayer = async () => {
-      const query = await fetch('/api/spotify/player')
-      const resp = await query.json()
-      const ms_progress = resp.data.progress_ms
-      const ms_duration = resp.data.item.duration_ms
-      setPlayer(resp.data)
-      setProgress(millisToMinutesAndSeconds(ms_progress))
-      setDuration(millisToMinutesAndSeconds(ms_duration))
-      setElapsed((ms_progress / ms_duration) * 100)
-    }
     getPlayer()
     setInterval(getPlayer, 500)
   }, [])
+
+  const handlePlayPause = () => {
+    setPlayback(!player.is_playing ? true : false)
+    updatePlayer(!player.is_playing ? 'play' : 'pause')
+  }
 
   if (!player) return <>Loading player...</>
 
   return (
     <div className='grid grid-cols-3'>
-      <div className='grid grid-cols-3 max-w-[400px] ml-4'>
+      <div className='grid grid-cols-3 max-w-[400px] ml-6'>
         {player.item ? (
           <>
             <div>
@@ -103,33 +117,35 @@ export default function nowPlaying() {
         )}
       </div>
 
-      <div className='grid grid-rows-2'>
-        <div className='grid grid-cols-5 max-w-[400px] ml-8'>
+      <div className='grid grid-rows-2 min-w-[400px]'>
+        <div className='grid grid-cols-5'>
           {play_states.map((state, id) => (
-            <div key={id} className='flex items-center justify-center object-center'>
+            <div
+              key={id}
+              className='flex items-center justify-center object-center'
+            >
               {state.name == 'Play' ? (
-                <>
-                  {!player.is_playing ? (
-                    <>{state.icon}</>
-                  ) : (
-                    <>{state.alt_icon}</>
-                  )}
-                </>
+                <div
+                  className='bg-white rounded-lg p-2'
+                  onClick={() => handlePlayPause()}
+                >
+                  {!playback ? <>{state.icon}</> : <>{state.alt_icon}</>}
+                </div>
               ) : (
                 <>{state.icon}</>
               )}
             </div>
           ))}
         </div>
-        <div className='flex items-center object-center'>
-          <div className='grid grid-flow-col space-x-4'>
+        <div className='flex items-center object-center align-middle justify-center pt-4'>
+          <div className='grid grid-flow-col space-x-2'>
             {progress ? (
               <>
                 <div>{progress}</div>
                 <div className='bg-[#5e5e5e] h-3 min-w-[400px] flex items-center align-middle mt-2 rounded-lg'>
                   <div
                     className='bg-white h-3 rounded-lg'
-                    style={{ width: elapsed }}
+                    style={{ width: elapsed + '%' }}
                   ></div>
                 </div>
                 <div>{duration}</div>
