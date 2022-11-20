@@ -7,21 +7,18 @@ export default function playlists() {
 
   useEffect(() => {
     const getPlaylists = async () => {
-      const query = await fetch('/api/spotify/playlists')
-      const results = await query.json()
-      setPlaylists(results.message.items)
+      const req = await fetch('/api/spotify/playlists')
+      const res = await req.json()
+      setPlaylists(res.data.items)
     }
     getPlaylists()
-  }, [])
+  })
 
   if (!playlists) return <></>
+
   return (
-    <div
-      className='grid grid-flow-row text-[#b3b3b3]
-    max-w-[200px]
-    '
-    >
-      {playlists.map((playlist: any, id: number) => (
+    <div className='grid grid-flow-row text-[#b3b3b3] max-w-[200px]'>
+      {playlists.map((playlist: any, id: any) => (
         <div
           key={id}
           className='hover:text-white

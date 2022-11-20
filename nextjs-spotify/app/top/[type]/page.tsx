@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import ProfileMenu from '../../spotify/profileMenu'
+import Sidebar from '../../spotify/sidebar'
 
 const time_ranges = [
   {
@@ -46,75 +48,81 @@ export default function page({ params }: any) {
   }, [range])
 
   return (
-    <div className='grid grid-flow-row auto-rows-max justify-center space-y-10'>
-      <div className='grid-cols-3 flex justify-center space-x-10'>
-        {time_ranges.map((range, id) => (
-          <div
-            key={id}
-            id={range.id}
-            className='hover:bg-yellow-400 cursor-pointer'
-            onClick={(e) => handleClick(e)}
-          >
-            {range.name} - {range.description}
-          </div>
-        ))}
+    <div className='grid grid-cols-4'>
+      <Sidebar />
+      <div className='grid grid-flow-row auto-rows-max justify-center space-y-10 col-span-2 mt-4'>
+        <div className='grid-cols-3 flex justify-center space-x-10'>
+          {time_ranges.map((range, id) => (
+            <div
+              key={id}
+              id={range.id}
+              className='hover:bg-yellow-400 cursor-pointer'
+              onClick={(e) => handleClick(e)}
+            >
+              {range.name} - {range.description}
+            </div>
+          ))}
+        </div>
+        <div>
+          {!top ? (
+            <></>
+          ) : (
+            <>
+              <div className='flex justify-center mb-10'>Top {range}</div>
+              {params.type == 'tracks' ? (
+                <>
+                  <div className='grid grid-cols-4 space-x-2 text-2xl font-bold underline'>
+                    <div>Album Cover</div>
+                    <div>Album</div>
+                    <div>Track</div>
+                    <div>Artist</div>
+                  </div>
+                  <div className='grid grid-cols-4 space-x-4'>
+                    {top.map((item: any) => (
+                      <>
+                        <div className='my-4 max-w-[175px]'>
+                          <Image
+                            src={item.album.images[0].url}
+                            width={150}
+                            height={150}
+                            alt=''
+                          />
+                        </div>
+                        <div className='flex items-center'>
+                          {item.album.name}
+                        </div>
+                        <div className='flex items-center'>{item.name}</div>
+                        <div className='flex items-center'>
+                          {item.artists[0].name}
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className='grid grid-cols-2 space-x-2'>
+                    {top.map((item: any) => (
+                      <>
+                        <div className='my-4'>
+                          <Image
+                            src={item.images[0].url}
+                            width={150}
+                            height={150}
+                            alt=''
+                          />
+                        </div>
+                        <div className='flex items-center'>{item.name}</div>
+                      </>
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          )}
+        </div>
       </div>
-      <div>
-        {!top ? (
-          <>Loading top {range}</>
-        ) : (
-          <>
-            <div className='flex justify-center mb-10'>Top {range}</div>
-            {params.type == 'tracks' ? (
-              <>
-                <div className='grid grid-cols-4 space-x-2 text-2xl font-bold underline'>
-                  <div>Album Cover</div>
-                  <div>Album</div>
-                  <div>Track</div>
-                  <div>Artist</div>
-                </div>
-                <div className='grid grid-cols-4 space-x-4'>
-                  {top.map((item: any) => (
-                    <>
-                      <div className='my-4 max-w-[175px]'>
-                        <Image
-                          src={item.album.images[0].url}
-                          width={150}
-                          height={150}
-                          alt=''
-                        />
-                      </div>
-                      <div className='flex items-center'>{item.album.name}</div>
-                      <div className='flex items-center'>{item.name}</div>
-                      <div className='flex items-center'>
-                        {item.artists[0].name}
-                      </div>
-                    </>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className='grid grid-cols-2 space-x-2'>
-                  {top.map((item: any) => (
-                    <>
-                      <div className='my-4'>
-                        <Image
-                          src={item.images[0].url}
-                          width={150}
-                          height={150}
-                          alt=''
-                        />
-                      </div>
-                      <div className='flex items-center'>{item.name}</div>
-                    </>
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        )}
-      </div>
+      <ProfileMenu />
     </div>
   )
 }

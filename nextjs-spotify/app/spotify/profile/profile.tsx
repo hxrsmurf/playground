@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function profile() {
@@ -29,7 +30,7 @@ export default function profile() {
       if (type == 'artists') {
         limit = 10
       } else {
-        limit = 4
+        limit = 5
       }
 
       const query = await fetch(
@@ -52,8 +53,8 @@ export default function profile() {
   if (loading) return <></>
 
   return (
-    <div>
-      <div className='grid grid-cols-8 items-center'>
+    <div className='col-span-2 mt-4'>
+      <div className='grid grid-cols-3 items-center'>
         <div>
           <Image
             src={profile.images[0].url}
@@ -64,18 +65,18 @@ export default function profile() {
           />
         </div>
 
-        <div className='grid grid-rows-3 space-y-2 min-w-[400px]'>
+        <div className='grid grid-rows-3 ml-8 col-span-2'>
           <div>Profile</div>
-          <div className='font-bold text-6xl'>{profile.display_name}</div>
-          <div className='grid grid-cols-3 space-x-3 pt-6'>
-            <div>{profile.followers.total} Followers</div>
-          </div>
+          <div className='font-bold text-3xl'>{profile.display_name}</div>
+          <div className='mt-4'>{profile.followers.total} Followers</div>
         </div>
       </div>
 
       <div>
-        <div className='mt-32 text-2xl font-bold'>Top artists this month</div>
-        <div className='grid grid-flow-col space-x-7 items-center mt-4 rounded-md'>
+        <div className='mt-32 text-2xl font-bold hover:underline'>
+          <Link href='/top/artists'>Top artists this month</Link>
+        </div>
+        <div className='grid grid-flow-col space-x-7 items-center rounded-md mt-4'>
           {artists.map((artist: any, id: string) => (
             <div
               className='grid grid-flow-row bg-[#181818] p-8 w-[190px] h-[270px]'
@@ -96,12 +97,14 @@ export default function profile() {
         </div>
 
         <div>
-          <div className='mt-16 text-2xl font-bold'>Top tracks this month</div>
+          <div className='mt-16 text-2xl font-bold hover:underline'>
+            <Link href='/top/tracks'>Top tracks this month</Link>
+          </div>
           <div className='mt-16'>
             {tracks.map((track: any, id: any) => (
-              <div className='grid grid-cols-3 mt-4'>
-                <div className='grid grid-cols-3 w-[400px]'>
-                  <div className='flex items-center w-[20px]'>{id + 1}</div>
+              <div className='grid grid-cols-3 mt-4 space-x-10 w-screen'>
+                <div className='grid grid-cols-6'>
+                  <div className='flex items-center'>{id + 1}</div>
                   <div>
                     <Image
                       src={track.album.images[0].url}
@@ -110,7 +113,7 @@ export default function profile() {
                       alt=''
                     />
                   </div>
-                  <div className='flex items-center'>
+                  <div className='flex items-center ml-4'>
                     <div>
                       <div>{track.name}</div>
                       <div>{track.artists[0].name}</div>

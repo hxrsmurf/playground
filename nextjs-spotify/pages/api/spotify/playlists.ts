@@ -5,10 +5,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const access_token = req.cookies.access_token
   const refresh_token = req.cookies.refresh_token
   const spotify_base_url = 'https://api.spotify.com/v1/me/playlists'
   var spotify_final_url = spotify_base_url
+
+  var access_token = null
+
+  if (req.cookies.access_token) {
+    access_token = req.cookies.access_token
+  } else {
+    access_token = req.headers.authorization
+  }
 
   if (req.query.limit) {
     spotify_final_url = spotify_base_url + '?limit=' + req.query.limit
@@ -23,5 +30,5 @@ export default async function handler(
 
   const results = await query.json()
 
-  res.status(200).send({ message: results })
+  res.status(200).send({ data: results })
 }

@@ -7,15 +7,15 @@ import Heart from '@heroicons/react/24/solid/HeartIcon'
 import MusicalNote from '@heroicons/react/24/solid/MusicalNoteIcon'
 import Bars3 from '@heroicons/react/24/solid/Bars3Icon'
 import Cog6Tooth from '@heroicons/react/24/solid/Cog6ToothIcon'
-import Power from '@heroicons/react/24/solid/PowerIcon'
-import Playlists from './playlists'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import Playlists from './playlists'
 
 const links = [
   {
     name: 'Home',
     id: 'home',
-    url: '/',
+    url: '/spotify',
     icon: <HomeIcon className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
   },
   {
@@ -47,25 +47,23 @@ const links = [
   {
     name: 'Settings',
     id: 'settings',
-    url: 'preferences',
+    url: '/spotify/settings',
     icon: <Cog6Tooth className='h-6 w-6 text-[#b3b3b3] hover:text-white' />,
   },
 ]
 
-export default function sidebar({ content }: any) {
+export default function sidebar(data: any) {
   const router = useRouter()
 
   const handleClick = (e: any) => {
     const id = e.target.id
     if (id == 'logout') {
       router.push('/api/auth/logout')
-    } else {
-      content(id)
     }
   }
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-6 max-w-[200px] ml-4 mt-4'>
       {links.map((link: any, id: any) => (
         <div
           key={id}
@@ -74,7 +72,7 @@ export default function sidebar({ content }: any) {
         >
           <div id={link.id}>{link.icon}</div>
           <div id={link.id} className='col-span-2'>
-            {link.name}
+            <Link href={link.url}>{link.name}</Link>
           </div>
         </div>
       ))}

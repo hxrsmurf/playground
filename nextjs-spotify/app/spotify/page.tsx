@@ -1,68 +1,45 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-import MainContent from './mainContent'
-import NowPlaying from './nowPlaying'
-import Settings from './settings'
-import Sidebar from './sidebar'
-import Top from './top'
+import { headers } from 'next/headers'
+import Content from './content'
 import ProfileMenu from './profileMenu'
-import Profile from './profile'
+import Sidebar from './sidebar'
 
-export default function page() {
-  const [loading, setLoading]: any = useState(true)
-  const [content, setContent]: any = useState('main')
+export default async function page() {
+  const cookies = headers().get('cookie')
+  const cookies_split = cookies?.split('; ') || ''
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 100)
-  }, [])
+  const access_token = cookies_split[0].split('=')[1]
+  const refresh_token = cookies_split[1].split('=')[1]
 
-  if (loading)
-    return (
-      <>
-        <div className='flex justify-center'>
-          <div>Loading...</div>
-        </div>
-      </>
-    )
+  const profile = await getProfile(access_token)
+  const playlists = await getPlaylists(access_token)
 
   return (
-    <>
-      <div className='flex grid-cols-3 mt-8 space-x-32'>
-        <div className='min-w-[200px] ml-4'>
-          <Sidebar content={setContent} />
-        </div>
-        {content == 'main' || content == 'home' || content == 'settings' ? (
-          <>
-            {content == 'settings' ? (
-              <Settings />
-            ) : (
-              <>
-                <MainContent />
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            {content == 'profile' ? (
-              <>
-                <Profile />
-              </>
-            ) : (
-              <>
-                <Top type={content} />
-              </>
-            )}
-          </>
-        )}
-        <div>
-          <ProfileMenu content={setContent} />
-        </div>
-      </div>
-
-      <div className='fixed bottom-0 min-w-full pb-4 bg-[#181818] py-4'>
-        <NowPlaying />
-      </div>
-    </>
+    <div className='grid grid-cols-4'>
+      <Sidebar data={playlists.data}/>
+      <Content profile={profile} playlists={playlists}/>
+      <ProfileMenu/>
+    </div>
   )
+}
+
+async function getProfile(access_token: string) {
+  const req = await fetch(process.env.API_URL + '/api/spotify/me', {
+    method: 'GET',
+    headers: {
+      Authorization: access_token,
+      'Content-Type': 'application/json',
+    },
+  })
+  return req.json()
+}
+
+async function getPlaylists(access_token: string) {
+  const req = await fetch(process.env.API_URL + '/api/spotify/playlists', {
+    method: 'GET',
+    headers: {
+      Authorization: access_token,
+      'Content-Type': 'application/json',
+    },
+  })
+  return req.json()
 }

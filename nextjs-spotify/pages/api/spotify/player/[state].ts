@@ -17,8 +17,8 @@ export default async function handler(
         'Content-Type': 'application/json',
       },
     })
+
     const resp = await query.json()
-    console.log(resp)
 
     res.send({ data: 'Success' })
   } catch (err) {
