@@ -5,9 +5,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const access_token = req.cookies.access_token
   const playlist_id = req.query.playlist
   const spotify_base_url = 'https://api.spotify.com/v1/playlists/' + playlist_id
+
+  var access_token = null
+
+  if (req.cookies.access_token) {
+    access_token = req.cookies.access_token
+  } else {
+    access_token = req.headers.authorization
+  }
 
   const query = await fetch(spotify_base_url, {
     headers: {
@@ -18,5 +25,5 @@ export default async function handler(
 
   const results = await query.json()
 
-  res.status(200).send({ message: results })
+  res.status(200).send({results})
 }

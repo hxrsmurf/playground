@@ -28,7 +28,14 @@ export default async function handler(
     },
   })
 
-  const results = await query.json()
-
-  res.status(200).send({ data: results })
+  if (query.status == 200) {
+    const results = await query.json()
+    res.status(200).send({ data: results })
+  }
+  {
+    res.status(500).send({
+      status: query.status,
+      statusText: query.statusText,
+    })
+  }
 }

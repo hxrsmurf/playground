@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function playlists() {
@@ -7,7 +8,7 @@ export default function playlists() {
 
   useEffect(() => {
     const getPlaylists = async () => {
-      const req = await fetch('/api/spotify/playlists')
+      const req = await fetch('/api/spotify/playlist')
       const res = await req.json()
       setPlaylists(res.data.items)
     }
@@ -29,7 +30,7 @@ export default function playlists() {
         mt-2
         '
         >
-          {playlist.name}
+          <Link href={'/spotify/playlist/' + playlist.id}>{playlist.name}</Link>
         </div>
       ))}
     </div>
