@@ -60,7 +60,7 @@ export default function page() {
         </div>
       </div>
 
-      <div className='fixed bottom-0 min-w-full pb-4'>
+      <div className='fixed bottom-0 min-w-full pb-4 bg-[#181818] py-4'>
         <NowPlaying />
       </div>
     </>
