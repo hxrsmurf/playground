@@ -8,7 +8,14 @@ export default async function handler(
   const access_token = req.cookies.access_token
   const type = req.query.type
   const time_range = req.query.time_range
-  const limit = 50
+  var limit = null
+
+  if (req.query.limit) {
+    limit = req.query.limit
+  } else {
+    limit = 50
+  }
+
   const spotify_base_url =
     'https://api.spotify.com/v1/me/top/' +
     type +

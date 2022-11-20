@@ -7,6 +7,7 @@ import Settings from './settings'
 import Sidebar from './sidebar'
 import Top from './top'
 import ProfileMenu from './profileMenu'
+import Profile from './profile'
 
 export default function page() {
   const [loading, setLoading]: any = useState(true)
@@ -43,11 +44,19 @@ export default function page() {
           </>
         ) : (
           <>
-            <Top type={content} />
+            {content == 'profile' ? (
+              <>
+                <Profile />
+              </>
+            ) : (
+              <>
+                <Top type={content} />
+              </>
+            )}
           </>
         )}
         <div>
-          <ProfileMenu content={setContent}/>
+          <ProfileMenu content={setContent} />
         </div>
       </div>
 
