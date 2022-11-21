@@ -102,3 +102,16 @@ dist
 
 # TernJS port file
 .tern-port
+
+# NextJS-Projects
+nextjs-integration-testing
+nextjs-password
+nextjs-photos
+nextjs-redis
+nextjs-spotify
+nextjs-template
+nextjs-pictures
+python-pictures
+python-bunnycdn/functions/__pycache__/
+python-bunnycdn/functions/config.py
+*.webm
