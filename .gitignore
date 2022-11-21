@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+# NextJS-Projects
+nextjs-integration-testing
+nextjs-password
+nextjs-photos
+nextjs-redis
+nextjs-spotify
+nextjs-template
