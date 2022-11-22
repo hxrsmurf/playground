@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { TriggerInstance } from 'twilio/lib/rest/api/v2010/account/usage/trigger'
 
 interface Data {
   result: {
@@ -14,7 +13,7 @@ interface Data {
     national_format: string
     carrier: {
       mobile_country_code: string
-      mobile_network_code: TriggerInstance
+      mobile_network_code: string
       name: string
       type: string
       error_code: number | null
