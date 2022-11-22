@@ -109,3 +109,4 @@ nextjs-password
 nextjs-photos
 nextjs-redis
 nextjs-twilio
+nextjs-spotify/redis/docker-compose.yaml

@@ -31,11 +31,12 @@ export default async function handler(
   if (query.status == 200) {
     const results = await query.json()
     res.status(200).send({ data: results })
-  }
-  {
+    return
+  } else {
     res.status(500).send({
       status: query.status,
       statusText: query.statusText,
     })
+    return
   }
 }

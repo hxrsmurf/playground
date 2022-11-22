@@ -1,0 +1,11 @@
+volumes:
+  data:
+
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --user nextjs --requirepass super_secure_password
+    volumes:
+      - data:/data
+    ports:
+      - 6379:6379
