@@ -62,7 +62,5 @@ export default async function handler(
 
   result['carrier'] = result_carrier['carrier']
 
-  console.log(result)
-
   res.status(200).json({ result })
 }
