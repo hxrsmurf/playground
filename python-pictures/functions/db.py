@@ -31,6 +31,10 @@ def redis_set_data(full_path, metadata, binary_file):
             full_path, 'metadata', json.dumps(metadata)
         )
 
+        expiration_time_seconds = False
+        if expiration_time_seconds:
+            redis_client.expire(full_path, expiration_time_seconds)
+
         set_binary = True
 
         if set_binary:
@@ -38,6 +42,7 @@ def redis_set_data(full_path, metadata, binary_file):
             redis_client().hset(
                 full_path, 'binary_file', binary_file
             )
+
         return True
     except:
         return False
