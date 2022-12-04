@@ -12,8 +12,6 @@ for root, subdirs, files in os.walk(directory):
     for file in files:
         if '.jpg'in file or '.png' in file or '.JPG' in file:
             full_path = root + '/' + file
-            print(full_path)
-
             redis_data = redis_check_existing(full_path)
 
             if redis_data:
