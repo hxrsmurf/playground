@@ -1,22 +1,20 @@
 import redis
 import json
 
-def redis_client():
-    pool = redis.ConnectionPool(
-        host='localhost',
-        port=6379,
-        db=0
-    )
-    return redis.Redis(
-        connection_pool=pool
-    )
+pool = redis.ConnectionPool(
+    host='127.0.0.1',
+    port=6379,
+    db=0
+)
+
+redis_client = redis.Redis(
+    connection_pool=pool
+)
 
 def redis_check_existing(full_path):
-    print(f'Retrieving from Redis:', full_path)
-
     decoded_data = {}
 
-    redis_data = redis_client().hgetall(full_path)
+    redis_data = redis_client.hgetall(full_path)
 
     for key, values in redis_data.items():
         decoded_key = key.decode('utf-8')
@@ -29,8 +27,7 @@ def redis_check_existing(full_path):
 
 def redis_set_data(full_path, metadata, binary_file):
     try:
-        print(f'Adding to Redis:', full_path)
-        redis_client().hset(
+        redis_client.hset(
             full_path, 'metadata', json.dumps(metadata)
         )
 
