@@ -1,6 +1,10 @@
 import os
 import exiftool
 
+from functions.db import redis_client
+
+redis_client().set('foo', 'bar')
+
 directory = 'C:/Users/kvchm/Pictures/pictures/Ollie'
 
 for root, subdirs, files in os.walk(directory):
