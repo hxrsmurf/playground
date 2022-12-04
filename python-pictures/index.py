@@ -1,5 +1,7 @@
 import os
 import json
+import io
+from PIL import Image
 
 from functions.db import redis_client, redis_check_existing, redis_set_data
 from functions.exif import get_exif_data
@@ -16,7 +18,9 @@ for root, subdirs, files in os.walk(directory):
 
             if redis_data:
                 redis_metadata = json.loads(redis_data['metadata'])
-                redis_binary_file = redis_data['binary_file']
+                redis_binary_file = io.BytesIO(redis_data['binary_file'])
+                # Show Image
+                # Image.open(redis_binary_file).show()
             else:
                 metadata = get_exif_data(full_path)
                 binary_file = open(full_path, 'rb').read()
