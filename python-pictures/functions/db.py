@@ -11,6 +11,7 @@ redis_client = redis.Redis(
     connection_pool=pool
 )
 
+
 def redis_check_existing(full_path):
     decoded_data = {}
 
@@ -25,22 +26,23 @@ def redis_check_existing(full_path):
 
     return decoded_data
 
-def redis_set_data(full_path, metadata, binary_file):
+
+def redis_set_data(folder, files, binary_file=None):
     try:
         redis_client.hset(
-            full_path, 'metadata', json.dumps(metadata)
+            folder, 'files', json.dumps(files)
         )
 
         expiration_time_seconds = False
         if expiration_time_seconds:
-            redis_client.expire(full_path, expiration_time_seconds)
+            redis_client.expire(folder, expiration_time_seconds)
 
-        set_binary = True
+        set_binary = False
 
         if set_binary:
 
             redis_client().hset(
-                full_path, 'binary_file', binary_file
+                folder, 'binary_file', binary_file
             )
 
         return True
