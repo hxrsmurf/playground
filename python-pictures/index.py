@@ -3,14 +3,14 @@ import json
 import io
 from PIL import Image
 
-from functions.db import redis_client, redis_check_existing, redis_set_data
+from functions.db import redis_check_existing, redis_set_data
 from functions.exif import get_exif_data
 
-directory = 'C:/Users/kvchm/Pictures/pictures/Ollie'
+directory = 'C:/Users/kvchm/Pictures/pictures/'
 
 for root, subdirs, files in os.walk(directory):
     for file in files:
-        if not '.ini' in file:
+        if '.jpg'in file or '.png' in file or '.JPG' in file:
             full_path = root + '/' + file
             print(file)
 
@@ -25,5 +25,5 @@ for root, subdirs, files in os.walk(directory):
                 metadata = get_exif_data(full_path)
                 binary_file = open(full_path, 'rb').read()
                 redis_set_data(full_path, metadata, binary_file)
-
-            break
+        else:
+            print('Extension:',file)
