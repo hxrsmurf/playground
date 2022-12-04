@@ -2,9 +2,13 @@ import redis
 import json
 
 def redis_client():
-    return redis.Redis(
+    pool = redis.ConnectionPool(
         host='localhost',
-        port='6379',
+        port=6379,
+        db=0
+    )
+    return redis.Redis(
+        connection_pool=pool
     )
 
 def redis_check_existing(full_path):
