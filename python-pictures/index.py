@@ -12,7 +12,7 @@ for root, subdirs, files in os.walk(directory):
     for file in files:
         if '.jpg'in file or '.png' in file or '.JPG' in file:
             full_path = root + '/' + file
-            print(file)
+            print(full_path)
 
             redis_data = redis_check_existing(full_path)
 
@@ -22,8 +22,13 @@ for root, subdirs, files in os.walk(directory):
                 # Show Image
                 # Image.open(redis_binary_file).show()
             else:
-                metadata = get_exif_data(full_path)
-                binary_file = open(full_path, 'rb').read()
+                add_binary_file = True
+
+                if add_binary_file:
+                    metadata = get_exif_data(full_path)
+                    binary_file = open(full_path, 'rb').read()
+                else:
+                    metadata = full_path
+                    binary_file = 'empty'
+
                 redis_set_data(full_path, metadata, binary_file)
-        else:
-            print('Extension:',file)
