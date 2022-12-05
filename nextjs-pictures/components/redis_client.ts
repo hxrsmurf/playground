@@ -11,5 +11,14 @@ export async function redis_album(album: any) {
   const redis_data = await client.hGet(album, 'files')
   client.disconnect()
   const json_data = JSON.parse(redis_data!)
+  if (json_data) return json_data
+  return null
+}
+
+export async function redis_get_all_albums() {
+  client.connect()
+  const redis_data = await client.KEYS('*')
+  client.disconnect()
+  const json_data = Object.values(redis_data).sort()
   return json_data
 }
