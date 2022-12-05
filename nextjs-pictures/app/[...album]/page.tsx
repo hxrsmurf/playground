@@ -1,8 +1,10 @@
 import { redis_album } from '../../components/redis_client'
 
 export default async function page({ params }: any) {
-  const album = decodeURI(params['album'][1])
-  const album_details = await redis_album(album)
+  const param_album = (params['album']).slice(1)
+  const join_album = param_album.join('/')
+  const decode_album = decodeURI(join_album)
+  const album_details = await redis_album(decode_album)
 
   return (
     <div className='flex justify-center mt-14'>
@@ -11,7 +13,7 @@ export default async function page({ params }: any) {
           <div>Album Not Found</div>
         ) : (
           <>
-            <div className='text-3xl font-bold mb-4'>{album}</div>
+            <div className='text-3xl font-bold mb-4'>{decode_album}</div>
             <div className='grid'>
               {Object.entries(album_details).map((album: any, id: any) => (
                 <div key={id} className='mt-4 text-white'>
