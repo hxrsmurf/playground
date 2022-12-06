@@ -10,45 +10,20 @@ export default async function page({ params }: any) {
   return (
     <div className='flex justify-center mt-14'>
       <div>
-        {!album_details ? (
-          <div>Album Not Found</div>
-        ) : (
-          <>
-            <div className='text-3xl font-bold mb-4'>{decode_album}</div>
-            <div className='grid'>
-              {Object.entries(album_details).map((album: any, id: any) => (
-                <div key={id} className='mt-4 text-white'>
-                  {album.map((image: any, id: any) => (
-                    <div key={id}>
-                      <div className='grid grid-cols-2'>
-                        {!image.file ? (
-                          <></>
-                        ) : (
-                          <>
-                            <div>
-                              <Image
-                                src={
-                                  process.env.CDN_URL +
-                                  image.folder +
-                                  '/' +
-                                  image.file
-                                }
-                                height={200}
-                                width={200}
-                                alt=''
-                                quality={25}
-                              />
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
+        <div className='text-3xl font-bold flex justify-center mb-6'>{decode_album}</div>
+        <div className='grid xl:grid-cols-8 md:grid-cols-5 sm:grid-cols-3 mx-10'>
+          {album_details.map((image: any, id: any) => (
+            <div className='m-4' key={id}>
+              <Image
+                src={process.env.CDN_URL + image.folder + '/' + image.file}
+                height={300}
+                width={300}
+                alt=''
+                quality={25}
+              />
             </div>
-          </>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   )
