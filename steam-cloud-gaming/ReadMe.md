@@ -7,3 +7,7 @@ The main game I am playing is Ready or Not. It took about an hour or so to downl
 
 ## Docs
 
+https://lg.io/2015/07/05/revised-and-much-faster-run-your-own-highend-cloud-gaming-service-on-ec2.html
+https://github.com/aws-samples/cloud-gaming-on-ec2-instances/blob/main/cdk/lib/base.ts
+https://medium.com/@bmatcuk/gaming-on-amazon-s-ec2-83b178f47a34
+https://aws.amazon.com/blogs/compute/use-amazon-ec2-for-cost-efficient-cloud-gaming-with-pay-as-you-go-pricing/
