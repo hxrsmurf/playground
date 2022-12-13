@@ -25,3 +25,7 @@ def upload_video(bunny_cdn_url, headers, guid, file):
     file_bytes = open(file,'rb')
     response = requests.put(video_url, headers=headers,data=file_bytes)
     return response.status_code
+
+def create_title(title):
+    split = title.split('[')[0]
+    return split
