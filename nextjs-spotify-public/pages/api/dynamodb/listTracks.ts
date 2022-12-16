@@ -19,18 +19,31 @@ export default async function handler(
   res: NextApiResponse
 ) {
   var data: any = []
+  const year: any = req.query.year
+  const current_year = new Date().getFullYear()
+  const current_month = new Date().getMonth() + 1
+  const current_year_month =
+    current_year.toString() + '-' + current_month.toString()
 
   await client.connect()
-  const redis_data = await client.get('tracks')
+  const redis_data = await client.get(year)
 
   if (!redis_data) {
     const db_data = await listTracks()
     data = db_data
-    await client.set('tracks', JSON.stringify(db_data))
+    await client.set(year, JSON.stringify(db_data))
     console.log('Getting data from db')
   } else {
     console.log('Getting data from redis')
     data = JSON.parse(redis_data)
+  }
+
+  if (year == current_year_month) {
+    const current_ttl = await client.TTL(year)
+    if (!current_ttl) {
+      await client.EXPIRE(year, Number(process.env.REDIS_EXPIRE_CURRENT_MONTH))
+      console.log('Expiring current month data')
+    }
   }
 
   await client.disconnect()
