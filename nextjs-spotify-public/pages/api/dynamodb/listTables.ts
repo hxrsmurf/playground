@@ -17,23 +17,21 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  var tables: any = []
+  var data: any = []
 
   await client.connect()
 
-  const redis_tables = await client.get('tables')
+  const redis_data = await client.get('tables')
 
-  if (!redis_tables) {
-    const db_tables = await listTables()
-    tables = db_tables
-    await client.set('tables', JSON.stringify(db_tables))
-    console.log('Received from database')
+  if (!redis_data) {
+    const db_data = await listTables()
+    data = db_data
+    await client.set('tables', JSON.stringify(db_data))
   } else {
-    console.log('Received from Redis')
-    tables = JSON.parse(redis_tables)
+    data = JSON.parse(redis_data)
   }
 
   await client.disconnect()
 
-  res.status(200).json({ tables: tables })
+  res.status(200).json({ tables: data })
 }
