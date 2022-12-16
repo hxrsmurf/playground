@@ -23,7 +23,7 @@ ChartJS.register(
   ChartDataLabels
 )
 
-export default function page() {
+export default function Page() {
   const router = useRouter()
   const { month } = router.query
   const [data, setData]: any = useState()
