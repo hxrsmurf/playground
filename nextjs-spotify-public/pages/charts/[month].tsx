@@ -28,6 +28,7 @@ export default function page() {
   const { month } = router.query
   const [data, setData]: any = useState()
   const [artists, setArtists]: any = useState()
+  const [tracks, setTracks]: any = useState()
 
   const options: any = {
     responsive: true,
@@ -60,6 +61,37 @@ export default function page() {
     },
   }
 
+  const track_options: any = {
+    responsive: true,
+    animation: {
+      delay: 500,
+    },
+    scales: {
+      y: {
+        color: 'white',
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Top 10 Tracks for ' + month,
+        color: 'white',
+        font: {
+          size: 24,
+        },
+      },
+      datalabels: {
+        formatter: function (value: any, context: any) {
+          const track_name = context.chart.data.labels[context.dataIndex]
+          return tracks[track_name]
+        },
+        align: 'top',
+        anchor: 'end',
+        color: 'white',
+      },
+    },
+  }
+
   useEffect(() => {
     if (data) return
 
@@ -68,11 +100,13 @@ export default function page() {
       .then((data) => {
         setData(data.data)
         setArtists(data.sorted_top_artists)
+        setTracks(data.top_tracks.top)
       })
   })
 
   if (!data) return <>Loading...</>
   if (!artists) return <>Loading...</>
+  if (!tracks) return <>Loading...</>
 
   const artist_labels = Object.keys(artists)
 
@@ -81,6 +115,7 @@ export default function page() {
     artist_labels,
     datasets: [
       {
+        axis: 'x',
         label: 'Play Count',
         data: artists,
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -88,10 +123,28 @@ export default function page() {
     ],
   }
 
+  const track_labels = Object.keys(tracks)
+
+  const track_data = {
+    track_labels,
+    datasets: [
+      {
+        label: 'Play Count',
+        data: tracks,
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  }
+
   return (
     <div className='flex justify-center mt-14'>
-      <div className='min-w-[2200px] min-h-full mt-14'>
-        <Bar options={options} data={chart_data} />
+      <div className='min-w-[1200px] min-h-full mt-24'>
+        <div className='mb-14'>
+          <Bar options={options} data={chart_data} />
+        </div>
+        <div>
+          <Bar options={track_options} data={track_data} />
+        </div>
       </div>
     </div>
   )

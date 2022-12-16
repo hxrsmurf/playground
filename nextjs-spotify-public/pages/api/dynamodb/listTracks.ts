@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createClient } from 'redis'
 import { listTracks } from '../../../components/dynamodb'
+import { getTopTracks } from '../../../components/getTop'
 
 const client = createClient({
   socket: {
@@ -59,5 +60,11 @@ export default async function handler(
       .slice(0, 10)
   )
 
-  res.status(200).json({ data, unique_artists, sorted_top_artists })
+  const top_tracks = getTopTracks(data)
+  res.status(200).json({
+    data,
+    unique_artists,
+    sorted_top_artists,
+    top_tracks,
+  })
 }
