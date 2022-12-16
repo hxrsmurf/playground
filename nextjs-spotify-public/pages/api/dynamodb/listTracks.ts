@@ -29,7 +29,7 @@ export default async function handler(
   const redis_data = await client.get(year)
 
   if (!redis_data) {
-    const db_data = await listTracks()
+    const db_data = await listTracks(year)
     data = db_data
     await client.set(year, JSON.stringify(db_data))
     console.log('Getting data from db')

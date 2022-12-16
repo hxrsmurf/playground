@@ -95,7 +95,7 @@ export default function Page() {
   useEffect(() => {
     if (data) return
 
-    fetch('/api/dynamodb/listTracks')
+    fetch('/api/dynamodb/listTracks?year=' + month)
       .then((res) => res.json())
       .then((data) => {
         setData(data.data)

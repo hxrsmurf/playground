@@ -13,14 +13,23 @@ export async function listTables() {
   return tables['TableNames']
 }
 
-export async function listTracks() {
+export async function listTracks(year: any) {
+  var query_year = undefined
+  const input_year = year
+
+  if (year.length !== 7) {
+    query_year = '2022-12'
+  } else {
+    query_year = year
+  }
+
   var params: DynamoDB.QueryInput = {
     TableName: process.env.TABLE!,
     IndexName: process.env.TABLE_INDEX,
     KeyConditionExpression: 'year_month = :q',
     ExpressionAttributeValues: {
       ':q': {
-        S: '2022-12',
+        S: query_year,
       },
     },
   }
