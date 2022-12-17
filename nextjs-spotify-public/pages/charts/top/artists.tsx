@@ -21,7 +21,7 @@ ChartJS.register(
   ChartDataLabels
 )
 
-export default function ChartArtists(data: any, year_month: any) {
+export default function ChartArtists(data: any, year_month: any, type: string) {
   const labels = Object.keys(data.data)
 
   // https://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
@@ -53,7 +53,7 @@ export default function ChartArtists(data: any, year_month: any) {
     plugins: {
       title: {
         display: true,
-        text: 'Top 10 Artists - ' + data.year_month ,
+        text: 'Top 10 ' + data.type + ' - ' + data.year_month,
         color: 'white',
         font: {
           size: 24,

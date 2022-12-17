@@ -1,5 +1,7 @@
 export function top_artists(tracks: any) {
   let play_count: any = {}
+  let track_play_count: any = {}
+  let track_name: any = {}
 
   tracks.forEach((element: any) => {
     const song_id = element['songID']['S']
@@ -16,8 +18,13 @@ export function top_artists(tracks: any) {
       repeat = element['possibleDuplicate']['BOOL']
     }
 
+    if (!track_name[song_id]) {
+      track_name[song_id] = song
+    }
+
     if (!repeat) {
       play_count[artist] = play_count[artist] + 1 || 1
+      track_play_count[song_id] = track_play_count[song_id] + 1 || 1
     }
   })
 
@@ -27,5 +34,21 @@ export function top_artists(tracks: any) {
       .slice(0, 10)
   )
 
-  return artists
+  const trackss = Object.fromEntries(
+    Object.entries(track_play_count)
+      .sort(([, a]: any, [, b]: any) => b - a)
+      .slice(0, 10)
+  )
+
+  const output_tracks: any = {}
+
+  Object.entries(trackss).map((track:any , id: any)=>{
+    const track_id = track[0]
+    const play_count = track[1]
+    const name = track_name[track_id]
+    console.log(name, play_count)
+    output_tracks[name] = play_count
+  })
+
+  return { artists, output_tracks }
 }

@@ -20,6 +20,7 @@ export default function YearMonth(props: any) {
 
   const year_month_tracks = props.year_month_tracks
   const top_artists = props.artists
+  const top_tracks = props.tracks
 
   if (!year_month_tracks) return <>Invalid Page</>
 
@@ -31,24 +32,30 @@ export default function YearMonth(props: any) {
             <TopHeader type='Artists' year_month={year_month} />
             {Object.keys(top_artists).map((artist: string, id) => (
               <div key={id} className='grid grid-flow-col'>
-                <div className='min-w-[150px]'>{artist}</div>
+                <div className='min-w-[250px]'>{artist}</div>
                 <div>{top_artists[artist]}</div>
               </div>
             ))}
           </div>
           <div className='pl-6'>
             <TopHeader type='Tracks' year_month={year_month} />
+            {Object.keys(top_tracks).map((track: string, id) => (
+              <div key={id} className='grid grid-flow-col'>
+                <div className='min-w-[250px]'>{track}</div>
+                <div>{top_tracks[track]}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       <div className='flex justify-center mt-14 min-w-[800px]'>
         <div className='grid grid-flow-col space-x-4'>
-          <div className='min-w-[700px]'>
-            <ChartArtists data={top_artists} year_month={year_month} />
+          <div className='min-w-[1000px]'>
+            <ChartArtists data={top_artists} year_month={year_month} type='Artists'/>
           </div>
-          <div className='min-w-[700px]'>
-            <ChartArtists data={top_artists} year_month={year_month} />
+          <div className='min-w-[1000px]'>
+            <ChartArtists data={top_tracks} year_month={year_month} type='Tracks'/>
           </div>
         </div>
       </div>
@@ -84,9 +91,10 @@ export async function getServerSideProps(context: any) {
     console.log('Using Redis')
   }
 
-  const artists = top_artists(year_month_tracks)
+  const artists = top_artists(year_month_tracks).artists
+  const tracks = top_artists(year_month_tracks).output_tracks
 
   return {
-    props: { year_month, year_month_tracks, artists }, // will be passed to the page component as props
+    props: { year_month, year_month_tracks, artists, tracks }, // will be passed to the page component as props
   }
 }
