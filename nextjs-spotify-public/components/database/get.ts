@@ -5,7 +5,6 @@ export async function redis_get_tracks(year_month: any) {
   client.connect()
 
   const data = await client.get(year_month).then((d: any)=>{
-    console.log('then statement')
     return d
   }).catch((error)=>{
     console.log(error)
