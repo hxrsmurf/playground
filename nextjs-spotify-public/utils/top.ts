@@ -1,7 +1,10 @@
+import { stringify } from 'querystring'
+
 export function top_artists(tracks: any) {
   let play_count: any = {}
   let track_play_count: any = {}
   let track_name: any = {}
+  let device_play_count: any = {}
 
   tracks.forEach((element: any) => {
     const song_id = element['songID']['S']
@@ -34,6 +37,10 @@ export function top_artists(tracks: any) {
     if (!repeat) {
       play_count[artist] = play_count[artist] + 1 || 1
       track_play_count[song_id] = track_play_count[song_id] + 1 || 1
+
+      if (device) {
+        device_play_count[device] = device_play_count[device] + 1 || 1
+      }
     }
   })
 
@@ -58,5 +65,33 @@ export function top_artists(tracks: any) {
     output_tracks[name] = play_count
   })
 
-  return { artists, output_tracks }
+  // Device Play Count
+
+  const devicess = Object.fromEntries(
+    Object.entries(device_play_count)
+      .sort(([, a]: any, [, b]: any) => b - a)
+      .slice(0, 3)
+  )
+
+  const output_devices: any = {}
+
+  Object.entries(devicess).map((device: any) => {
+    let new_device_name = String(device[0]).trim()
+
+    if (new_device_name == process.env.DEVICE_DESKTOP) {
+      new_device_name = 'Desktop'
+    } else if (new_device_name == process.env.DEVICE_LAPTOP) {
+      new_device_name = 'Laptop'
+    } else if (new_device_name == process.env.DEVICE_SAMSUNG) {
+      new_device_name = 'Samsung'
+    } else if (new_device_name == process.env.DEVICE_PIXEL) {
+      new_device_name = 'Pixel'
+    } else if (new_device_name == process.env.DEVICE_TABLET) {
+      new_device_name = 'Tablet'
+    }
+
+    output_devices[new_device_name] = device[1]
+  })
+
+  return { artists, output_tracks, output_devices }
 }

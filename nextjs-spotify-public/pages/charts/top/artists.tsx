@@ -7,7 +7,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import { Bar } from 'react-chartjs-2'
+
+import 'chart.js/auto'
+import { Bar, Pie } from 'react-chartjs-2'
 
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
@@ -30,6 +32,15 @@ export default function ChartArtists(data: any) {
     return <></>
   }
 
+  const data_type = data.type
+  let color_data_labels = 'white'
+  let background_color_data_labels: any = 'rgba(255, 99, 132, 0.5)'
+
+  if (data_type == 'Devices') {
+    color_data_labels = 'black'
+    background_color_data_labels = null
+  }
+
   // https://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
   const chart_data = {
     labels,
@@ -40,7 +51,7 @@ export default function ChartArtists(data: any) {
         data: Object.values(data.data).map((key: any) => {
           return key
         }),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: background_color_data_labels,
       },
     ],
   }
@@ -66,9 +77,13 @@ export default function ChartArtists(data: any) {
         },
       },
       datalabels: {
-        color: 'white',
+        color: color_data_labels,
       },
     },
+  }
+
+  if (data.type == 'Devices') {
+    return <Pie options={options} data={chart_data} />
   }
 
   return <Bar options={options} data={chart_data} />

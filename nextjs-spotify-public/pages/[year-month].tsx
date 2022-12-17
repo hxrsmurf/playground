@@ -20,6 +20,7 @@ export default function YearMonth(props: any) {
   const year_month_tracks = props.year_month_tracks
   const top_artists = props.artists
   const top_tracks = props.tracks
+  const top_devices = props.devices
 
   if (!year_month_tracks) return <>Invalid Page</>
 
@@ -27,6 +28,7 @@ export default function YearMonth(props: any) {
     <>
       <div className='flex justify-center mt-8 min-w-[800px]'>
         <div className='grid grid-flow-col divide-x-2 gap-6'>
+          {/* Artists */}
           <div>
             <TopHeader type='Artists' year_month={year_month} />
             {Object.keys(top_artists).map((artist: string, id) => (
@@ -36,12 +38,29 @@ export default function YearMonth(props: any) {
               </div>
             ))}
           </div>
+
+          {/* Tracks */}
           <div className='pl-6'>
             <TopHeader type='Tracks' year_month={year_month} />
             {Object.keys(top_tracks).map((track: string, id) => (
               <div key={id} className='grid grid-flow-col space-x-4'>
-                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>{track}</div>
+                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>
+                  {track}
+                </div>
                 <div>{top_tracks[track]}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Devices */}
+          <div className='pl-6'>
+            <TopHeader type='Devices' year_month={year_month} />
+            {Object.keys(top_devices).map((device: string, id) => (
+              <div key={id} className='grid grid-flow-col space-x-4'>
+                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>
+                  {device}
+                </div>
+                <div>{top_devices[device]}</div>
               </div>
             ))}
           </div>
@@ -49,12 +68,27 @@ export default function YearMonth(props: any) {
       </div>
 
       <div className='flex justify-center mt-14 min-w-[800px]'>
-        <div className='grid grid-flow-col space-x-4'>
-          <div className='min-w-[1000px]'>
-            <ChartArtists data={top_artists} year_month={year_month} type='Artists'/>
+        <div className='grid grid-flow-col space-x-4 col-span-2'>
+          <div className='min-w-[700px]'>
+            <ChartArtists
+              data={top_artists}
+              year_month={year_month}
+              type='Artists'
+            />
           </div>
-          <div className='min-w-[1000px]'>
-            <ChartArtists data={top_tracks} year_month={year_month} type='Tracks'/>
+          <div className='min-w-[700px]'>
+            <ChartArtists
+              data={top_tracks}
+              year_month={year_month}
+              type='Tracks'
+            />
+          </div>
+          <div className='min-w-[700px] max-h-[400px]'>
+            <ChartArtists
+              data={top_devices}
+              year_month={year_month}
+              type='Devices'
+            />
           </div>
         </div>
       </div>
@@ -109,8 +143,9 @@ export async function getStaticProps(context: any) {
 
   const artists = top_artists(year_month_tracks).artists
   const tracks = top_artists(year_month_tracks).output_tracks
+  const devices = top_artists(year_month_tracks).output_devices
 
   return {
-    props: { year_month, year_month_tracks, artists, tracks }, // will be passed to the page component as props
+    props: { year_month, year_month_tracks, artists, tracks, devices }, // will be passed to the page component as props
   }
 }
