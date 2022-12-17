@@ -4,6 +4,7 @@ import {
 } from '../components/database/get'
 import { redis_update_tracks } from '../components/database/update'
 import { top_artists } from '../utils/top'
+import ChartArtists from './charts/top/artists'
 
 export default function YearMonth(props: any) {
   const year_month = props.year_month
@@ -13,21 +14,28 @@ export default function YearMonth(props: any) {
   if (!year_month_tracks) return <>Invalid Page</>
 
   return (
-    <div className='flex justify-center mt-14'>
-      <div className='grid grid-flow-row'>
-        <div>Top 10 Artists - {year_month}</div>
-        <div className='grid grid-flow-col my-4 font-bold'>
-          <div className='min-w-[150px]'>Artist</div>
-          <div>Count</div>
-        </div>
-        {Object.keys(top_artists).map((artist: string, id) => (
-          <div key={id} className='grid grid-flow-col'>
-            <div className='min-w-[150px]'>{artist}</div>
-            <div>{top_artists[artist]}</div>
+    <>
+      <div className='flex justify-center mt-14'>
+        <div className='grid grid-flow-row'>
+          <div>Top 10 Artists - {year_month}</div>
+          <div className='grid grid-flow-col my-4 font-bold'>
+            <div className='min-w-[150px]'>Artist</div>
+            <div>Count</div>
           </div>
-        ))}
+          {Object.keys(top_artists).map((artist: string, id) => (
+            <div key={id} className='grid grid-flow-col'>
+              <div className='min-w-[150px]'>{artist}</div>
+              <div>{top_artists[artist]}</div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      <div className='flex justify-center mt-14'>
+        <div className='min-h-[1200px] min-w-[1500px]'>
+          <ChartArtists data={top_artists} />
+        </div>
+      </div>
+    </>
   )
 }
 
