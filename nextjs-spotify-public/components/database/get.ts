@@ -3,8 +3,17 @@ import { dynamodb, redis } from '../../lib/database'
 export async function redis_get_tracks(year_month: any) {
   const client = redis()
   client.connect()
-  const data = await client.get(year_month)
+
+  const data = await client.get(year_month).then((d: any)=>{
+    console.log('then statement')
+    return d
+  }).catch((error)=>{
+    console.log(error)
+    return false
+  })
+
   if (!data) return data
+
   return JSON.parse(data)
 }
 
