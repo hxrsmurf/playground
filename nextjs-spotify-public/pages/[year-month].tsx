@@ -14,7 +14,6 @@ export default function YearMonth(props: any) {
   const available_months = available_dates().months
 
   if (!available_months.includes(year_month)) {
-    console.log(year_month)
     return <MonthNotAvailable month={year_month} />
   }
 

@@ -46,7 +46,6 @@ export function top_artists(tracks: any) {
     const track_id = track[0]
     const play_count = track[1]
     const name = track_name[track_id]
-    console.log(name, play_count)
     output_tracks[name] = play_count
   })
 
