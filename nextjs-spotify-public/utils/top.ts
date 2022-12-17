@@ -6,12 +6,21 @@ export function top_artists(tracks: any) {
   tracks.forEach((element: any) => {
     const song_id = element['songID']['S']
     const song = element['song']['S']
-    const album = element['album']['S']
     const artist = element['artist']['S']
-    const device = element['device']['S']
 
-    // Previous months may not have possibleDuplicate field
-    let repeat = undefined
+    // Previous months may not have some fields
+    let album = null
+
+    if ('album' in element) {
+      album = element['album']['S']
+    }
+
+    let device = null
+    if ('device' in element) {
+      device = element['device']['S']
+    }
+
+    let repeat = null
     if (!('possibleDuplicate' in element)) {
       repeat = false
     } else {
@@ -42,7 +51,7 @@ export function top_artists(tracks: any) {
 
   const output_tracks: any = {}
 
-  Object.entries(trackss).map((track:any , id: any)=>{
+  Object.entries(trackss).map((track: any, id: any) => {
     const track_id = track[0]
     const play_count = track[1]
     const name = track_name[track_id]
