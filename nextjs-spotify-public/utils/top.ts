@@ -7,8 +7,14 @@ export function top_artists(tracks: any) {
     const album = element['album']['S']
     const artist = element['artist']['S']
     const device = element['device']['S']
-    var repeat: any =
-      repeat == undefined ? false : element['possibleDuplicate']['BOOL']
+
+    // Previous months may not have possibleDuplicate field
+    let repeat = undefined
+    if (!('possibleDuplicate' in element)) {
+      repeat = false
+    } else {
+      repeat = element['possibleDuplicate']['BOOL']
+    }
 
     if (!repeat) {
       play_count[artist] = play_count[artist] + 1 || 1
