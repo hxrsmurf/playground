@@ -22,7 +22,13 @@ ChartJS.register(
 )
 
 export default function ChartArtists(data: any) {
-  const labels = Object.keys(data.data)
+  let labels = null
+
+  if (data.data) {
+    labels = Object.keys(data.data)
+  } else {
+    return <></>
+  }
 
   // https://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
   const chart_data = {

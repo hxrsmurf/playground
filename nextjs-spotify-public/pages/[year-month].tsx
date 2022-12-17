@@ -62,8 +62,25 @@ export default function YearMonth(props: any) {
   )
 }
 
-export async function getServerSideProps(context: any) {
-  const year_month = context.query['year-month']
+export async function getStaticPaths() {
+  const available_months = available_dates().months
+
+  const paths = available_months.map((month: any) => ({
+    params: {
+      'year-month': month,
+    },
+  }))
+
+  return {
+    paths,
+    fallback: false, // can also be true or 'blocking'
+  }
+}
+
+export async function getStaticProps(context: any) {
+  const year_month = context.params['year-month']
+  // getServerSideProps
+  // const year_month = context.query['year-month']
 
   // Catch if someone inputs the wrong date
   if (year_month.length != 7) {
@@ -74,7 +91,7 @@ export async function getServerSideProps(context: any) {
     }
   }
 
-  let year_month_tracks = undefined
+  let year_month_tracks = null
 
   year_month_tracks = await redis_get_tracks(year_month)
 
