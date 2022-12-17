@@ -21,7 +21,7 @@ ChartJS.register(
   ChartDataLabels
 )
 
-export default function ChartArtists(data: any, year_month: any, type: string) {
+export default function ChartArtists(data: any) {
   const labels = Object.keys(data.data)
 
   // https://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
