@@ -14,7 +14,7 @@ export async function listTables() {
 }
 
 export async function listTracks(year: any) {
-  var query_year = undefined
+  var query_year = null
   const input_year = year
 
   if (year.length !== 7) {
@@ -37,7 +37,7 @@ export async function listTracks(year: any) {
   // https://aws.amazon.com/blogs/developer/pagination-using-async-iterators-in-modular-aws-sdk-for-javascript/
 
   let hasNext = true
-  let LastKey = undefined
+  let LastKey = null
 
   const tracks: any = []
 

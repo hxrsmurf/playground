@@ -16,7 +16,7 @@ export async function dynamodb_get_tracks(year_month: any) {
   const params = database.params
 
   let hasNext = true
-  let LastEvaluatedKey = undefined
+  let LastEvaluatedKey = null
   let tracks: any = []
 
   while (hasNext) {
