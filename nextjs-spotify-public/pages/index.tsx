@@ -5,3 +5,11 @@ export default function Home() {
     </div>
   )
 }
+
+export async function getServerSideProps() {
+  return {
+    redirect: {
+      destination: process.env.LATEST_MONTH,
+    },
+  }
+}
