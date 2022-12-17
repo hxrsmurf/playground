@@ -39,8 +39,8 @@ export default function YearMonth(props: any) {
           <div className='pl-6'>
             <TopHeader type='Tracks' year_month={year_month} />
             {Object.keys(top_tracks).map((track: string, id) => (
-              <div key={id} className='grid grid-flow-col'>
-                <div className='min-w-[250px]'>{track}</div>
+              <div key={id} className='grid grid-flow-col space-x-4'>
+                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>{track}</div>
                 <div>{top_tracks[track]}</div>
               </div>
             ))}
