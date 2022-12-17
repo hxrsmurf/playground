@@ -21,7 +21,7 @@ ChartJS.register(
   ChartDataLabels
 )
 
-export default function ChartArtists(data: any) {
+export default function ChartArtists(data: any, year_month: any) {
   const labels = Object.keys(data.data)
 
   // https://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
@@ -29,9 +29,11 @@ export default function ChartArtists(data: any) {
     labels,
     datasets: [
       {
-        axis: 'x',
+        axis: 'y',
         label: 'Play Count',
-        data: data.data,
+        data: Object.values(data.data).map((key: any) => {
+          return key
+        }),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
@@ -40,29 +42,24 @@ export default function ChartArtists(data: any) {
   const options: any = {
     responsive: true,
     animation: {
-      delay: 500,
+      delay: 300,
     },
     scales: {
-      y: {
+      x: {
         color: 'white',
       },
     },
+    indexAxis: 'y',
     plugins: {
       title: {
-        display: false,
-        text: 'Top 10 Artists',
+        display: true,
+        text: 'Top 10 Artists - ' + data.year_month ,
         color: 'white',
         font: {
           size: 24,
         },
       },
       datalabels: {
-        formatter: function (value: any, context: any) {
-          const artist_name = context.chart.data.labels[context.dataIndex]
-          return data.data[artist_name]
-        },
-        align: 'top',
-        anchor: 'end',
         color: 'white',
       },
     },

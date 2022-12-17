@@ -32,7 +32,7 @@ export default function YearMonth(props: any) {
       </div>
       <div className='flex justify-center mt-14'>
         <div className='min-h-[1200px] min-w-[1500px]'>
-          <ChartArtists data={top_artists} />
+          <ChartArtists data={top_artists} year_month={year_month}/>
         </div>
       </div>
     </>
