@@ -4,6 +4,7 @@ import {
 } from '../components/database/get'
 import { redis_update_tracks } from '../components/database/update'
 import MonthNotAvailable from '../components/MonthNotAvailable'
+import TopHeader from '../components/TopHeader'
 import { available_dates } from '../utils/dates'
 import { top_artists } from '../utils/top'
 import ChartArtists from './charts/top/artists'
@@ -24,24 +25,31 @@ export default function YearMonth(props: any) {
 
   return (
     <>
-      <div className='flex justify-center mt-14'>
-        <div className='grid grid-flow-row'>
-          <div>Top 10 Artists - {year_month}</div>
-          <div className='grid grid-flow-col my-4 font-bold'>
-            <div className='min-w-[150px]'>Artist</div>
-            <div>Count</div>
+      <div className='flex justify-center mt-8 min-w-[800px]'>
+        <div className='grid grid-flow-col divide-x-2 gap-6'>
+          <div>
+            <TopHeader type='Artists' year_month={year_month} />
+            {Object.keys(top_artists).map((artist: string, id) => (
+              <div key={id} className='grid grid-flow-col'>
+                <div className='min-w-[150px]'>{artist}</div>
+                <div>{top_artists[artist]}</div>
+              </div>
+            ))}
           </div>
-          {Object.keys(top_artists).map((artist: string, id) => (
-            <div key={id} className='grid grid-flow-col'>
-              <div className='min-w-[150px]'>{artist}</div>
-              <div>{top_artists[artist]}</div>
-            </div>
-          ))}
+          <div className='pl-6'>
+            <TopHeader type='Tracks' year_month={year_month} />
+          </div>
         </div>
       </div>
-      <div className='flex justify-center mt-14'>
-        <div className='min-h-[1200px] min-w-[1500px]'>
-          <ChartArtists data={top_artists} year_month={year_month} />
+
+      <div className='flex justify-center mt-14 min-w-[800px]'>
+        <div className='grid grid-flow-col space-x-4'>
+          <div className='min-w-[700px]'>
+            <ChartArtists data={top_artists} year_month={year_month} />
+          </div>
+          <div className='min-w-[700px]'>
+            <ChartArtists data={top_artists} year_month={year_month} />
+          </div>
         </div>
       </div>
     </>
