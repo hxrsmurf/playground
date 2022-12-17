@@ -2,7 +2,7 @@ import Link from "next/link"
 import { available_dates } from "../utils/dates"
 
 export default function Navigation() {
-  const months = available_dates()
+  const months = available_dates().months
 
   return (
     <div className='flex justify-center mt-4'>
