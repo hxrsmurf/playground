@@ -4,7 +4,7 @@ const nextConfig = {
   experimental: {
     largePageDataBytes: 8750000,
   },
-  staticPageGenerationTimeout: 300
+  staticPageGenerationTimeout: 60
 }
 
 module.exports = nextConfig
