@@ -70,7 +70,7 @@ export function top_artists(tracks: any) {
   const devicess = Object.fromEntries(
     Object.entries(device_play_count)
       .sort(([, a]: any, [, b]: any) => b - a)
-      .slice(0, 3)
+      .slice(0, 4)
   )
 
   const output_devices: any = {}

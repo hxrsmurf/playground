@@ -9,7 +9,7 @@ export default function Home() {
 export async function getServerSideProps() {
   return {
     redirect: {
-      destination: process.env.LATEST_MONTH,
+      destination: process.env.LATEST_YEAR,
     },
   }
 }
