@@ -24,8 +24,12 @@ def on_press(key):
     write(log)
     logging.info(log)
 
+def on_release(key):
+    if key == keyboard.Key.esc:
+        return False
+
 # Collect events until released
-keyboard_listener = keyboard.Listener(on_press=on_press)
+keyboard_listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 
 with mouse.Listener(on_click=on_click) as listener:
     keyboard_listener.start()
