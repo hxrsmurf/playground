@@ -22,7 +22,7 @@ def on_click(x, y, button, pressed):
 
 # Keyboard
 def on_press(key):
-    desired_keys = ['r', 'z']
+    desired_keys = ['r', 'z', 'f', 'q', 'e', 'c']
     desired_key_pressed = any(k in str(key) for k in desired_keys)
     if desired_key_pressed:
         log = f'{key}'
