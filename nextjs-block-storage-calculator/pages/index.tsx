@@ -8,7 +8,7 @@ import OVH from "../components/ovh";
 
 export default function Home() {
   return (
-    <div className='flex justify-center mt-8 mb-24'>
+    <div className='flex justify-center mt-16 mb-24'>
       <div className="min-w-[800px]">
         <div className="mb-24">
           <Calculator/>
