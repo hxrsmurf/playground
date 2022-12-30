@@ -20,7 +20,7 @@ const pricing_info = [
 export default function Backblaze() {
   return (
     <div>
-      <div>
+      <div className='font-bold text-4xl'>
         <Link
           href={
             'https://help.backblaze.com/hc/en-us/articles/360037814594-B2-Pricing'

@@ -60,7 +60,7 @@ const pricing_stream = [
 export default function BunnyCDN() {
   return (
     <div>
-      <div>
+      <div className='font-bold text-4xl'>
         <Link href={'https://bunny.net/pricing/'}>Bunny CDN Pricing</Link>
       </div>
 
