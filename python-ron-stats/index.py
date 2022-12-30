@@ -13,16 +13,21 @@ def write(log):
     file.write('\n')
     file.write(f'{timestamp} - {log}')
 
+# Mouse
 def on_click(x, y, button, pressed):
     if pressed:
         log = f'{x}, {y}, {button}'
         write(log)
         logging.info(log)
 
+# Keyboard
 def on_press(key):
-    log = f'{key}'
-    write(log)
-    logging.info(log)
+    desired_keys = ['r', 'z']
+    desired_key_pressed = any(k in str(key) for k in desired_keys)
+    if desired_key_pressed:
+        log = f'{key}'
+        write(log)
+        logging.info(log)
 
 def on_release(key):
     if key == keyboard.Key.esc:
