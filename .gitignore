@@ -113,3 +113,9 @@ nextjs-template
 
 #AWS SAM
 **/.aws-sam/
+
+# ffmpeg
+aws-python-lambda-layers/ffmpeg/ffmpeg
+aws-python-lambda-layers/ffmpeg/ffprobe
+aws-python-lambda-layers/ffmpeg-bin/
+*.tar.xz
