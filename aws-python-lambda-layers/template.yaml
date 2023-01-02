@@ -2,6 +2,11 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: Python Lambda Layers
 
+Parameters:
+  PythonVersion:
+    Type: String
+    Default: python3.9
+
 Outputs:
   ytdlp:
     Value: !Ref ytdlp
@@ -25,18 +30,18 @@ Resources:
     Properties:
       ContentUri: yt-dlp
       CompatibleRuntimes:
-        - python3.9
+        - !Ref PythonVersion
       Description: YouTube-DLP (Python)
       LayerName: yt-dlp
     Metadata:
-      BuildMethod: python3.9
+      BuildMethod: !Ref PythonVersion
 
   requests:
     Type: AWS::Serverless::LayerVersion
     Properties:
       ContentUri: requests
       CompatibleRuntimes:
-        - python3.9
+        - !Ref PythonVersion
       Description: requests (python)
       LayerName: requests
     Metadata:
@@ -46,8 +51,8 @@ Resources:
     Properties:
       ContentUri: ffmpeg
       CompatibleRuntimes:
-        - python3.9
+        - !Ref PythonVersion
       Description: ffmpeg (python)
       LayerName: ffmpeg
     Metadata:
-      BuildMethod: python3.9
+      BuildMethod: !Ref PythonVersion
