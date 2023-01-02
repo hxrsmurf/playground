@@ -110,3 +110,6 @@ nextjs-photos
 nextjs-redis
 nextjs-spotify
 nextjs-template
+
+#AWS SAM
+**/.aws-sam/
