@@ -11,3 +11,14 @@ Resources:
       LayerName: yt-dlp
     Metadata:
       BuildMethod: python3.9
+
+  requests:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: requests
+      CompatibleRuntimes:
+        - python3.9
+      Description: requests (python)
+      LayerName: requests
+    Metadata:
+      BuildMethod: python3.9
