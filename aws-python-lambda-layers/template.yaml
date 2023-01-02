@@ -1,0 +1,13 @@
+Transform: AWS::Serverless-2016-10-31
+Description: Python Lambda Layers
+Resources:
+  ytdlp:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: yt-dlp
+      CompatibleRuntimes:
+        - python3.9
+      Description: YouTube-DLP (Python)
+      LayerName: yt-dlp
+    Metadata:
+      BuildMethod: python3.9
