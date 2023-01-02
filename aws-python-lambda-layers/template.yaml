@@ -1,0 +1,61 @@
+Transform: AWS::Serverless-2016-10-31
+
+Description: Python Lambda Layers
+
+Parameters:
+  PythonVersion:
+    Type: String
+    Default: python3.9
+
+Outputs:
+  ytdlp:
+    Value: !Ref ytdlp
+    Description: python lambda layer for ytdlp
+    Export:
+      Name: !Sub ${AWS::StackName}-ytdlp
+  requests:
+    Value: !Ref requests
+    Description: python lambda layer for requests
+    Export:
+      Name: !Sub ${AWS::StackName}-requests
+  ffmpeg:
+    Value: !Ref ffmpeg
+    Description: python lambda layer for ffmpeg
+    Export:
+      Name: !Sub ${AWS::StackName}-ffmpeg
+  LayersUrl:
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/lambda/home?region=${AWS::Region}#/layers
+    Description: Url to Lambda Layers
+
+Resources:
+  ytdlp:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: yt-dlp
+      CompatibleRuntimes:
+        - !Ref PythonVersion
+      Description: YouTube-DLP (Python)
+      LayerName: yt-dlp
+    Metadata:
+      BuildMethod: !Ref PythonVersion
+
+  requests:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: requests
+      CompatibleRuntimes:
+        - !Ref PythonVersion
+      Description: requests (python)
+      LayerName: requests
+    Metadata:
+
+  ffmpeg:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: ffmpeg
+      CompatibleRuntimes:
+        - !Ref PythonVersion
+      Description: ffmpeg (python)
+      LayerName: ffmpeg
+    Metadata:
+      BuildMethod: !Ref PythonVersion
