@@ -1,5 +1,24 @@
 Transform: AWS::Serverless-2016-10-31
+
 Description: Python Lambda Layers
+
+Outputs:
+  ytdlp:
+    Value: !Ref ytdlp
+    Description: python lambda layer for ytdlp
+    Export:
+      Name: !Sub ${AWS::StackName}-ytdlp
+  requests:
+    Value: !Ref requests
+    Description: python lambda layer for requests
+    Export:
+      Name: !Sub ${AWS::StackName}-requests
+  ffmpeg:
+    Value: !Ref ffmpeg
+    Description: python lambda layer for ffmpeg
+    Export:
+      Name: !Sub ${AWS::StackName}-ffmpeg
+
 Resources:
   ytdlp:
     Type: AWS::Serverless::LayerVersion
