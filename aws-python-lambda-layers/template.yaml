@@ -21,4 +21,14 @@ Resources:
       Description: requests (python)
       LayerName: requests
     Metadata:
+
+  ffmpeg:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: ffmpeg
+      CompatibleRuntimes:
+        - python3.9
+      Description: ffmpeg (python)
+      LayerName: ffmpeg
+    Metadata:
       BuildMethod: python3.9
