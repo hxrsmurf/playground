@@ -23,6 +23,9 @@ Outputs:
     Description: python lambda layer for ffmpeg
     Export:
       Name: !Sub ${AWS::StackName}-ffmpeg
+  LayersUrl:
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/lambda/home?region=${AWS::Region}#/layers
+    Description: Url to Lambda Layers
 
 Resources:
   ytdlp:
