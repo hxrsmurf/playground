@@ -1,0 +1,9 @@
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass blah
+  nextjs:
+    build:
+      context: .
+    ports:
+      - 3000:3000

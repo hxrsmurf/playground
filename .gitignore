@@ -115,6 +115,7 @@ nextjs-photos
 nextjs-redis
 nextjs-spotify
 nextjs-template
+nextjs-spotify-public/docker-compose.yaml
 python-pictures/functions/__pycache__/
 python-pictures/docker-compose.yaml
 nextjs-pictures
