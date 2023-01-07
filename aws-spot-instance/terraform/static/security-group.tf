@@ -31,9 +31,9 @@ resource "aws_security_group" "security-group" {
             to_port          = 22
         },
     ]
-    name        = "aws-spot-instance-SecurityGroup"
+    name        = "aws-spot-instance"
     tags        = {
-        Name = "aws-spot-instance-SecurityGroup"
+        Name = "aws-spot-instance"
     }
-    vpc_id      = aws_vpc.vpc.id
+    vpc_id      = var.vpc-id
 }
