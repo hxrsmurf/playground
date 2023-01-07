@@ -129,8 +129,12 @@ python-bunnycdn/functions/__pycache__/
 python-bunnycdn/functions/config.py
 *.webm
 
-#AWS SAM
+# AWS SAM
 **/.aws-sam/
+
+# Terraform
+**/.terraform/
+variables-private.tf
 
 # ffmpeg
 aws-python-lambda-layers/ffmpeg/ffmpeg
