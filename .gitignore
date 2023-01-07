@@ -111,8 +111,12 @@ nextjs-redis
 nextjs-spotify
 nextjs-template
 
-#AWS SAM
+# AWS SAM
 **/.aws-sam/
+
+# Terraform
+**/.terraform/
+variables-private.tf
 
 # ffmpeg
 aws-python-lambda-layers/ffmpeg/ffmpeg
