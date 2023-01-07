@@ -48,6 +48,7 @@ Resources:
       Description: requests (python)
       LayerName: requests
     Metadata:
+      BuildMethod: !Ref PythonVersion
 
   ffmpeg:
     Type: AWS::Serverless::LayerVersion
