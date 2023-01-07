@@ -109,3 +109,26 @@ nextjs-password
 nextjs-photos
 nextjs-spotify
 nextjs-template
+nextjs-integration-testing
+nextjs-password
+nextjs-photos
+nextjs-redis
+nextjs-spotify
+nextjs-template
+nextjs-pictures
+python-pictures
+python-bunnycdn/functions/__pycache__/
+python-bunnycdn/functions/config.py
+*.webm
+
+#AWS SAM
+**/.aws-sam/
+
+# ffmpeg
+aws-python-lambda-layers/ffmpeg/ffmpeg
+aws-python-lambda-layers/ffmpeg/ffprobe
+aws-python-lambda-layers/ffmpeg-bin/
+
+# Terraform
+**/.terraform/
+variables-private.tf
