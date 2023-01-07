@@ -1,0 +1,84 @@
+Description: EC2 Launch Template for nextjs-block-storage-calculator
+
+Parameters:
+  AMI:
+    Type: String
+    Default: ami-050406429a71aaa64 # Debian
+  InstanceType:
+    Type: String
+    Default: t2.micro
+  KeyPair:
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: nvme-virginia
+  Name:
+    Type: String
+    Default: nextjs-block-storage-calculator
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+    Default: sg-021f7ad75c4a4f4d0
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Default: subnet-04dcef0f98e287f57
+
+Resources:
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Ref Name
+      DesiredCapacity: '0'
+      MaxSize: '1'
+      MinSize: '0'
+      MixedInstancesPolicy:
+        InstancesDistribution:
+          OnDemandPercentageAboveBaseCapacity: 0
+        LaunchTemplate:
+          LaunchTemplateSpecification:
+            LaunchTemplateId: !Ref LaunchTemplate
+            Version: !GetAtt LaunchTemplate.LatestVersionNumber
+
+      VPCZoneIdentifier:
+        - !Ref SubnetId
+
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Ref Name
+      VersionDescription: !Ref Name
+      LaunchTemplateData:
+        ImageId: !Ref AMI
+        InstanceType: !Ref InstanceType
+        KeyName: !Ref KeyPair
+        NetworkInterfaces:
+          - AssociatePublicIpAddress: true
+            DeleteOnTermination: true
+            DeviceIndex: 0
+            Description: !Ref Name
+            Groups:
+              - !Ref SecurityGroup
+            SubnetId: !Ref SubnetId
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: !Ref Name
+          - ResourceType: volume
+            Tags:
+              - Key: Name
+                Value: !Ref Name
+          - ResourceType: spot-instances-request
+            Tags:
+              - Key: Name
+                Value: !Ref Name
+
+        UserData:
+          Fn::Base64:
+            !Sub |
+              #!/bin/bash
+              sudo apt-get update
+              sudo apt-get upgrade -yf
+              sudo apt-get install git docker-compose -yf
+              git clone https://github.com/hxrsmurf/playground-repo.git
+              cd  playground-repo
+              git checkout nextjs-block-storage-calculator
+              cd nextjs-block-storage-calculator
+              sudo docker-compose up -d
