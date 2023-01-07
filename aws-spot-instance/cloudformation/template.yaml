@@ -1,0 +1,81 @@
+# CFT Name: aws-spot-instance
+Description: AWS EC2 Spot Instance
+
+Parameters:
+  AMI:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+
+  InstanceType:
+    Type: String
+    Default: t2.micro
+
+  KeyPair:
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  Name:
+    Type: String
+    Default: aws-spot-instance
+
+  VpcId:
+    Type: 'AWS::EC2::VPC::Id'
+    Default: vpc-00c669209674ae8fb
+
+  SubnetId:
+    Type: 'AWS::EC2::Subnet::Id'
+    Default: subnet-04dcef0f98e287f57
+  
+  IPAddress:
+    Type: String
+
+Resources:
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH for Spot Instances
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22 
+          CidrIp: !Ref IPAddress
+
+  LaunchTemplate:
+    Type: 'AWS::EC2::LaunchTemplate'
+    Properties:
+      LaunchTemplateName: !Ref Name
+      VersionDescription: !Ref Name
+      LaunchTemplateData:
+        ImageId: !Ref AMI
+        InstanceType: !Ref InstanceType
+        KeyName: !Ref KeyPair
+        InstanceMarketOptions:
+          MarketType: spot
+          SpotOptions:
+            InstanceInterruptionBehavior: terminate
+            SpotInstanceType: one-time
+        NetworkInterfaces:
+          - AssociatePublicIpAddress: true
+            DeleteOnTermination: true
+            DeviceIndex: 0
+            Description: !Ref Name
+            Groups:
+              - !Ref SecurityGroup
+            SubnetId: !Ref SubnetId
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: !Ref Name
+          - ResourceType: volume
+            Tags:
+              - Key: Name
+                Value: !Ref Name
+          - ResourceType: spot-instances-request
+            Tags:
+              - Key: Name
+                Value: !Ref Name
+        UserData:
+          'Fn::Base64': !Sub |
+            #!/bin/bash
+            echo "Hello World"
