@@ -1,7 +1,9 @@
+import Form from "./components/Form";
+
 export default function Home() {
   return (
-    <div>
-      <div>Hello World</div>
+    <div className="flex justify-center mt-4">
+      <Form/>
     </div>
   )
 }
