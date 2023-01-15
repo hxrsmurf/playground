@@ -1,6 +1,8 @@
+import { useState } from "react"
 import { date } from "../utils/utils"
 
 export default function Form() {
+    const [entry, setEntry] = useState()
     const utc_date = date()
     const current_date = date().toUTCString()
 
