@@ -8,3 +8,4 @@ variables-private.tf
 .env
 .env.test
 electron-testing/out/
+**/__pycache__/

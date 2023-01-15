@@ -1,0 +1,1 @@
+ffmpeg -i input.mk4 -c:v copy -c:a copy -flags +cgop -g 30 -hls_time 2 -hls_playlist_type event noconvert.m3u8
