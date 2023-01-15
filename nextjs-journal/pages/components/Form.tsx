@@ -1,6 +1,7 @@
 import { date } from "../utils/utils"
 
 export default function Form() {
+    const utc_date = date()
     const current_date = date().toUTCString()
 
     return (
