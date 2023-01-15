@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-export default function entry() {
+export default function Entry() {
     const router = useRouter()
     const { entry } = router.query
     return (
