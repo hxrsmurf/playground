@@ -7,3 +7,4 @@ node_modules
 variables-private.tf
 .env
 .env.test
+electron-testing/out/
