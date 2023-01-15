@@ -24,9 +24,9 @@ export default function Form() {
     if (loading) return <>Loading...</>
 
     return (
-        <div className="m-4 min-w-[200px]">
+        <div className="m-4 min-w-[200px] min-[800px]:min-w-[400px]">
             <div className="text-1xl font-bold">{current_date}</div>
-            <div className="mt-4"><textarea id='entry' autoFocus className="min-h-[400px]" onChange={(e) => handleUpdate(e)}></textarea></div>
+            <div className="mt-4"><textarea id='entry' autoFocus className="min-h-[400px] min-[800px]:min-w-[400px]" onChange={(e) => handleUpdate(e)}></textarea></div>
             <div className="mt-4 rounded-full bg-blue-600 p-2 text-center cursor-pointer" onClick={() => handleSubmit()}><button>Submit</button></div>
         </div>
     )

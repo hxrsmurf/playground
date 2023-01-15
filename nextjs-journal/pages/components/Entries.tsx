@@ -1,6 +1,6 @@
 export default function Entries() {
     return (
-        <div className="max-w-[100px] space-y-4 mt-4">
+        <div className="max-w-[100px] space-y-4 mt-4 min-[800px]:min-w-[200px] min-[800px]:pr-5">
             <div className="font-bold">
                 Entries
             </div>
