@@ -20,12 +20,6 @@ export default function Entries() {
             <div className="font-bold">
                 Entries
             </div>
-            <div>
-                Sun, 15 Jan 2023 23:25:14 GMT
-            </div>
-            <div>
-                Sun, 15 Jan 2023 23:25:14 GMT
-            </div>
             {list_entries.map((entry, id) => (
                 <div key={id}>
                     <Link href={'/entry/' + entry.id}>
