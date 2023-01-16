@@ -3,4 +3,5 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def handler(event, context):
-    logging.info(event)
+    code = event['queryStringParameters']['code']
+    logging.info(code)
