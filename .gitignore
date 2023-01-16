@@ -9,3 +9,4 @@ variables-private.tf
 .env.test
 electron-testing/out/
 **/__pycache__/
+ffmpeg/ffmpeg copy.py
