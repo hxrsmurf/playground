@@ -1,0 +1,22 @@
+Transform: AWS::Serverless-2016-10-31
+
+Description: python-spotify
+
+Resources:
+  Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.9
+      CodeUri: code
+      ReservedConcurrentExecutions: 30
+      Tracing: Active
+      Timeout: 120
+      Policies:
+        - AWSLambdaExecute
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
