@@ -15,8 +15,8 @@ Resources:
       Policies:
         - AWSLambdaExecute
       Events:
-        ApiEvent:
-          Type: Api
+        HttpEvent:
+          Type: HttpApi
           Properties:
             Path: /
             Method: get
