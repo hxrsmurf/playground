@@ -52,6 +52,7 @@ Resources:
           SpotifyClientId: !Ref SpotifyClientId
           SpotifyClientSecret: !Ref SpotifyClientSecret
           Table: !Ref Table
+          RedirectUri: !Ref Api
       Tracing: Active
       Timeout: 120
       Policies:
