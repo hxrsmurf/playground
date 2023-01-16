@@ -9,6 +9,10 @@ Parameters:
   SpotifyClientSecret:
     Type: String
 
+  # Hard coding for now
+  Api:
+    Type: String
+
 Resources:
   Table:
     Type: AWS::Serverless::SimpleTable
@@ -59,4 +63,24 @@ Resources:
           Type: HttpApi
           Properties:
             Path: /auth
+            Method: get
+
+  GenerateUrl:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.9
+      CodeUri: code/generate-url
+      Environment:
+        Variables:
+          SpotifyClientId: !Ref SpotifyClientId
+          RedirectUri: !Ref Api
+      Timeout: 120
+      Policies:
+        - AWSLambdaExecute
+      Events:
+        HttpEvent:
+          Type: HttpApi
+          Properties:
+            Path: /generate-url
             Method: get
