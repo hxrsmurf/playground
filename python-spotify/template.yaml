@@ -31,3 +31,24 @@ Resources:
           Properties:
             Path: /
             Method: get
+
+  Authorization:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.9
+      CodeUri: code/authorization
+      Environment:
+        Variables:
+          SpotifyClientId: !Ref SpotifyClientId
+          SpotifyClientSecret: !Ref SpotifyClientSecret
+      Tracing: Active
+      Timeout: 120
+      Policies:
+        - AWSLambdaExecute
+      Events:
+        HttpEvent:
+          Type: HttpApi
+          Properties:
+            Path: /auth
+            Method: get
