@@ -47,10 +47,13 @@ Resources:
         Variables:
           SpotifyClientId: !Ref SpotifyClientId
           SpotifyClientSecret: !Ref SpotifyClientSecret
+          Table: !Ref Table
       Tracing: Active
       Timeout: 120
       Policies:
         - AWSLambdaExecute
+        - DynamoDBCrudPolicy:
+            TableName: !Ref Table
       Events:
         HttpEvent:
           Type: HttpApi
