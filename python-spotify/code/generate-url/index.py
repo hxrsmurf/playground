@@ -13,6 +13,11 @@ def handler(event, context):
 
     return ({
         'statusCode': 200,
+        'body': generated_url
+    })
+
+    return ({
+        'statusCode': 200,
         'body': html,
         'headers': {
             'Content-Type': 'text/html; charset=utf-8'
