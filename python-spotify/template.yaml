@@ -2,6 +2,13 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: python-spotify
 
+Parameters:
+  SpotifyClientId:
+    Type: String
+
+  SpotifyClientSecret:
+    Type: String
+
 Resources:
   Lambda:
     Type: AWS::Serverless::Function
@@ -9,6 +16,10 @@ Resources:
       Handler: index.handler
       Runtime: python3.9
       CodeUri: code
+      Environment:
+        Variables:
+          SpotifyClientId: !Ref SpotifyClientId
+          SpotifyClientSecret: !Ref SpotifyClientSecret
       ReservedConcurrentExecutions: 30
       Tracing: Active
       Timeout: 120
