@@ -15,7 +15,7 @@ def handler(event, context):
 
     user_profile = me(access_token)
 
-    put_item(json.loads(user_profile))
+    put_item(json.loads(user_profile), access_token, refresh_token)
 
     return ({
         'statusCode': 200,

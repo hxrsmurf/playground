@@ -4,11 +4,18 @@ import logging
 
 client = boto3.client('dynamodb')
 
-def put_item(item):
+def put_item(user_profile, access_token, refresh_token):
 
-    json_items = {}
+    json_items = {
+        'access_token' : {
+            'S': access_token
+        },
+        'refresh_token' : {
+            'S': refresh_token
+        }
+    }
 
-    for key, value in item.items():
+    for key, value in user_profile.items():
         json_items[key] = {
             'S': str(value)
         }
