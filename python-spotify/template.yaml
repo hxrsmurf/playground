@@ -19,28 +19,6 @@ Resources:
     Properties:
       TableName: !Ref AWS::StackName
 
-  Lambda:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: index.handler
-      Runtime: python3.9
-      CodeUri: code
-      Environment:
-        Variables:
-          SpotifyClientId: !Ref SpotifyClientId
-          SpotifyClientSecret: !Ref SpotifyClientSecret
-      ReservedConcurrentExecutions: 30
-      Tracing: Active
-      Timeout: 120
-      Policies:
-        - AWSLambdaExecute
-      Events:
-        HttpEvent:
-          Type: HttpApi
-          Properties:
-            Path: /
-            Method: get
-
   Authorization:
     Type: AWS::Serverless::Function
     Properties:
