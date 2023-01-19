@@ -62,3 +62,16 @@ Resources:
           Properties:
             Path: /generate-url
             Method: get
+
+  RefreshToken:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.9
+      CodeUri: code/refresh-token
+      Environment:
+        Variables:
+          SpotifyClientId: !Ref SpotifyClientId
+      Timeout: 120
+      Policies:
+        - AWSLambdaExecute
