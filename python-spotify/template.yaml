@@ -75,3 +75,5 @@ Resources:
       Timeout: 120
       Policies:
         - AWSLambdaExecute
+        - DynamoDBCrudPolicy:
+            TableName: !Ref Table
