@@ -4,7 +4,7 @@ resource "aws_lambda_function" "function" {
     ]
     function_name                  = "python-spotify-RefreshToken-Lwk5LrL82LoO"
     handler                        = "index.handler"
-    layers                         = []
+    layers                         = [ "arn:aws:lambda:us-east-1:195663387853:layer:requests-tf:8" ]
     memory_size                    = 128
     package_type                   = "Zip"
     role                           = "arn:aws:iam::195663387853:role/python-spotify-RefreshTokenRole-TZDMHK9BE12C"
