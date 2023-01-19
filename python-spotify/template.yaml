@@ -72,6 +72,7 @@ Resources:
       Environment:
         Variables:
           SpotifyClientId: !Ref SpotifyClientId
+          Table: !Ref Table
       Timeout: 120
       Policies:
         - AWSLambdaExecute
