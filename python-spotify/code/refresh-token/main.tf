@@ -19,6 +19,7 @@ resource "aws_lambda_function" "function" {
     environment {
         variables = {
             "SpotifyClientId" = var.SpotifyClientId
+            "SpotifyClientSecret" = var.SpotifyClientSecret
             "Table"           = "python-spotify"
         }
     }
