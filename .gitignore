@@ -13,3 +13,6 @@ ffmpeg/ffmpeg copy.py
 
 private-variables.tf
 *.zip
+
+# Pyhon dotenv
+env
