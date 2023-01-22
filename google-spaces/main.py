@@ -8,21 +8,7 @@ load_dotenv()
 
 from httplib2 import Http
 
-def main():
-    message_headers = {'Content-Type': 'application/json; charset=UTF-8'}
-
-    space = os.getenv('space')
-    key = os.getenv('key')
-    token = os.getenv('token')
-
-    url = f'https://chat.googleapis.com/v1/spaces/{space}/messages?'\
-          f'key={key}'\
-          f'&token={token}'
-
-    bot_message = {
-        'text': 'Hello from a Python script!'
-    }
-
+def main(url, message_headers, bot_message):
     http_obj = Http()
 
     response = http_obj.request(
