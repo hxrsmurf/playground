@@ -32,8 +32,14 @@ def main():
         body=dumps(bot_message),
     )
 
-def z():
+def  viaRequests(url, message_headers, bot_message):
+    response = requests.post(url=url, headers=message_headers, data=dumps(bot_message))
+    if not response.status_code == 200:
+        print('Unsuccessful')
+
+if __name__ == '__main__':
     message_headers = {'Content-Type': 'application/json; charset=UTF-8'}
+
     space = os.getenv('space')
     key = os.getenv('key')
     token = os.getenv('token')
@@ -46,9 +52,5 @@ def z():
         'text': 'Hello from a Python script!'
     }
 
-    response = requests.post(url=url, headers=message_headers, data=dumps(bot_message))
-    print(response)
-
-if __name__ == '__main__':
-    z()
+    viaRequests(url, message_headers, bot_message)
     # main()
