@@ -1,4 +1,5 @@
 from json import dumps
+import requests
 import os
 
 from dotenv import load_dotenv
@@ -31,5 +32,23 @@ def main():
         body=dumps(bot_message),
     )
 
+def z():
+    message_headers = {'Content-Type': 'application/json; charset=UTF-8'}
+    space = os.getenv('space')
+    key = os.getenv('key')
+    token = os.getenv('token')
+
+    url = f'https://chat.googleapis.com/v1/spaces/{space}/messages?'\
+          f'key={key}'\
+          f'&token={token}'
+
+    bot_message = {
+        'text': 'Hello from a Python script!'
+    }
+
+    response = requests.post(url=url, headers=message_headers, data=dumps(bot_message))
+    print(response)
+
 if __name__ == '__main__':
-    main()
+    z()
+    # main()
