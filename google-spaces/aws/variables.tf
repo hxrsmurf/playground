@@ -21,9 +21,11 @@ variable "runtime" {
 }
 
 variable "environment" {
-  Space = "test"
-  Key = "test"
-  Token = "test"
+  default = {
+    Space = "test"
+    Key   = "test"
+    Token = "test"
+  }
 }
 
 variable "policy-arn" {
