@@ -8,9 +8,9 @@ export default function Navigation() {
   return (
     <div className='flex justify-center mt-4'>
       <div className='grid grid-flow-col space-x-4'>
-        <div>
+        {/* <div>
           <Link href={years}>{years}</Link>
-        </div>
+        </div> */}
         {Object.values(months).map((month: any, id: any) => (
           <div key={id}>
             <Link href={month}>{month}</Link>
