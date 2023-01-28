@@ -16,3 +16,4 @@ private-variables.tf
 
 # Pyhon dotenv
 env
+docker-compose.yaml
