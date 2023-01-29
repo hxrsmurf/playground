@@ -27,14 +27,14 @@ export default function YearMonth(props: any) {
   return (
     <>
       <div className='flex justify-center mt-8'>
-        <div className='grid grid-flow-row'>
+        <div className='grid grid-flow-row text-center'>
           {/* Artists */}
           <div>
             <TopHeader type='Artists' year_month={year_month} />
           </div>
           {Object.keys(top_artists).map((artist: string, id) => (
-            <div key={id} className='grid grid-flow-col'>
-              <div className='min-w-[250px]'>{artist}</div>
+            <div key={id} className='grid grid-flow-col text-center'>
+              <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>{artist}</div>
               <div>{top_artists[artist]}</div>
             </div>
           ))}
@@ -45,7 +45,7 @@ export default function YearMonth(props: any) {
           </div>
           {Object.keys(top_tracks).map((track: string, id) => (
             <div key={id} className='grid grid-flow-col space-x-4'>
-              <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>
+              <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
                 {track}
               </div>
               <div>{top_tracks[track]}</div>
@@ -57,7 +57,7 @@ export default function YearMonth(props: any) {
             <TopHeader type='Devices' year_month={year_month} />
             {Object.keys(top_devices).map((device: string, id) => (
               <div key={id} className='grid grid-flow-col space-x-4'>
-                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>
+                <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
                   {device}
                 </div>
                 <div>{top_devices[device]}</div>
