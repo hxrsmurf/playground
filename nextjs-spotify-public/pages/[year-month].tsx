@@ -65,6 +65,38 @@ export default function YearMonth(props: any) {
             ))}
           </div>
           {/* Devices */}
+          {/* Charts */}
+          <div className='hidden sm:flex sm:visible sm:justify-center'>
+            <div className='min-w-[800px]'>
+              {/* Chart Artists */}
+              <div>
+                <ChartArtists
+                  data={top_artists}
+                  year_month={year_month}
+                  type='Artists'
+                />
+              </div>
+              {/* Chart Artists */}
+              {/* Chart Tracks */}
+              <div>
+                <ChartArtists
+                  data={top_tracks}
+                  year_month={year_month}
+                  type='Tracks'
+                />
+              </div>
+              {/* Chart Tracks */}
+              {/* Chart Devices */}
+              <div>
+                <ChartArtists
+                  data={top_devices}
+                  year_month={year_month}
+                  type='Devices'
+                />
+              </div>
+              {/* Chart Devices */}
+            </div>
+          </div>
         </div>
       </div>
     </>
