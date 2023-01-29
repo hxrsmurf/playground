@@ -9,7 +9,7 @@ resource "aws_ecs_service" "service" {
   name                               = var.task-name
   propagate_tags                     = "NONE"
   scheduling_strategy                = "REPLICA"
-  cluster                            = "arn:aws:ecs:us-east-1:195663387853:cluster/${var.task-name}"
+  cluster                            = "arn:aws:ecs:us-east-1:${var.account-id}:cluster/${var.task-name}"
 
   task_definition = "${var.task-name}:${aws_ecs_task_definition.service.revision}"
   triggers        = {}
@@ -64,7 +64,7 @@ resource "aws_ecs_task_definition" "service" {
     ]
   )
   cpu                = "1024"
-  execution_role_arn = "arn:aws:iam::195663387853:role/ecsTaskExecutionRole"
+  execution_role_arn = "arn:aws:iam::${var.account-id}:role/ecsTaskExecutionRole"
   family             = var.task-name
   memory             = "512"
   network_mode       = "bridge"

@@ -9,7 +9,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size                  = 0
   name                      = "Infra-ECS-Cluster-nextjs-spotify-public-16b2f8ee-ECSAutoScalingGroup-1DA5MYASPDRA6"
   protect_from_scale_in     = false
-  service_linked_role_arn   = "arn:aws:iam::195663387853:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+  service_linked_role_arn   = "arn:aws:iam::${var.account-id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
   vpc_zone_identifier = [
     "subnet-01dff429e17e1250f",
     "subnet-032f181112ad9a659",
