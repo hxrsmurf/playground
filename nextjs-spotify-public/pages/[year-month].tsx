@@ -35,12 +35,12 @@ export default function YearMonth(props: any) {
           {Object.keys(top_artists).map((artist: string, id) => (
             <div
               key={id}
-              className='grid grid-flow-col text-center sm:min-w-[400px] sm:max-w-[400px] sm:pl-44'
+              className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
             >
               <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
                 {artist}
               </div>
-              <div className='sm:pl-44'>{top_artists[artist]}</div>
+              <div className='min-[1400px]:pl-44'>{top_artists[artist]}</div>
             </div>
           ))}
           {/* Artists */}
@@ -51,12 +51,12 @@ export default function YearMonth(props: any) {
           {Object.keys(top_tracks).map((track: string, id) => (
             <div
               key={id}
-              className='grid grid-flow-col text-center sm:min-w-[400px] sm:max-w-[400px] sm:pl-44'
+              className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
             >
               <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
                 {track}
               </div>
-              <div className='sm:pl-44'>{top_tracks[track]}</div>
+              <div className='min-[1400px]:pl-44'>{top_tracks[track]}</div>
             </div>
           ))}
           {/* Tracks */}
@@ -66,18 +66,20 @@ export default function YearMonth(props: any) {
             {Object.keys(top_devices).map((device: string, id) => (
               <div
                 key={id}
-                className='grid grid-flow-col text-center sm:min-w-[400px] sm:max-w-[400px] sm:pl-44'
+                className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
               >
                 <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
                   {device}
                 </div>
-                <div className='sm:pl-44'>{top_devices[device]}</div>
+                <div className='min-[1400px]:pl-44'>{top_devices[device]}</div>
               </div>
             ))}
           </div>
           {/* Devices */}
+        </div>
+        <div>
           {/* Charts */}
-          <div className='hidden sm:flex sm:visible sm:justify-center'>
+          <div className='hidden min-[1400px]:flex min-[1400px]:visible min-[1400px]:justify-center ml-4'>
             <div className='min-w-[800px]'>
               {/* Chart Artists */}
               <div>
