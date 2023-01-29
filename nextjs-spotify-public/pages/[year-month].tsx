@@ -130,8 +130,6 @@ export async function getStaticProps(context: any) {
   if (process.env.REDIS_HOST) {
     console.log(process.env.REDIS_HOST)
     year_month_tracks = await redis_get_tracks(year_month)
-  } else {
-    console.log('Correct Catch')
   }
 
   if (!year_month_tracks) {
