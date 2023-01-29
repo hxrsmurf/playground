@@ -127,16 +127,21 @@ export async function getStaticProps(context: any) {
 
   let year_month_tracks = null
 
-  year_month_tracks = await redis_get_tracks(year_month)
+  if (process.env.REDIS_HOST) {
+    console.log(process.env.REDIS_HOST)
+    year_month_tracks = await redis_get_tracks(year_month)
+  }
 
   if (!year_month_tracks) {
     console.log('Querying Dynamo')
     year_month_tracks = await dynamodb_get_tracks(year_month)
-    const result_update = await redis_update_tracks(
-      year_month,
-      year_month_tracks
-    )
-    console.log('Update to Redis:', result_update)
+    if (process.env.REDIS_HOST) {
+      const result_update = await redis_update_tracks(
+        year_month,
+        year_month_tracks
+      )
+      console.log('Update to Redis:', result_update)
+    }
   } else {
     console.log('Using Redis')
   }
