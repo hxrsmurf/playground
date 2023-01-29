@@ -26,69 +26,89 @@ export default function YearMonth(props: any) {
 
   return (
     <>
-      <div className='flex justify-center mt-8 min-w-[800px]'>
-        <div className='grid grid-flow-col divide-x-2 gap-6'>
+      <div className='flex justify-center mt-8'>
+        <div className='grid grid-flow-row text-center'>
           {/* Artists */}
           <div>
             <TopHeader type='Artists' year_month={year_month} />
-            {Object.keys(top_artists).map((artist: string, id) => (
-              <div key={id} className='grid grid-flow-col'>
-                <div className='min-w-[250px]'>{artist}</div>
-                <div>{top_artists[artist]}</div>
-              </div>
-            ))}
           </div>
-
+          {Object.keys(top_artists).map((artist: string, id) => (
+            <div
+              key={id}
+              className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
+            >
+              <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
+                {artist}
+              </div>
+              <div className='min-[1400px]:pl-44'>{top_artists[artist]}</div>
+            </div>
+          ))}
+          {/* Artists */}
           {/* Tracks */}
-          <div className='pl-6'>
+          <div className='pt-8'>
             <TopHeader type='Tracks' year_month={year_month} />
-            {Object.keys(top_tracks).map((track: string, id) => (
-              <div key={id} className='grid grid-flow-col space-x-4'>
-                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>
-                  {track}
-                </div>
-                <div>{top_tracks[track]}</div>
-              </div>
-            ))}
           </div>
-
+          {Object.keys(top_tracks).map((track: string, id) => (
+            <div
+              key={id}
+              className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
+            >
+              <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
+                {track}
+              </div>
+              <div className='min-[1400px]:pl-44'>{top_tracks[track]}</div>
+            </div>
+          ))}
+          {/* Tracks */}
           {/* Devices */}
-          <div className='pl-6'>
+          <div className='pt-8 pb-8'>
             <TopHeader type='Devices' year_month={year_month} />
             {Object.keys(top_devices).map((device: string, id) => (
-              <div key={id} className='grid grid-flow-col space-x-4'>
-                <div className='min-w-[250px] max-w-[250px] text-clip overflow-hidden whitespace-nowrap'>
+              <div
+                key={id}
+                className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
+              >
+                <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
                   {device}
                 </div>
-                <div>{top_devices[device]}</div>
+                <div className='min-[1400px]:pl-44'>{top_devices[device]}</div>
               </div>
             ))}
           </div>
+          {/* Devices */}
         </div>
-      </div>
-
-      <div className='flex justify-center mt-14 min-w-[800px]'>
-        <div className='grid grid-flow-col space-x-4 col-span-2'>
-          <div className='min-w-[700px]'>
-            <ChartArtists
-              data={top_artists}
-              year_month={year_month}
-              type='Artists'
-            />
-          </div>
-          <div className='min-w-[700px]'>
-            <ChartArtists
-              data={top_tracks}
-              year_month={year_month}
-              type='Tracks'
-            />
-          </div>
-          <div className='min-w-[700px] max-h-[400px]'>
-            <ChartArtists
-              data={top_devices}
-              year_month={year_month}
-              type='Devices'
-            />
+        <div>
+          {/* Charts */}
+          <div className='hidden min-[1400px]:flex min-[1400px]:visible min-[1400px]:justify-center ml-4'>
+            <div className='min-w-[800px]'>
+              {/* Chart Artists */}
+              <div>
+                <ChartArtists
+                  data={top_artists}
+                  year_month={year_month}
+                  type='Artists'
+                />
+              </div>
+              {/* Chart Artists */}
+              {/* Chart Tracks */}
+              <div>
+                <ChartArtists
+                  data={top_tracks}
+                  year_month={year_month}
+                  type='Tracks'
+                />
+              </div>
+              {/* Chart Tracks */}
+              {/* Chart Devices */}
+              <div>
+                <ChartArtists
+                  data={top_devices}
+                  year_month={year_month}
+                  type='Devices'
+                />
+              </div>
+              {/* Chart Devices */}
+            </div>
           </div>
         </div>
       </div>
