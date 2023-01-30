@@ -1,0 +1,32 @@
+---
+const { frontmatter } = Astro.props
+
+const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-us', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+})
+---
+
+<html>
+  <head>
+    <!-- Add other Head elements here, like styles and meta tags. -->
+    <title>{frontmatter.title}</title>
+  </head>
+  <body class='flex justify-center mt-4'>
+    <div>
+      <!-- Add other UI components here, like common headers and footers. -->
+      <h1>{frontmatter.title} by {frontmatter.author} - {formattedDate}</h1>
+      <!-- 2. Rendered HTML will be passed into the default slot. -->
+      <div class='mt-8'></div>
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  html {
+    background-color: #0d0950;
+    color: #fff;
+  }
+</style>
