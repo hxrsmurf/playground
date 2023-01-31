@@ -12,8 +12,10 @@ resource "aws_lambda_function" "function" {
     "x86_64",
   ]
 
-  handler                        = "lambda_function.lambda_handler"
-  layers                         = []
+  handler = "lambda_function.lambda_handler"
+  layers = [
+    "arn:aws:lambda:us-east-1:195663387853:layer:requests-tf:8"
+  ]
   memory_size                    = 128
   package_type                   = "Zip"
   reserved_concurrent_executions = -1
