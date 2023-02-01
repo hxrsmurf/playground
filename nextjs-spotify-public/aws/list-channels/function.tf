@@ -12,7 +12,7 @@ resource "aws_lambda_function" "function" {
     "x86_64",
   ]
 
-  handler = "lambda_function.lambda_handler"
+  handler = "index.lambda_handler"
   layers = [
     "arn:aws:lambda:us-east-1:195663387853:layer:requests-tf:8"
   ]
