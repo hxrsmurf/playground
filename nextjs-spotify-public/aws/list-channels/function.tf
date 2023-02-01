@@ -16,6 +16,13 @@ resource "aws_lambda_function" "function" {
   layers = [
     "arn:aws:lambda:us-east-1:195663387853:layer:requests-tf:8"
   ]
+
+  environment {
+    variables = {
+      "api" = var.cloudflare-api
+    }
+  }
+
   memory_size                    = 128
   package_type                   = "Zip"
   reserved_concurrent_executions = -1
