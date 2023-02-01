@@ -1,5 +1,6 @@
 import requests
 import os
+import json
 
 base_url = 'https://api.cloudflare.com/client/v4'
 
@@ -25,4 +26,6 @@ def list_dns_records():
 
     response = requests.get(url, headers=headers)
 
-    print(response.content)
+    content = json.loads(response.content)
+
+    return content['result']
