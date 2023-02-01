@@ -29,3 +29,17 @@ def list_dns_records():
     content = json.loads(response.content)
 
     return content['result']
+
+def search_dns_records(fqdn):
+    url = base_url + '/zones/' + os.environ['zone_identifier'] + "/dns_records?name=" + fqdn
+
+    headers = {
+        'Authorization': 'Bearer ' + os.environ['api'],
+        'Content-Type': 'application/json',
+    }
+
+    response = requests.get(url, headers=headers)
+
+    content = json.loads(response.content)
+
+    return content['result'][0]
