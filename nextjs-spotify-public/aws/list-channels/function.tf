@@ -20,6 +20,8 @@ resource "aws_lambda_function" "function" {
   environment {
     variables = {
       "api" = var.cloudflare-api
+      "email" = var.cloudflare-email
+      "zone_identifier" = var.cloudflare-zone
     }
   }
 

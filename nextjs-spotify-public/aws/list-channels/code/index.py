@@ -1,7 +1,7 @@
 import json
 
 from functions.ec2 import describe_instances
-from functions.cloudflare import verify
+from functions.cloudflare import verify, zone_record_update, list_dns_records
 
 def lambda_handler(event, context):
     record = event['Records'][0]
