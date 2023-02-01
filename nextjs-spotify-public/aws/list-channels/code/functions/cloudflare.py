@@ -3,6 +3,7 @@ import os
 import json
 
 base_url = 'https://api.cloudflare.com/client/v4'
+fqdn = os.environ['fqdn']
 
 def verify():
     url = base_url + '/user/tokens/verify'
@@ -44,12 +45,13 @@ def search_dns_records(fqdn):
 
     return content['result'][0]
 
-def update_dns_record(fqdn, id, ip_address):
-    url = base_url + '/zones/' + os.environ['zone_identifier'] + "/dns_records/" + id
+def update_dns_record(ip_address):
+    record_id = search_dns_records(fqdn)['id']
+    url = base_url + '/zones/' + os.environ['zone_identifier'] + "/dns_records/" + record_id
 
     json_data = {
         "type": "A",
-        "name" : os.environ['fqdn'],
+        "name" : fqdn,
         "content" : ip_address,
         "proxied": True
     }
