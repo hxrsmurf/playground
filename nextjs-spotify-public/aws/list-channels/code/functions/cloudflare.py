@@ -43,3 +43,22 @@ def search_dns_records(fqdn):
     content = json.loads(response.content)
 
     return content['result'][0]
+
+def update_dns_record(fqdn, id, ip_address):
+    url = base_url + '/zones/' + os.environ['zone_identifier'] + "/dns_records/" + id
+
+    json_data = {
+        "type": "A",
+        "name" : os.environ['fqdn'],
+        "content" : ip_address,
+        "proxied": True
+    }
+
+    headers = {
+        'Authorization': 'Bearer ' + os.environ['api'],
+        'Content-Type': 'application/json',
+    }
+
+    response = requests.put(url, headers=headers, json=json_data)
+
+    print(response)
