@@ -8,7 +8,7 @@ def lambda_handler(event, context):
     record = event['Records'][0]
     sns_message = record['Sns']
     subject = sns_message['Subject']
-    message = sns_message['Message']
+    message = json.loads(sns_message['Message'])
 
     if subject == 'Auto Scaling: launch':
         # Parse EC2 Information
