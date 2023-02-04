@@ -1,4 +1,5 @@
-FROM node:18-alpine
+# FROM node:18-alpine
+FROM ghcr.io/hxrsmurf/playground-repo:nextjs-spotify-public
 
 COPY package.json .
 RUN npm install
