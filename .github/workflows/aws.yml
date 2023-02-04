@@ -61,12 +61,12 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+    # - name: Login to Amazon ECR
+    #   id: login-ecr
+    #   uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Setup Docker buildx
-      uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+    # - name: Setup Docker buildx
+    #   uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
 
     - name: Delete Year
       working-directory: nextjs-spotify-public
@@ -100,9 +100,16 @@ jobs:
     #       LATEST_YEAR=${{ secrets.LATEST_YEAR }}
 
     - name: ECS List Clusters
-      working-directory: nextjs-spotify-public
+      id: listClusters
       run: |
         cluster=$(aws ecs list-clusters | jq .clusterArns[0])
-        echo $cluster
-        task=$(aws ecs list-tasks --cluster $cluster)
+        echo "cluster=$cluster" >> $GITHUB_OUTPUT
+    - name: ECS List Tasks
+      id: listTasks
+      run: |
+        task=$(aws ecs list-tasks --cluster ${{ steps.listClusters.outputs.cluster }} | jq .taskArns[0])
         echo $task
+        echo "task=$task" >> $GITHUB_OUTPUT
+    - name: ECS Stop Task
+      run: |
+        echo ${{ steps.listTasks.outputs.task }}
