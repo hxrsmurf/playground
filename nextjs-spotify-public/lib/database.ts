@@ -14,10 +14,6 @@ export function redis() {
 }
 
 export function dynamodb(year_month: any) {
-  console.log('kevin testing')
-  console.log(process.env.REGION)
-  console.log(process.env.ACCESS_KEY)
-
   const client = new DynamoDBClient({
     credentials: {
       accessKeyId: process.env.ACCESS_KEY!,
