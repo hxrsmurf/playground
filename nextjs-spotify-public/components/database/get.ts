@@ -1,4 +1,5 @@
 import { dynamodb, redis } from '../../lib/database'
+import { QueryCommand } from "@aws-sdk/client-dynamodb";
 
 export async function redis_get_tracks(year_month: any) {
   const client = redis()
@@ -28,7 +29,7 @@ export async function dynamodb_get_tracks(year_month: any) {
   let tracks: any = []
 
   while (hasNext) {
-    const data = await client.query(params).promise()
+    const data = await client.send(new QueryCommand(params))
     const data_items: any = data['Items']
     data_items.forEach((element: any) => {
       tracks.push(element)

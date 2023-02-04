@@ -1,5 +1,6 @@
 import { createClient } from 'redis'
-import { DynamoDB } from 'aws-sdk'
+// import { DynamoDB } from 'aws-sdk'
+import { DynamoDBClient, QueryInput } from "@aws-sdk/client-dynamodb";
 
 export function redis() {
   const client = createClient({
@@ -13,17 +14,27 @@ export function redis() {
 }
 
 export function dynamodb(year_month: any) {
-  const client = new DynamoDB({
+  console.log(process.env.REGION)
+  console.log(process.env.ACCESS_KEY)
+
+  const client = new DynamoDBClient({
     credentials: {
       accessKeyId: process.env.ACCESS_KEY!,
       secretAccessKey: process.env.SECRET_KEY!,
     },
-    region: process.env.REGION,
-  })
+    region: 'us-east-1'
+  });
+  // const client = new DynamoDB({
+  //   credentials: {
+  //     accessKeyId: process.env.ACCESS_KEY!,
+  //     secretAccessKey: process.env.SECRET_KEY!,
+  //   },
+  //   region: process.env.REGION!,
+  // })
 
-  let params: DynamoDB.QueryInput = {
+  let params: QueryInput = {
     TableName: process.env.TABLE!,
-    IndexName: process.env.TABLE_INDEX,
+    IndexName: process.env.TABLE_INDEX!,
     KeyConditionExpression: 'year_month = :year_month',
     ExpressionAttributeValues: {
       ':year_month': {
