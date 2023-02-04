@@ -65,48 +65,78 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
-        ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        DEVICE_DESKTOP: ${{ secrets.DEVICE_DESKTOP }}
-        DEVICE_LAPTOP: ${{ secrets.DEVICE_LAPTOP }}
-        DEVICE_PIXEL: ${{ secrets.DEVICE_PIXEL }}
-        DEVICE_SAMSUNG: ${{ secrets.DEVICE_SAMSUNG }}
-        DEVICE_TABLET: ${{ secrets.DEVICE_TABLET }}
-        LATEST_MONTH: ${{ secrets.LATEST_MONTH }}
-        LATEST_YEAR: ${{ secrets.LATEST_YEAR }}
-        REGION: ${{ secrets.REGION }}
-        REDIS_HOST: ${{ secrets.REDIS_HOST }}
-        REDIS_PORT: ${{ secrets.REDIS_PORT }}
-        REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-        REDIS_EXPIRE_CURRENT_MONTH: ${{ secrets.REDIS_EXPIRE_CURRENT_MONTH }}
-        TABLE: ${{ secrets.TABLE }}
-        TABLE_INDEX: ${{ secrets.TABLE_INDEX }}
-      working-directory: nextjs-spotify-public
-      run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        rm -rf pages/2022.tsx
-        docker build . \
-          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-          -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
-          --build-arg ACCESS_KEY=$ACCESS_KEY \
-          --build-arg SECRET=$SECRET_KEY \
-          --build-arg TABLE=$TABLE \
-          --build-arg TABLE_INDEX=$TABLE_INDEX \
-          --build-arg REGION=us-east-1 \
-          --build-arg DEVICE_DESKTOP=$DEVICE_DESKTOP \
-          --build-arg DEVICE_LAPTOP=$DEVICE_LAPTOP \
-          --build-arg DEVICE_SAMSUNG=$DEVICE_SAMSUNG \
-          --build-arg DEVICE_TABLET=$DEVICE_TABLET
+    - name: Setup Docker buildx
+      uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
 
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    - name: Delete Year
+      working-directory: nextjs-spotify-public
+      run: rm -rf pages/2022.tsx
+
+    - name: Build and push Docker image
+      id: build-and-push
+      # uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+      uses: docker/build-push-action@v4
+      with:
+        context: nextjs-spotify-public
+        file: ./nextjs-spotify-public/Dockerfile
+        # push: ${{ github.event_name != 'pull_request' }}
+        push: true
+        # tags: ${{ steps.meta.outputs.tags }}
+        # labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TABLE=${{ secrets.TABLE }}
+          TABLE_INDEX=${{ secrets.TABLE_INDEX }}
+          REGION=${{ secrets.REGION }}
+          DEVICE_DESKTOP=${{ secrets.DEVICE_DESKTOP }}
+          DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
+          DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
+
+    # - name: Build, tag, and push image to Amazon ECR
+    #   id: build-image
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     IMAGE_TAG: ${{ github.sha }}
+    #     ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     DEVICE_DESKTOP: ${{ secrets.DEVICE_DESKTOP }}
+    #     DEVICE_LAPTOP: ${{ secrets.DEVICE_LAPTOP }}
+    #     DEVICE_PIXEL: ${{ secrets.DEVICE_PIXEL }}
+    #     DEVICE_SAMSUNG: ${{ secrets.DEVICE_SAMSUNG }}
+    #     DEVICE_TABLET: ${{ secrets.DEVICE_TABLET }}
+    #     LATEST_MONTH: ${{ secrets.LATEST_MONTH }}
+    #     LATEST_YEAR: ${{ secrets.LATEST_YEAR }}
+    #     REGION: ${{ secrets.REGION }}
+    #     REDIS_HOST: ${{ secrets.REDIS_HOST }}
+    #     REDIS_PORT: ${{ secrets.REDIS_PORT }}
+    #     REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+    #     REDIS_EXPIRE_CURRENT_MONTH: ${{ secrets.REDIS_EXPIRE_CURRENT_MONTH }}
+    #     TABLE: ${{ secrets.TABLE }}
+    #     TABLE_INDEX: ${{ secrets.TABLE_INDEX }}
+    #   working-directory: nextjs-spotify-public
+    #   run: |
+    #     # Build a docker container and
+    #     # push it to ECR so that it can
+    #     # be deployed to ECS.
+    #     rm -rf pages/2022.tsx
+    #     docker build . \
+    #       -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+    #       -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+    #       --build-arg ACCESS_KEY=$ACCESS_KEY \
+    #       --build-arg SECRET=$SECRET_KEY \
+    #       --build-arg TABLE=$TABLE \
+    #       --build-arg TABLE_INDEX=$TABLE_INDEX \
+    #       --build-arg REGION=us-east-1 \
+    #       --build-arg DEVICE_DESKTOP=$DEVICE_DESKTOP \
+    #       --build-arg DEVICE_LAPTOP=$DEVICE_LAPTOP \
+    #       --build-arg DEVICE_SAMSUNG=$DEVICE_SAMSUNG \
+    #       --build-arg DEVICE_TABLET=$DEVICE_TABLET
+
+    #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+    #     echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
     # - name: Fill in the new image ID in the Amazon ECS task definition
     #   id: task-def
