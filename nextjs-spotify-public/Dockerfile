@@ -18,4 +18,4 @@ ENV TABLE=$TABLE
 ARG TABLE_INDEX
 ENV TABLE_INDEX=$TABLE_INDEX
 RUN npm run build
-# CMD npm run start
+CMD npm run start
