@@ -72,11 +72,6 @@ jobs:
       working-directory: nextjs-spotify-public
       run: rm -rf pages/2022.tsx
 
-    - name: ECS List Clusters
-      working-directory: nextjs-spotify-public
-      run: |
-        aws ecs list-clusters | jq .clusterArns[0]
-
     # - name: Build and push Docker image
     #   id: build-and-push
     #   # uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
@@ -101,3 +96,13 @@ jobs:
     #       DEVICE_DESKTOP=${{ secrets.DEVICE_DESKTOP }}
     #       DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
     #       DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
+    #       LATEST_MONTH=${{ secrets.LATEST_MONTH }}
+    #       LATEST_YEAR=${{ secrets.LATEST_YEAR }}
+
+    - name: ECS List Clusters
+      working-directory: nextjs-spotify-public
+      run: |
+        cluster=$(aws ecs list-clusters | jq .clusterArns[0])
+        echo $cluster
+        task=$(aws ecs list-tasks --cluster $cluster)
+        echo $task
