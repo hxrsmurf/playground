@@ -134,8 +134,6 @@ export async function getStaticProps(context: any) {
 
   if (!year_month_tracks) {
     console.log('Querying Dynamo')
-    console.log(process.env.REGION)
-    console.log(process.env.ACCESS_KEY)
 
     year_month_tracks = await dynamodb_get_tracks(year_month)
     if (process.env.REDIS_HOST) {
