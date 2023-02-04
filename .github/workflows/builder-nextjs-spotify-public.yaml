@@ -8,8 +8,8 @@ name: builder-nextjs-spotify-public
 on:
   # schedule:
   #   - cron: '24 6 * * *'
-  push:
-    branches: [ "**" ]
+  #push:
+  #  branches: [ "**" ]
   #   # Publish semver tags as releases.
   #   tags: [ 'v*.*.*' ]
   # pull_request:
