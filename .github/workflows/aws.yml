@@ -29,7 +29,7 @@ name: Deploy to Amazon ECS
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 6-18/4 * * *'
+    - cron:  '0 7-22/4 * * *'
 
   push:
     # branches: [ "main", "**" ]
