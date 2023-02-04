@@ -49,33 +49,10 @@ permissions:
   contents: read
 
 jobs:
-  cleanupECR:
-    name: Delete Old ECR
-    runs-on: ubuntu-latest
-    if: true
-    steps:
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    - name: List ECR Images
-      run: |
-        images=$(aws ecr list-images --repository-name ${{ env.ECR_REPOSITORY }} | jq --raw-output '.imageIds[] | "\(.imageDigest)"')
-        # echo $images
-        for image in $images
-        do
-          echo $image
-          aws ecr batch-delete-image --repository-name ${{ env.ECR_REPOSITORY }} --image-ids imageDigest=$image
-        done
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
-    needs: cleanupECR
     if: true
 
     steps:
@@ -144,3 +121,25 @@ jobs:
     - name: ECS Stop Task
       run: |
         aws ecs stop-task --task ${{ steps.listTasks.outputs.task }} --cluster ${{ steps.listClusters.outputs.cluster }}
+
+  cleanupECR:
+    name: Delete Old ECR
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: List ECR Images
+      run: |
+        images=$(aws ecr list-images --repository-name ${{ env.ECR_REPOSITORY }} | jq --raw-output '.imageIds[] | "\(.imageDigest)"')
+        # echo $images
+        for image in $images
+        do
+          echo $image
+          aws ecr batch-delete-image --repository-name ${{ env.ECR_REPOSITORY }} --image-ids imageDigest=$image
+        done
