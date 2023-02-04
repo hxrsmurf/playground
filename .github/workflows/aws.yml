@@ -75,7 +75,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
-    if: false
+    if: true
 
     steps:
     - name: Checkout
