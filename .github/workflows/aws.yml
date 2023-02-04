@@ -72,27 +72,32 @@ jobs:
       working-directory: nextjs-spotify-public
       run: rm -rf pages/2022.tsx
 
-    - name: Build and push Docker image
-      id: build-and-push
-      # uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
-      uses: docker/build-push-action@v4
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      with:
-        context: nextjs-spotify-public
-        file: ./nextjs-spotify-public/Dockerfile
-        # push: ${{ github.event_name != 'pull_request' }}
-        push: true
-        tags: ${{env.ECR_REGISTRY}}/${{env.ECR_REPOSITORY}}:latest
-        # labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        build-args: |
-          ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }}
-          SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          TABLE=${{ secrets.TABLE }}
-          TABLE_INDEX=${{ secrets.TABLE_INDEX }}
-          REGION=${{ secrets.REGION }}
-          DEVICE_DESKTOP=${{ secrets.DEVICE_DESKTOP }}
-          DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
-          DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
+    - name: ECS List Clusters
+      working-directory: nextjs-spotify-public
+      run: |
+        aws ecs list-clusters | jq .clusterArns
+
+    # - name: Build and push Docker image
+    #   id: build-and-push
+    #   # uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+    #   uses: docker/build-push-action@v4
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #   with:
+    #     context: nextjs-spotify-public
+    #     file: ./nextjs-spotify-public/Dockerfile
+    #     # push: ${{ github.event_name != 'pull_request' }}
+    #     push: true
+    #     tags: ${{env.ECR_REGISTRY}}/${{env.ECR_REPOSITORY}}:latest
+    #     # labels: ${{ steps.meta.outputs.labels }}
+    #     cache-from: type=gha
+    #     cache-to: type=gha,mode=max
+    #     build-args: |
+    #       ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }}
+    #       SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #       TABLE=${{ secrets.TABLE }}
+    #       TABLE_INDEX=${{ secrets.TABLE_INDEX }}
+    #       REGION=${{ secrets.REGION }}
+    #       DEVICE_DESKTOP=${{ secrets.DEVICE_DESKTOP }}
+    #       DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
+    #       DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
