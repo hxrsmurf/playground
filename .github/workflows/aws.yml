@@ -68,6 +68,7 @@ jobs:
         for image in $images
         do
           echo $image
+          aws ecr batch-delete-image --repository-name ${{ env.ECR_REPOSITORY }} --image-ids imageDigest=$image
         done
 
   deploy:
