@@ -1,0 +1,9 @@
+docker build . --build-arg ACCESS_KEY=$ACCESS_KEY \
+    --build-arg SECRET=$SECRET_KEY \
+    --build-arg TABLE=$TABLE \
+    --build-arg TABLE_INDEX=$TABLE_INDEX \
+    --build-arg REGION=$REGION \
+    --build-arg DEVICE_DESKTOP=$DEVICE_DESKTOP \
+    --build-arg DEVICE_LAPTOP=$DEVICE_LAPTOP \
+    --build-arg DEVICE_SAMSUNG=$DEVICE_SAMSUNG \
+    --build-arg DEVICE_TABLET=$DEVICE_TABLET
