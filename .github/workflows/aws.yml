@@ -96,6 +96,7 @@ jobs:
           DEVICE_DESKTOP=${{ secrets.DEVICE_DESKTOP }}
           DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
           DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
+          DEVICE_SAMSUNG=${{ secrets.DEVICE_SAMSUNG }}
           LATEST_MONTH=${{ secrets.LATEST_MONTH }}
           LATEST_YEAR=${{ secrets.LATEST_YEAR }}
 
