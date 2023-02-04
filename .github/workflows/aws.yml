@@ -104,12 +104,14 @@ jobs:
       run: |
         cluster=$(aws ecs list-clusters | jq .clusterArns[0])
         echo "cluster=$cluster" >> $GITHUB_OUTPUT
+
     - name: ECS List Tasks
       id: listTasks
       run: |
         task=$(aws ecs list-tasks --cluster ${{ steps.listClusters.outputs.cluster }} | jq .taskArns[0])
         echo $task
         echo "task=$task" >> $GITHUB_OUTPUT
+
     - name: ECS Stop Task
       run: |
-        echo ${{ steps.listTasks.outputs.task }}
+        aws ecs stop-task --task ${{ steps.listTasks.outputs.task }} --cluster ${{ steps.listClusters.outputs.cluster }}
