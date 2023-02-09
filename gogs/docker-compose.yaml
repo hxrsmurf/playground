@@ -1,0 +1,19 @@
+services:
+  gogs:
+    image: gogs/gogs:latest
+    ports:
+      - 10880:3000
+  drone:
+    image: drone/drone:latest
+    ports:
+      - 80:80
+    environment:
+      - DRONE_AGENTS_ENABLED=true
+      - DRONE_GOGS_SERVER=https://gogs.company.com
+      - DRONE_RPC_SECRET=super-duper-secret
+      - DRONE_SERVER_HOST=drone.company.com
+      - DRONE_SERVER_PROTO=http
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
