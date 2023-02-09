@@ -1,4 +1,4 @@
-service:
+services:
   gogs:
     image: gogs/gogs:latest
     ports:
