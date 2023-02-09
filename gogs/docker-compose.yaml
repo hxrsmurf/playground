@@ -13,3 +13,7 @@ services:
       - DRONE_RPC_SECRET=super-duper-secret
       - DRONE_SERVER_HOST=drone.company.com
       - DRONE_SERVER_PROTO=http
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
