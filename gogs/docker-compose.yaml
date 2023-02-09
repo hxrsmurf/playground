@@ -1,0 +1,5 @@
+service:
+  gogs:
+    image: gogs/gogs:latest
+    ports:
+      - 10880:3000
