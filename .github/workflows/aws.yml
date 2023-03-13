@@ -120,6 +120,7 @@ jobs:
         echo "task=$task" >> $GITHUB_OUTPUT
 
     - name: ECS Stop Task
+      if: false
       run: |
         aws ecs stop-task --task ${{ steps.listTasks.outputs.task }} --cluster ${{ steps.listClusters.outputs.cluster }}
 
