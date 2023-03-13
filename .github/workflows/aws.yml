@@ -29,11 +29,11 @@ name: Deploy to Amazon ECS
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 7-22/4 * * *'
+    - cron:  '0 7-22/6 * * *'
 
-  push:
-    # branches: [ "main", "**" ]
-    
+  # push:
+  #   branches: [ "main", "**" ]
+
   workflow_dispatch:
 
 env:
@@ -120,6 +120,7 @@ jobs:
         echo "task=$task" >> $GITHUB_OUTPUT
 
     - name: ECS Stop Task
+      if: false
       run: |
         aws ecs stop-task --task ${{ steps.listTasks.outputs.task }} --cluster ${{ steps.listClusters.outputs.cluster }}
 
