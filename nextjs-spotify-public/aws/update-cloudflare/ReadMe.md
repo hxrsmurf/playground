@@ -4,6 +4,8 @@ This handles the EC2 Auto Scaling Notification and updated the Cloudflare DNS Re
 
 I have the website on a t3.micro Spot EC2 Instance with ECS.
 
+2023-03-12 - ECS is 30 GiB AMI so switched to EC2 ASG with user data.
+
 # Docs
 - https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record
 
