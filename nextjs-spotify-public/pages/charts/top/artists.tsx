@@ -36,7 +36,7 @@ export default function ChartArtists(data: any) {
   let color_data_labels = 'white'
   let background_color_data_labels: any = 'rgba(255, 99, 132, 0.5)'
 
-  if (data_type == 'Devices') {
+  if (data_type == 'Devices' || data_type == 'Playlists') {
     color_data_labels = 'black'
     background_color_data_labels = null
   }
@@ -82,7 +82,7 @@ export default function ChartArtists(data: any) {
     },
   }
 
-  if (data.type == 'Devices') {
+  if (data.type == 'Devices' || data.type == 'Playlists') {
     return <Pie options={options} data={chart_data} />
   }
 
