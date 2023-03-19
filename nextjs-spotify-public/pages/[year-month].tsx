@@ -21,6 +21,7 @@ export default function YearMonth(props: any) {
   const top_artists = props.artists
   const top_tracks = props.tracks
   const top_devices = props.devices
+  const top_playlists = props.playlists
 
   if (!year_month_tracks) return <>Invalid Page</>
 
@@ -28,9 +29,32 @@ export default function YearMonth(props: any) {
     <>
       <div className='flex justify-center mt-8'>
         <div className='grid grid-flow-row text-center'>
+          {/* Playlists */}
+          {Object.keys(top_playlists).length == 0 ? (
+            <></>
+          ) : (
+            <div className='pt-8 pb-8'>
+              <TopHeader type='Playlists' year_month={year_month} />
+              {Object.keys(top_playlists).map((playlist: string, id) => (
+                <div
+                  key={id}
+                  className='grid grid-flow-col text-center min-[1400px]:min-w-[400px] min-[1400px]:max-w-[400px] min-[1400px]:pl-44'
+                >
+                  <div className='min-w-[130px] max-w-[130px] text-clip overflow-hidden whitespace-nowrap'>
+                    {playlist}
+                  </div>
+                  <div className='min-[1400px]:pl-44'>
+                    {top_playlists[playlist]}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {/* Playlists */}
+
           {/* Artists */}
           <div>
-            <TopHeader type='Artists' year_month={year_month} />
+            <TopHeader type='Artists' year_month={year_month} clas />
           </div>
           {Object.keys(top_artists).map((artist: string, id) => (
             <div
@@ -44,6 +68,7 @@ export default function YearMonth(props: any) {
             </div>
           ))}
           {/* Artists */}
+
           {/* Tracks */}
           <div className='pt-8'>
             <TopHeader type='Tracks' year_month={year_month} />
@@ -60,6 +85,7 @@ export default function YearMonth(props: any) {
             </div>
           ))}
           {/* Tracks */}
+
           {/* Devices */}
           <div className='pt-8 pb-8'>
             <TopHeader type='Devices' year_month={year_month} />
@@ -75,12 +101,28 @@ export default function YearMonth(props: any) {
               </div>
             ))}
           </div>
-          {/* Devices */}
+        {/* Devices */}
         </div>
+        {/* Table */}
+
         <div>
           {/* Charts */}
           <div className='hidden min-[1400px]:flex min-[1400px]:visible min-[1400px]:justify-center ml-4'>
             <div className='min-w-[800px]'>
+              {/* Chart Playlist */}
+              {Object.keys(top_playlists).length == 0 ? (
+                <></>
+              ) : (
+                <div>
+                  <ChartArtists
+                    data={top_playlists}
+                    year_month={year_month}
+                    type='Playlists'
+                  />
+                </div>
+              )}
+              {/* Chart Playlist */}
+
               {/* Chart Artists */}
               <div>
                 <ChartArtists
@@ -90,6 +132,7 @@ export default function YearMonth(props: any) {
                 />
               </div>
               {/* Chart Artists */}
+
               {/* Chart Tracks */}
               <div>
                 <ChartArtists
@@ -99,6 +142,7 @@ export default function YearMonth(props: any) {
                 />
               </div>
               {/* Chart Tracks */}
+
               {/* Chart Devices */}
               <div>
                 <ChartArtists
@@ -153,7 +197,7 @@ export async function getStaticProps(context: any) {
   }
 
   if (!year_month_tracks) {
-    console.log('Querying Dynamo')
+    console.log('Querying Dynamo', year_month)
 
     year_month_tracks = await dynamodb_get_tracks(year_month)
     if (process.env.REDIS_HOST) {
@@ -164,14 +208,22 @@ export async function getStaticProps(context: any) {
       console.log('Update to Redis:', result_update)
     }
   } else {
-    console.log('Using Redis')
+    console.log('Using Redis', year_month)
   }
 
   const artists = top_artists(year_month_tracks).artists
   const tracks = top_artists(year_month_tracks).output_tracks
   const devices = top_artists(year_month_tracks).output_devices
+  const playlists = top_artists(year_month_tracks).output_playlist
 
   return {
-    props: { year_month, year_month_tracks, artists, tracks, devices }, // will be passed to the page component as props
+    props: {
+      year_month,
+      year_month_tracks,
+      artists,
+      tracks,
+      devices,
+      playlists,
+    }, // will be passed to the page component as props
   }
 }

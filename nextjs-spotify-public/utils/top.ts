@@ -5,6 +5,7 @@ export function top_artists(tracks: any) {
   let track_play_count: any = {}
   let track_name: any = {}
   let device_play_count: any = {}
+  let playlist_play_count: any = {}
 
   tracks.forEach((element: any) => {
     const song_id = element['songID']['S']
@@ -16,6 +17,12 @@ export function top_artists(tracks: any) {
 
     if ('album' in element) {
       album = element['album']['S']
+    }
+
+    let playlist = null
+    if ('playlist_name' in element) {
+      playlist = element['playlist_name']['S']
+      if (playlist == 'none') playlist = "Other"
     }
 
     let device = null
@@ -40,6 +47,10 @@ export function top_artists(tracks: any) {
 
       if (device) {
         device_play_count[device] = device_play_count[device] + 1 || 1
+      }
+
+      if (playlist) {
+        playlist_play_count[playlist] = playlist_play_count[playlist] + 1 || 1
       }
     }
   })
@@ -93,5 +104,11 @@ export function top_artists(tracks: any) {
     output_devices[new_device_name] = device[1]
   })
 
-  return { artists, output_tracks, output_devices }
+  const output_playlist = Object.fromEntries(
+    Object.entries(playlist_play_count)
+      .sort(([, a]: any, [, b]: any) => b - a)
+      .slice(0, 5)
+  )
+
+  return { artists, output_tracks, output_devices, output_playlist }
 }
