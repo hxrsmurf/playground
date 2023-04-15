@@ -117,6 +117,7 @@ jobs:
       run: |
         asg=$(aws autoscaling describe-auto-scaling-instances --query "AutoScalingInstances[?AutoScalingGroupName=='nextjs-spotify-public'].InstanceId" --output text)
         echo "asg=$asg" >> $GITHUB_OUTPUT
+        echo "asg=$asg" >> $GITHUB_STEP_SUMMARY
 
     - name: ECS List Clusters
       id: listClusters
