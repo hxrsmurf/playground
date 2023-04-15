@@ -31,8 +31,8 @@ on:
     # * is a special character in YAML so you have to quote this string
     - cron:  '0 7-22/6 * * *'
 
-  # push:
-  #   branches: [ "main", "**" ]
+  push:
+    branches: [ "nextjs-spotify-public/*"]
 
   workflow_dispatch:
 
@@ -110,6 +110,13 @@ jobs:
           DEVICE_SAMSUNG=${{ secrets.DEVICE_SAMSUNG }}
           LATEST_MONTH=${{ secrets.LATEST_MONTH }}
           LATEST_YEAR=${{ secrets.LATEST_YEAR }}
+
+    - name: EC2 List AutoScaling Group
+      id: listASG
+      if: true
+      run: |
+        asg=$(aws autoscaling describe-auto-scaling-instances --query "AutoScalingInstances[?AutoScalingGroupName=='nextjs-spotify-public'")
+        echo "asg=$asg" >> $GITHUB_OUTPUT
 
     - name: ECS List Clusters
       id: listClusters
