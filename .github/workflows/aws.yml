@@ -121,10 +121,11 @@ jobs:
 
     - name: Set ASG Instance Unhealthy
       id: setASGUnhealthy
+      env:
+        instance_id: ${{ steps.listAsg.outputs.asg }}
       if: true
       run: |
-        echo ${{ steps.listAsg.outputs.asg }}
-        echo ${{ steps.listAsg.outputs.asg }} >> $GITHUB_STEP_SUMMARY
+        aws autoscaling set-instance-health $instance_id --health-status "Unhealthy" --no-should-respect-grace-period
 
     - name: ECS List Clusters
       id: listClusters
