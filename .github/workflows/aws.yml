@@ -24,15 +24,15 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to Amazon ECS
+name: Deploy to AWS ECR and EC2
 
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '0 7-22/6 * * *'
 
-  push:
-    branches: [ "nextjs-spotify-public/*"]
+  # push:
+  #   branches: [ "nextjs-spotify-public/*"]
 
   workflow_dispatch:
 
@@ -59,7 +59,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      if: false
+      if: true
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -71,16 +71,16 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-      if: false
+      if: true
 
     - name: Setup Docker buildx
       uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
-      if: false
+      if: true
 
     - name: Delete Year
       working-directory: nextjs-spotify-public
       run: rm -rf pages/2022.tsx
-      if: false
+      if: true
 
     - name: Build and push Docker image
       id: build-and-push
@@ -88,7 +88,7 @@ jobs:
       uses: docker/build-push-action@v4
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      if: false
+      if: true
       with:
         context: nextjs-spotify-public
         file: ./nextjs-spotify-public/Dockerfile
