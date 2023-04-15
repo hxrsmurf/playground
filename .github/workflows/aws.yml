@@ -59,6 +59,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      if: false
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -70,13 +71,16 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      if: false
 
     - name: Setup Docker buildx
       uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+      if: false
 
     - name: Delete Year
       working-directory: nextjs-spotify-public
       run: rm -rf pages/2022.tsx
+      if: false
 
     - name: Build and push Docker image
       id: build-and-push
@@ -84,6 +88,7 @@ jobs:
       uses: docker/build-push-action@v4
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      if: false
       with:
         context: nextjs-spotify-public
         file: ./nextjs-spotify-public/Dockerfile
@@ -108,12 +113,14 @@ jobs:
 
     - name: ECS List Clusters
       id: listClusters
+      if: false
       run: |
         cluster=$(aws ecs list-clusters | jq .clusterArns[0])
         echo "cluster=$cluster" >> $GITHUB_OUTPUT
 
     - name: ECS List Tasks
       id: listTasks
+      if: false
       run: |
         task=$(aws ecs list-tasks --cluster ${{ steps.listClusters.outputs.cluster }} | jq .taskArns[0])
         echo $task
