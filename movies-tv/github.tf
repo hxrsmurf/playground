@@ -81,6 +81,34 @@ resource "aws_iam_role" "iam_for_github" {
       }
     )
   }
+
+  inline_policy {
+    name = "APIGateway"
+    policy = jsonencode(
+      {
+        Statement = [
+          {
+            Action = [
+              "apigateway:GET"
+            ]
+            Effect = "Allow"
+            Resource = [
+                "arn:aws:apigateway:us-east-1::/apis/da3g2wpi27",
+                "arn:aws:apigateway:us-east-1::/apis/da3g2wpi27/*"
+            ]
+          },
+          {
+            Action = [
+              "apigateway:Delete*"
+            ]
+            Effect   = "Deny"
+            Resource = ["*"]
+          },
+        ]
+        Version = "2012-10-17"
+      }
+    )
+  }
 }
 
 output "iam_for_github" {
