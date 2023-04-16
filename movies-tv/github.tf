@@ -30,9 +30,21 @@ resource "aws_iam_role" "iam_for_github" {
       {
         Statement = [
           {
-            Action   = ["iam:GetRole", "iam:ListRolePolicies"]
-            Effect   = "Allow"
-            Resource = ["arn:aws:iam::195663387853:role/movies-tv-github", "arn:aws:iam::195663387853:role/movies-tv-twilio-role-vker147g"]
+            Action = [
+              "iam:*",
+            ]
+            Effect = "Allow"
+            Resource = [
+              "arn:aws:iam::195663387853:role/movies-tv-github",
+              "arn:aws:iam::195663387853:role/movies-tv-twilio-role-vker147g"
+            ]
+          },
+          {
+            Action = [
+              "iam:Delete*"
+            ]
+            Effect   = "Deny"
+            Resource = ["*"]
           },
         ]
         Version = "2012-10-17"
