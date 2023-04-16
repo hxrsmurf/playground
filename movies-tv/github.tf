@@ -93,13 +93,40 @@ resource "aws_iam_role" "iam_for_github" {
             ]
             Effect = "Allow"
             Resource = [
-                "arn:aws:apigateway:us-east-1::/apis/da3g2wpi27",
-                "arn:aws:apigateway:us-east-1::/apis/da3g2wpi27/*"
+              "arn:aws:apigateway:us-east-1::/apis/da3g2wpi27",
+              "arn:aws:apigateway:us-east-1::/apis/da3g2wpi27/*"
             ]
           },
           {
             Action = [
               "apigateway:Delete*"
+            ]
+            Effect   = "Deny"
+            Resource = ["*"]
+          },
+        ]
+        Version = "2012-10-17"
+      }
+    )
+  }
+
+  inline_policy {
+    name = "DynamoDB"
+    policy = jsonencode(
+      {
+        Statement = [
+          {
+            Action = [
+              "dynamodb:*"
+            ]
+            Effect = "Allow"
+            Resource = [
+              "arn:aws:dynamodb:us-east-1:195663387853:table/moveies-tv" # Yes I spelled that wrong.
+            ]
+          },
+          {
+            Action = [
+              "dynamodb:Delete*"
             ]
             Effect   = "Deny"
             Resource = ["*"]
