@@ -2,9 +2,9 @@ name: 'Movies and TV'
 
 on:
   push:
-    branches: [ "movies-tv/*" ]
-    # paths:
-    #   - 'movies-tv/**'
+    branches: [ "movies-tv/*", "main" ]
+    paths:
+      - 'movies-tv/**'
 
 permissions:
   contents: read
@@ -28,7 +28,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Configure Aws Credentials
+    - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
         role-to-assume: ${{ vars.ROLE }}
