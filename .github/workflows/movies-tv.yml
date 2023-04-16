@@ -3,8 +3,8 @@ name: 'Movies and TV'
 on:
   push:
     branches: [ "movies-tv/*" ]
-    paths:
-      - ./movies-tv
+    # paths:
+    #   - 'movies-tv/**'
 
 permissions:
   contents: read
