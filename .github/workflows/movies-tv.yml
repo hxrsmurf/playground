@@ -3,7 +3,7 @@ name: 'Movies and TV'
 on:
   push:
     branches: [ "movies-tv/*" ]
-    path:
+    paths:
       - movies-tv
 
 permissions:
