@@ -32,7 +32,7 @@ resource "aws_iam_role" "iam_for_github" {
           {
             Action   = "iam:GetRole"
             Effect   = "Allow"
-            Resource = "arn:aws:iam::195663387853:role/movies-tv-github"
+            Resource = ["arn:aws:iam::195663387853:role/movies-tv-github", "arn:aws:iam::195663387853:role/movies-tv-twilio-role-vker147g"]
           },
         ]
         Version = "2012-10-17"
