@@ -32,6 +32,9 @@ resource "aws_iam_role" "iam_for_github" {
           {
             Action = [
               "iam:*",
+              "iam:GetRole",
+              "iam:GetRolePolicy",
+              "iam:ListRolePolicies"
             ]
             Effect = "Allow"
             Resource = [
