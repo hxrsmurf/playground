@@ -51,6 +51,33 @@ resource "aws_iam_role" "iam_for_github" {
       }
     )
   }
+
+  inline_policy {
+    name = "Lambda"
+    policy = jsonencode(
+      {
+        Statement = [
+          {
+            Action = [
+              "lambda:*",
+            ]
+            Effect = "Allow"
+            Resource = [
+              "arn:aws:lambda:us-east-1:195663387853:function:movies-tv-twilio",
+            ]
+          },
+          {
+            Action = [
+              "lambda:Delete*"
+            ]
+            Effect   = "Deny"
+            Resource = ["*"]
+          },
+        ]
+        Version = "2012-10-17"
+      }
+    )
+  }
 }
 
 output "iam_for_github" {
