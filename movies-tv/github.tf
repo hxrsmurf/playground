@@ -31,15 +31,15 @@ resource "aws_iam_role" "iam_for_github" {
         Statement = [
           {
             Action = [
-              "iam:*",
               "iam:GetRole",
               "iam:GetRolePolicy",
-              "iam:ListRolePolicies"
+              "iam:ListRolePolicies",
+              "iam:ListAttachedRolePolicies"
             ]
             Effect = "Allow"
             Resource = [
               "arn:aws:iam::195663387853:role/movies-tv-github",
-              "arn:aws:iam::195663387853:role/movies-tv-twilio-role-vker147g"
+              "arn:aws:iam::195663387853:role/service-role/movies-tv-twilio-role-vker147g"
             ]
           },
           {

@@ -65,3 +65,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 output "lambda" {
   value = aws_lambda_function.function.arn
 }
+
+output "iam_for_lambda" {
+  value = aws_iam_role.iam_for_lambda.arn
+}
