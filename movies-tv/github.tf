@@ -37,7 +37,8 @@ resource "aws_iam_role" "iam_for_github" {
               "iam:GetRole",
               "iam:GetRolePolicy",
               "iam:ListRolePolicies",
-              "iam:ListAttachedRolePolicies"
+              "iam:ListAttachedRolePolicies",
+              "iam:UpdateAssumeRolePolicy"
             ]
             Effect = "Allow"
             Resource = [
