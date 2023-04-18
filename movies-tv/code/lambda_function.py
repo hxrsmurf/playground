@@ -4,7 +4,6 @@ import time
 from dynamodb import write
 
 def lambda_handler(event, context):
-    #print(event)
     event_body = str((base64.b64decode(event['body'])), "utf-8")
     parsed_message = event_body.split("&")
 
@@ -23,12 +22,14 @@ def lambda_handler(event, context):
             actual_message = split_message[1]
 
     write(time.time(), message_type, actual_message, user)
-    print(time.time(), message_type, actual_message, user)
 
     formatted_message_type = message_type.lower()
 
     if message_type == "TV":
         formatted_message_type = "tv episode"
+
+    if message_type == "Book":
+        formatted_message_type = "book"
 
     response_body = f"Enjoy that {formatted_message_type}!"
 
