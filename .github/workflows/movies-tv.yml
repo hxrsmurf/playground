@@ -5,6 +5,7 @@ on:
     branches: [ "movies-tv/*", "main" ]
     paths:
       - 'movies-tv/**'
+      - '.github/workflows/movies-tv.yml'
   workflow_dispatch:
 
 permissions:
