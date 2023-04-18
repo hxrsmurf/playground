@@ -7,6 +7,9 @@ resource "aws_iam_role" "iam_for_github" {
           Condition = {
             StringEquals = {
               "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+            },
+            StringEquals = {
+              "token.actions.githubusercontent.com:sub" = "repo:hxrsmurf/playground-repo:ref:refs/heads/*"
             }
           }
           Effect = "Allow"
