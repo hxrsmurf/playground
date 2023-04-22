@@ -7,6 +7,9 @@ resource "aws_iam_role" "iam_for_github" {
           Condition = {
             StringEquals = {
               "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+            },
+            StringLike = {
+              "token.actions.githubusercontent.com:sub" = "repo:hxrsmurf/playground-repo:*"
             }
           }
           Effect = "Allow"
@@ -18,6 +21,7 @@ resource "aws_iam_role" "iam_for_github" {
       Version = "2012-10-17"
     }
   )
+
   description          = "GitHub role for playground-repo/movies-tv"
   managed_policy_arns  = []
   max_session_duration = 3600
@@ -34,7 +38,8 @@ resource "aws_iam_role" "iam_for_github" {
               "iam:GetRole",
               "iam:GetRolePolicy",
               "iam:ListRolePolicies",
-              "iam:ListAttachedRolePolicies"
+              "iam:ListAttachedRolePolicies",
+              "iam:UpdateAssumeRolePolicy"
             ]
             Effect = "Allow"
             Resource = [
