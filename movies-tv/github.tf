@@ -9,7 +9,7 @@ resource "aws_iam_role" "iam_for_github" {
               "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
             },
             StringLike = {
-              "token.actions.githubusercontent.com:sub" = "repo:hxrsmurf/playground-repo:ref:refs/heads/*"
+              "token.actions.githubusercontent.com:sub" = "repo:hxrsmurf/playground-repo:*"
             }
           }
           Effect = "Allow"
