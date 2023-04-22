@@ -21,6 +21,7 @@ resource "aws_iam_role" "iam_for_github" {
       Version = "2012-10-17"
     }
   )
+
   description          = "GitHub role for playground-repo/movies-tv"
   managed_policy_arns  = []
   max_session_duration = 3600
