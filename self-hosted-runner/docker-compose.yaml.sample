@@ -1,0 +1,11 @@
+services:
+  runner:
+    build:
+      context: .
+      args:
+        RUNNER_VERSION: '2.304.0'
+    environment:
+      GH_OWNER: hxrsmurf
+      GH_REPOSITORY: playground-repo
+      GH_TOKEN: example
+    scale: 4
