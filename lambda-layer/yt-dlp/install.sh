@@ -1,0 +1,1 @@
+pip install --target ./yt-dlp/python yt-dlp
