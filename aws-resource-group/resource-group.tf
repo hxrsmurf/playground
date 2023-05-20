@@ -1,5 +1,5 @@
 resource "aws_resourcegroups_group" "test" {
-  name = "resource-group-testing"
+  name = var.name
 
   resource_query {
     query = <<JSON
@@ -10,7 +10,9 @@ resource "aws_resourcegroups_group" "test" {
   "TagFilters": [
     {
       "Key": "Project",
-      "Values": ["resource-group-testing"]
+      "Values": [
+          "resource-group-testing"
+      ]
     }
   ]
 }
