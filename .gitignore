@@ -18,3 +18,4 @@ private-variables.tf
 env
 docker-compose.yaml
 aws-ecs-spot/build.sh
+nginx-rtmp/tmp/
