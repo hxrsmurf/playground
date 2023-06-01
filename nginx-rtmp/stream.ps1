@@ -1,0 +1,1 @@
+ffmpeg -re -i 'video.mp4' -c:v libx264 -c:a aac -ar 44100 -ac 1 -f flv rtmp://localhost/live/stream
