@@ -10,12 +10,15 @@ def post(data):
         'authorization': 'meow'
     }
     title = data['title']
-    response = requests.post(
-        'http://localhost:3000/api/journal',
-        json={title: json.dumps(data)},
-        headers=headers
-    )
-    return response.status_code
+    prod = False
+
+    if prod:
+        response = requests.post(
+            'http://localhost:3000/api/journal',
+            json={title: json.dumps(data)},
+            headers=headers
+        )
+        return response.status_code
 
 
 def convert_title(file):
@@ -24,6 +27,11 @@ def convert_title(file):
     try:
         return datetime.datetime.strptime(split_file, "%m-%d-%Y").strftime('%Y-%m-%d')
     except:
+        try:
+            # 12_15_2021 - Unknown.md
+            return datetime.datetime.strptime(split_file, "%m_%d_%Y").strftime('%Y-%m-%d')
+        except:
+            print(f'Exception:', file)
         return None
 
 
