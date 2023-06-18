@@ -36,8 +36,8 @@ export default function page({
       <div>
         <div>Journal Entries for {page_title}</div>
         {days_in_month.map((day, key) => (
-          <div>
-            <div key={key} className='mt-2'>
+          <div key={key} className='mt-2'>
+            <div>
               <Link href={day.day.replace('-', '/')}>
                 {day.day + ' - ' + day.weekday}
               </Link>
