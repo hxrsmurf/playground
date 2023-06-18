@@ -10,8 +10,10 @@ export default function JournalForm() {
   }
   const { user } = useUser()
 
+  const timestamp = new Date().getTime()
+
   const handleSubmit = () => {
-    console.log(user['id'], journal)
+    console.log(user['id'], timestamp, journal)
     setJournal('')
   }
 
