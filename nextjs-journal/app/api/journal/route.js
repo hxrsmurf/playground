@@ -1,3 +1,4 @@
+import { todayPage } from '@/lib/utils'
 import { NextResponse } from 'next/server'
 import { createClient } from 'redis'
 export async function POST(request) {
@@ -8,9 +9,8 @@ export async function POST(request) {
   await client.connect()
 
   const data = await request.json()
-  // const existing_data = await client.hGetAll(data['user'])
-  console.log(data['user'])
-  await client.sAdd(data['user'], JSON.stringify(data))
+  const redis_key = data['user'] + '-' + todayPage()
+  await client.sAdd(redis_key, JSON.stringify(data))
   return NextResponse.json({ body: 'SUCCESS' })
 }
 
