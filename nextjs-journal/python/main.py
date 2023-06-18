@@ -10,9 +10,10 @@ def post(data):
         'authorization': 'meow'
     }
     title = data['title']
-    prod = False
+    prod = True
 
     if prod:
+        print(title)
         response = requests.post(
             'http://localhost:3000/api/journal',
             json={title: json.dumps(data)},
