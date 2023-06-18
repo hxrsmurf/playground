@@ -1,10 +1,29 @@
+'use client'
+
+import { useState } from 'react'
+
 export default function JournalForm() {
+  const [journal, setJournal] = useState('')
+  const handleUpdate = (e: any) => {
+    setJournal(e.target.value)
+  }
+  const handleSubmit = () => {
+    setJournal('')
+  }
   return (
     <div className='mt-4'>
       <form className='text-black min-w-[400px]'>
-        <textarea rows={10}>Journal entry</textarea>
+        <textarea
+          id='textarea'
+          rows={10}
+          onChange={(e) => handleUpdate(e)}
+          value={journal}
+        ></textarea>
       </form>
-      <button className='mt-4 rounded-full bg-blue-300 text-black min-w-[200px] min-h-[30px]'>
+      <button
+        className='mt-4 rounded-full bg-blue-300 text-black min-w-[200px] min-h-[30px]'
+        onClick={() => handleSubmit()}
+      >
         Submit
       </button>
     </div>
