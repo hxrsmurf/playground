@@ -8,9 +8,9 @@ export default function EditForm(data: {
 }) {
   const [showEdit, setShowEdit] = useState(true)
   const [newContent, setNewContent]: any = useState()
-  const [newYearMonthDay, setNewYearMonthDay] : any = useState()
+  const [newYearMonthDay, setNewYearMonthDay]: any = useState()
 
-  const {user} = useUser()
+  const { user } = useUser()
   const handleClick = () => {
     const year_month_day = data.data.year_month_day
     const content = data.data.content
@@ -25,18 +25,22 @@ export default function EditForm(data: {
     const submit_data = {
       timestamp: new Date().getTime(),
       content: newContent,
-      title: newYearMonthDay
+      title: newYearMonthDay,
     }
     await fetch('http://localhost:3000/api/journal', {
       method: 'POST',
       body: JSON.stringify(submit_data),
       headers: {
         'Content-Type': 'application/json',
-        user: user!['id']
-      }
+        user: user!['id'],
+      },
     })
     setNewContent('')
     setNewYearMonthDay('')
+    setShowEdit(true)
+  }
+
+  const handleCancel = () => {
     setShowEdit(true)
   }
 
@@ -56,6 +60,12 @@ export default function EditForm(data: {
           onClick={() => handleSubmit()}
         >
           Submit
+        </button>
+        <button
+          className='mt-4 rounded-full bg-yellow-400 text-black min-w-[200px] min-h-[30px]'
+          onClick={() => handleCancel()}
+        >
+          Cancel
         </button>
       </div>
     )
