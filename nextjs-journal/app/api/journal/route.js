@@ -31,12 +31,14 @@ export async function POST(request) {
     console.log('Error with Headers Users: ', error)
   }
 
-  if (!user)
+  if (!user) {
+    console.log('No user')
     return NextResponse.json({ body: 'Failure, no user', statusCode: 500 })
+  }
 
   try {
     await client.hSet(user, data)
-    console.log('Wrote to Redis', data)
+    console.log('Wrote to Redis')
   } catch (error) {
     console.log('Error when hSet', error)
   }
