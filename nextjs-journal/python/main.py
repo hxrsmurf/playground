@@ -4,14 +4,6 @@ import datetime
 import requests
 
 
-def remove_extension(file):
-    trim = file.split(' ')
-    only_date = trim[0]
-    formatted_date = datetime.datetime.strptime(
-        only_date, "%m-%d-%Y").strftime('%Y-%m-%d')
-    return formatted_date
-
-
 def post(data):
     headers = {
         'authorization': 'meow'
@@ -32,6 +24,7 @@ def convert_title(file):
         return datetime.datetime.strptime(split_file, "%m-%d-%Y").strftime('%Y-%m-%d')
     except:
         return None
+
 
 def get_all_files():
     list_all_files = []
