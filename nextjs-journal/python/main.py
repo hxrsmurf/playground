@@ -41,8 +41,17 @@ def convert_title(file, root):
                 split_file = ' '.join(file.split(' ')[0:2]) + ' ' + year
                 return datetime.datetime.strptime(split_file, "%B %d %Y").strftime('%Y-%m-%d')
             except:
-                full_path = f'{root}\{file}'
-                print(f'Convert Title Exception:', full_path)
+                try:
+                    # 2019\06 - June\June 01.md
+                    full_path = f'{root}\{file}'
+                    split_year = full_path.split('\\')
+                    for y in split_year:
+                        if len(y) == 4:
+                            year = y
+                    split_file = file.split('.')[0] + ' ' + year
+                    return datetime.datetime.strptime(split_file, "%B %d %Y").strftime('%Y-%m-%d')
+                except:
+                    print(f'Convert Title Exception:', file, root, split_file)
         return None
 
 
