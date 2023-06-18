@@ -28,7 +28,7 @@ export default async function Page({
   const day = params.day
 
   const year_month_day: any = year + '-' + month + '-' + day
-  const weekday: string = moment([year, month-1, day]).format('dddd')
+  const weekday: string = moment([year, month - 1, day]).format('dddd')
 
   console.log(weekday)
 
@@ -42,32 +42,40 @@ export default async function Page({
   return (
     <div className='flex justify-center mt-14'>
       <div>
-        <div>
+        <div className='flex justify-center'>
           <Link className='font-bold' href={'/'}>
             Home
           </Link>
         </div>
-        <div className='mt-4'>
-          Journal for <Link href={'/' + year}>{year}</Link> {' --> '}
-          <Link href={'/' + year + '/' + month}>{month}</Link>
-          {' --> '}
-          {day} {' --> '}
-          {weekday}
+        <div className='flex justify-center mt-4 mb-8'>
+          <div>
+            Journal for<Link href={'/' + year}> {year}</Link> {' --> '}
+            <Link href={'/' + year + '/' + month}>{month}</Link>
+            {' --> '}
+            {day} {' --> '}
+            {weekday}
+          </div>
         </div>
         <div className='mt-4'>
           {content ? (
-            <>
-              <div className='whitespace-pre-line max-w-[1000px]'>
-                {content}
+            <div className='flex justify-center'>
+              <div className='grid grid-flow-row'>
+                <div className='whitespace-pre-line min-w-[1000px] max-w-[1000px] flex justify-center'>
+                  {content}
+                </div>
+                <div className='mt-10 flex justify-center'>
+                  <EditForm
+                    data={{ year_month_day: year_month_day, content: content }}
+                  />
+                </div>
               </div>
-              <div className='mt-10'>
-                <EditForm
-                  data={{ year_month_day: year_month_day, content: content }}
-                />
-              </div>
-            </>
+            </div>
           ) : (
-            <JournalForm entry={year_month_day} />
+            <div className='flex justify-center'>
+              <div className='min-w-[1000px] max-w-[1000px] flex justify-center pl-40'>
+                <JournalForm entry={year_month_day} />
+              </div>
+            </div>
           )}
         </div>
         <div className='mt-8'>
