@@ -18,21 +18,25 @@ export async function POST(request) {
 
   try {
     user = headersList.get('user')
-    const json_response = await request.json()
-    data = { [json_response['title']]: JSON.stringify(json_response) }
-    frontend = true
-
-  } catch (error) {
-    console.log('Error with Headers Users: ', error)
-    try {
+    if (user) {
+      const json_response = await request.json()
+      data = { [json_response['title']]: JSON.stringify(json_response) }
+      frontend = true
+    } else {
       const authorization = headersList.get('authorization')
       user = await client.get(authorization)
       data = await request.json()
-    } catch (error) {}
+    }
+  } catch (error) {
+    console.log('Error with Headers Users: ', error)
   }
+
+  if (!user)
+    return NextResponse.json({ body: 'Failure, no user', statusCode: 500 })
 
   try {
     await client.hSet(user, data)
+    console.log('Wrote to Redis', data)
   } catch (error) {
     console.log('Error when hSet', error)
   }
