@@ -31,7 +31,12 @@ def convert_title(file):
             # 12_15_2021 - Unknown.md
             return datetime.datetime.strptime(split_file, "%m_%d_%Y").strftime('%Y-%m-%d')
         except:
-            print(f'Exception:', file)
+            try:
+                # January 01 - Monday.md
+                split_file = ' '.join(file.split(' ')[0:2])
+                return datetime.datetime.strptime(split_file, "%B %d")
+            except:
+                print(f'Exception:', file)
         return None
 
 
@@ -54,7 +59,7 @@ def get_all_files():
                         'tag': file['tag']
                     })
 
-        return list_all_files
+    return list_all_files
 
 
 def get_file_content(full_path):
