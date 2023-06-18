@@ -2,6 +2,7 @@
 
 import { useUser } from '@clerk/nextjs'
 import { useState } from 'react'
+import { todayPage } from '../lib/utils'
 
 export default function JournalForm() {
   const [journal, setJournal] = useState('')
@@ -11,9 +12,10 @@ export default function JournalForm() {
   const { user } = useUser()
 
   const timestamp = new Date().getTime()
+  const today_page = todayPage()
 
   const handleSubmit = () => {
-    console.log(user['id'], timestamp, journal)
+    console.log(user['id'], timestamp, today_page, journal)
     setJournal('')
   }
 
