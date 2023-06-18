@@ -23,12 +23,12 @@ export default async function Page({
   params: { year: string; month: string; day: string }
 }) {
   // { year: '2023', month: '06', day: '18' }
-  const year = params.year
-  const month = params.month
-  const day = params.day
+  const year: string = params.year
+  const month: string = params.month
+  const day: string = params.day
 
   const year_month_day: any = year + '-' + month + '-' + day
-  const weekday: string = moment([year, month - 1, day]).format('dddd')
+  const weekday: string = moment([year, Number(month) - 1, day]).format('dddd')
 
   console.log(weekday)
 
