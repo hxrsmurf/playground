@@ -1,20 +1,26 @@
 import os
-from os.path import join, getsize
 import datetime
 import requests
+import concurrent.futures
 
 
 def post(data):
     headers = {
         'authorization': 'meow'
     }
+    response = requests.post(
+        'http://localhost:3000/api/journal',
+        json=data,
+        headers=headers
+    )
+    return response.status_code
 
-    for d in data:
-        date = d['file']
-        content = d['content']
-        response = requests.post(
-            'http://localhost:3000/api/journal', json=d, headers=headers)
-        print(response)
+    # for d in data:
+    #     date = d['file']
+    #     content = d['content']
+    #     response = requests.post(
+    #         'http://localhost:3000/api/journal', json=d, headers=headers)
+    #     print(response)
 
 
 def convert_title(file):
@@ -46,9 +52,11 @@ def get_all_files():
 
     return list_all_files
 
+
 def get_file_content(full_path):
     with open(full_path, 'r') as file:
         return file.read()
+
 
 def main():
     all_files = get_all_files()
@@ -57,9 +65,10 @@ def main():
     for file in all_files:
         file['content'] = get_file_content(file['full_path'])
         all_files_with_content.append(file)
-        break
 
-    print(all_files_with_content)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+        futures_to_url = {executor.submit(
+            post, file): file for file in all_files_with_content}
 
 
 if __name__ == "__main__":
