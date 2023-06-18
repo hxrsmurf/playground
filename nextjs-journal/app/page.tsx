@@ -28,6 +28,9 @@ export default async function Home() {
             {dates.day}
           </Link>
         </div>
+        <div>
+          <Link href={'/previous-years'}>Previous Years</Link>
+        </div>
       </div>
     </div>
   )
