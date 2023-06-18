@@ -1,5 +1,6 @@
 'use client'
 
+import { useUser } from '@clerk/nextjs'
 import { useState } from 'react'
 
 export default function JournalForm() {
@@ -7,9 +8,13 @@ export default function JournalForm() {
   const handleUpdate = (e: any) => {
     setJournal(e.target.value)
   }
+  const { user } = useUser()
+
   const handleSubmit = () => {
+    console.log(user['id'], journal)
     setJournal('')
   }
+
   return (
     <div className='mt-4'>
       <form className='text-black min-w-[400px]'>
