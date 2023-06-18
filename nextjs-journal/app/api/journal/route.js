@@ -9,7 +9,7 @@ export async function POST(request) {
   await client.connect()
 
   const data = await request.json()
-  const redis_key = data['user'] + '-' + todayPage()
+  const redis_key = data['user'] + '-' + todayPage().today_page
   await client.sAdd(redis_key, JSON.stringify(data))
   return NextResponse.json({ body: 'SUCCESS' })
 }
