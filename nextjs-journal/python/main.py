@@ -46,12 +46,20 @@ def get_all_files():
 
     return list_all_files
 
+def get_file_content(full_path):
+    with open(full_path, 'r') as file:
+        return file.read()
 
 def main():
     all_files = get_all_files()
+    all_files_with_content = []
+
     for file in all_files:
-        print(file)
+        file['content'] = get_file_content(file['full_path'])
+        all_files_with_content.append(file)
         break
+
+    print(all_files_with_content)
 
 
 if __name__ == "__main__":
