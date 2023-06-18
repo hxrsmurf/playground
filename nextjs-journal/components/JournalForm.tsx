@@ -15,7 +15,7 @@ export default function JournalForm() {
   const today_page = todayPage()
 
   const handleSubmit = () => {
-    console.log(user['id'], timestamp, today_page, journal)
+    console.log(user!['id'], timestamp, today_page, journal)
     setJournal('')
   }
 
