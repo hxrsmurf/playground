@@ -45,7 +45,6 @@ def get_all_files():
                         'title': title,
                         'tag': file['tag']
                     })
-                    break
 
         return list_all_files
 
