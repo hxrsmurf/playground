@@ -18,14 +18,21 @@ export default function JournalForm() {
   const timestamp = new Date().getTime()
   const today_page = todayPage()
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const submit_data = {
-      'user': user_id,
-      'timestamp': timestamp,
-      'entry': journal,
-      'today_page': today_page
+      user: user_id,
+      timestamp: timestamp,
+      entry: journal,
+      today_page: today_page,
     }
     console.log(submit_data)
+    await fetch('http://localhost:3000/api/journal', {
+      method: 'POST',
+      body: JSON.stringify(submit_data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     setJournal('')
   }
 
