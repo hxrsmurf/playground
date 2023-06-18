@@ -34,6 +34,9 @@ export default function page({
   return (
     <div className='flex justify-center mt-14'>
       <div>
+        <div className='m-4 font-bold'>
+          <Link href={'/'}>Home</Link>
+        </div>
         <div>Journal Entries for {page_title}</div>
         {days_in_month.map((day, key) => (
           <div key={key} className='mt-2'>
