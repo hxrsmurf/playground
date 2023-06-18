@@ -47,7 +47,8 @@ def get_all_files():
                 list_all_files.append({
                     'full_path': f'{root}\{file}',
                     'root': root,
-                    'file': file
+                    'file': file,
+                    'title': title
                 })
 
     return list_all_files
