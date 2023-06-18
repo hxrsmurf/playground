@@ -1,7 +1,11 @@
 version: '3.3'
 services:
-  nextjs:
-    build:
-      context: .
+  redis:
+    image: redis
     ports:
-      - 3005:3000
+      - 6379:6379
+  # nextjs:
+  #   build:
+  #     context: .
+  #   ports:
+  #     - 3005:3000
