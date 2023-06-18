@@ -1,24 +1,22 @@
-import { todayPage } from '@/lib/utils'
 import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
-
 import { createClient } from 'redis'
+
 export async function POST(request) {
   const client = createClient({
     url: 'redis://' + process.env.REDIS_SERVER + ':6379',
     legacyMode: false,
   })
-  await client.connect()
 
-  const data = await request.json()
+  await client.connect()
 
   const headersList = headers()
   const authorization = headersList.get('authorization')
   const user = await client.get(authorization, 0)
-  const file = data['file']
-  const redis_key = user + '-' + file
 
-  await client.sAdd(redis_key, JSON.stringify(data))
+  const data = await request.json()
+  await client.hSet(user, data)
+
   return NextResponse.json({ body: 'SUCCESS' })
 }
 

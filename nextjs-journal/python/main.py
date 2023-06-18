@@ -2,26 +2,20 @@ import os
 import datetime
 import requests
 import concurrent.futures
+import json
 
 
 def post(data):
     headers = {
         'authorization': 'meow'
     }
+    title = data['title']
     response = requests.post(
         'http://localhost:3000/api/journal',
-        json=data,
+        json={title: json.dumps(data)},
         headers=headers
     )
     return response.status_code
-
-    # for d in data:
-    #     date = d['file']
-    #     content = d['content']
-    #     response = requests.post(
-    #         'http://localhost:3000/api/journal', json=d, headers=headers)
-    #     print(response)
-
 
 def convert_title(file):
     # 01-02-2023 - Monday.md
