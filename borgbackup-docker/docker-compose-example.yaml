@@ -1,0 +1,9 @@
+services:
+  borg:
+    build: .
+    volumes:
+      - ./Obsidian:/mnt/obsidian
+    environment:
+      - BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=y
+      - BORG_FOLDER=/mnt/obsidian/borg
+      - BACKUP_FOLDER=/mnt/obsidian/Kevin
