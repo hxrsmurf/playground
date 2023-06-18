@@ -21,7 +21,7 @@ def post(data):
         return response.status_code
 
 
-def convert_title(file):
+def convert_title(file, root):
     # 01-02-2023 - Monday.md
     split_file = file.split(' ')[0]
     try:
@@ -32,11 +32,16 @@ def convert_title(file):
             return datetime.datetime.strptime(split_file, "%m_%d_%Y").strftime('%Y-%m-%d')
         except:
             try:
-                # January 01 - Monday.md
-                split_file = ' '.join(file.split(' ')[0:2])
-                return datetime.datetime.strptime(split_file, "%B %d")
+                # 2019\01 - January\January 01 - Monday.md
+                full_path = f'{root}\{file}'
+                split_year = full_path.split('\\')
+                for y in split_year:
+                    if len(y) == 4:
+                        year = y
+                split_file = ' '.join(file.split(' ')[0:2]) + ' ' + year
+                return datetime.datetime.strptime(split_file, "%B %d %Y").strftime('%Y-%m-%d')
             except:
-                print(f'Exception:', file)
+                print(f'Convert Title Exception:', file)
         return None
 
 
@@ -49,7 +54,10 @@ def get_all_files():
     for file in json_file:
         for root, dirs, files in os.walk(file['path']):
             for f in files:
-                title = convert_title(f)
+                if "Year In Review" in root:
+                    pass
+
+                title = convert_title(f, root)
                 if title:
                     list_all_files.append({
                         'full_path': f'{root}\{f}',
@@ -63,8 +71,11 @@ def get_all_files():
 
 
 def get_file_content(full_path):
-    with open(full_path, 'r') as file:
-        return file.read()
+    try:
+        with open(full_path, 'r', encoding="utf-8") as file:
+            return file.read()
+    except Exception as e:
+        print('Read File error:', full_path, e)
 
 
 def main():
