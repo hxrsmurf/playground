@@ -44,10 +44,14 @@ export async function GET(request) {
 
   if (!user) return new Response('Not valid API Key')
 
-  const testing = await client.sScan(user, 0)
+  const entries = await client.hGetAll(user)
 
   const list_of_entries = []
-  testing['members'].map((entry) => list_of_entries.push(JSON.parse(entry)))
+  {
+    Object.entries(entries).map((entry) =>
+      list_of_entries.push({ title: entry[0], content: JSON.parse(entry[1]) })
+    )
+  }
 
   return new Response(JSON.stringify(list_of_entries), {
     status: 200,
