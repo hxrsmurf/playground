@@ -1,3 +1,4 @@
+import EditForm from '@/components/EditForm'
 import JournalForm from '@/components/JournalForm'
 import { currentUser } from '@clerk/nextjs'
 import { User } from '@clerk/nextjs/dist/types/server'
@@ -48,9 +49,16 @@ export default async function Page({
         </div>
         <div className='mt-4'>
           {content ? (
-            <div className='whitespace-pre-line'>{content}</div>
+            <>
+              <div className='whitespace-pre-line'>{content}</div>
+              <div className='mt-10'>
+                <EditForm
+                  data={{ year_month_day: year_month_day, content: content }}
+                />
+              </div>
+            </>
           ) : (
-            <JournalForm entry={year_month_day}/>
+            <JournalForm entry={year_month_day} />
           )}
         </div>
       </div>{' '}
