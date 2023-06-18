@@ -1,4 +1,5 @@
 import os
+from os.path import join, getsize
 import datetime
 import requests
 
@@ -24,29 +25,21 @@ def post(data):
         print(response)
 
 
-def main():
+def get_all_files():
+    list_all_files = []
+
     with open('.env', 'r') as file:
         for line in file:
             obsidian = line
 
-    dirs = os.listdir(obsidian)
-    markdown_files = []
-    for file in dirs:
-        if '.md' in file and not 'Huel' in file:
-            markdown_files.append(file)
+    for root, dirs, files in os.walk(obsidian):
+        for file in files:
+            list_all_files.append(f'{root}\{file}')
 
-    all_content = []
-    for markdown in markdown_files:
-        path = obsidian + '\\' + markdown
-        with open(path, 'r') as file:
-            output = file.read()
-            data = {
-                'file': remove_extension(markdown),
-                'content': output
-            }
-            all_content.append(data)
+    return list_all_files
 
-    post(all_content)
+def main():
+    all_files = get_all_files()
 
 
 if __name__ == "__main__":
