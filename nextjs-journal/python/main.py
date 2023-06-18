@@ -51,7 +51,13 @@ def convert_title(file, root):
                     split_file = file.split('.')[0] + ' ' + year
                     return datetime.datetime.strptime(split_file, "%B %d %Y").strftime('%Y-%m-%d')
                 except:
-                    print(f'Convert Title Exception:', file, root, split_file)
+                    try:
+                        # 2017\02 - February\February 1, 2017 - Wednesday.md
+                        split_file = file.split(' - ')[0]
+                        # February 10, 2017
+                        return datetime.datetime.strptime(split_file, "%B %d, %Y").strftime('%Y-%m-%d')
+                    except:
+                        print(f'Convert Title Exception:', file, root, split_file)
         return None
 
 
@@ -65,6 +71,9 @@ def get_all_files():
         for root, dirs, files in os.walk(file['path']):
             for f in files:
                 if "Year In Review" in root or "Music" in root or "Movies" in root or "Review" in f or ".png" in f:
+                    continue
+
+                if 'Overview' in root:
                     continue
 
                 title = convert_title(f, root)
