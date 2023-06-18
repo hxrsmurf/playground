@@ -53,7 +53,9 @@ export default async function Page({
         <div className='mt-4'>
           {content ? (
             <>
-              <div className='whitespace-pre-line'>{content}</div>
+              <div className='whitespace-pre-line max-w-[1000px]'>
+                {content}
+              </div>
               <div className='mt-10'>
                 <EditForm
                   data={{ year_month_day: year_month_day, content: content }}
