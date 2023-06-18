@@ -6,14 +6,14 @@ import { createClient } from 'redis'
 
 export default async function Home() {
   const user = await currentUser()
-  const today_page = todayPage()
+  const dates = todayPage()
 
-  const redis_server = "redis://" + process.env.REDIS_SERVER + ":6379"
+  const redis_server = 'redis://' + process.env.REDIS_SERVER + ':6379'
   const client = createClient({
-    url: redis_server
+    url: redis_server,
   })
 
-  client.on('error', err => console.log('Redis Client Error', err))
+  client.on('error', (err) => console.log('Redis Client Error', err))
   await client.connect()
 
   return (
@@ -21,7 +21,12 @@ export default async function Home() {
       <div>
         <div>Welcome {user?.firstName}</div>
         <div>
-          Today is <Link href={today_page}>{today_page}</Link>
+          Today is {dates.weekday}{' '}
+          <Link href={dates.year}>{dates.year}</Link>-
+          <Link href={dates.year + '/' + dates.month}>{dates.month}</Link>-
+          <Link href={dates.year + '/' + dates.month + '/' + dates.day}>
+            {dates.day}
+          </Link>
         </div>
         <JournalForm />
       </div>
