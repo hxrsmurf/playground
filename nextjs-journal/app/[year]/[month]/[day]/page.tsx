@@ -1,7 +1,9 @@
 import EditForm from '@/components/EditForm'
 import JournalForm from '@/components/JournalForm'
+import { PreviousNext } from '@/components/PreviousNext'
 import { currentUser } from '@clerk/nextjs'
 import { User } from '@clerk/nextjs/dist/types/server'
+import moment from 'moment'
 import Link from 'next/link'
 import { createClient } from 'redis'
 
@@ -25,7 +27,8 @@ export default async function Page({
   const month = params.month
   const day = params.day
 
-  const year_month_day = year + '-' + month + '-' + day
+  const year_month_day: any = year + '-' + month + '-' + day
+
   const user = await currentUser()
   const entries: any = await fetchEntries(user, year_month_day)
 
@@ -60,6 +63,14 @@ export default async function Page({
           ) : (
             <JournalForm entry={year_month_day} />
           )}
+        </div>
+        <div className='mt-8'>
+          <div className='space-y-4'>
+            <div className='bg-white min-h-[3px]'></div>
+            <div>
+              <PreviousNext data={params} />
+            </div>
+          </div>
         </div>
       </div>{' '}
     </div>
