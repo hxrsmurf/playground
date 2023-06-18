@@ -61,7 +61,7 @@ def convert_title(file, root):
                             # 05 - May\ May 11th, 2017.md
                             split_file = file.split(' - ')[0]
                             split_period = split_file.split('.')[0]
-                            replace_th = split_period.replace('th','')
+                            replace_th = split_period.replace('th', '')
                             try:
                                 return datetime.datetime.strptime(replace_th, "%B %d, %Y").strftime('%Y-%m-%d')
                             except:
@@ -70,9 +70,11 @@ def convert_title(file, root):
                                     replace_rd = split_period.replace('rd', '')
                                     return datetime.datetime.strptime(replace_rd, "%B %d, %Y").strftime('%Y-%m-%d')
                                 except:
-                                    print(f'Convert Title Exception:', file, root, split_file)
+                                    print(f'Convert Title Exception:',
+                                          file, root, split_file)
                         except:
-                            print(f'Convert Title Exception:', file, root, split_file)
+                            print(f'Convert Title Exception:',
+                                  file, root, split_file)
         return None
 
 
@@ -85,13 +87,10 @@ def get_all_files():
     for file in json_file:
         for root, dirs, files in os.walk(file['path']):
             for f in files:
-                if "Year In Review" in root or "Music" in root or "Movies" in root or "Review" in f or ".png" in f:
+                if "Year In Review" in root or "Music" in root or "Movies" in root or "Overview" in root:
                     continue
 
-                if 'Overview' in root:
-                    continue
-
-                if 'References' in f:
+                if "Review" in f or ".png" in f or "References" in f:
                     continue
 
                 title = convert_title(f, root)
