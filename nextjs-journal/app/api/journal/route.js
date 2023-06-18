@@ -14,11 +14,14 @@ export async function POST(request) {
 
   var user = null
   var data = null
+  var frontend = null
 
   try {
     user = headersList.get('user')
     const json_response = await request.json()
     data = { [json_response['title']]: JSON.stringify(json_response) }
+    frontend = true
+
   } catch (error) {
     console.log('Error with Headers Users: ', error)
     try {
@@ -33,6 +36,8 @@ export async function POST(request) {
   } catch (error) {
     console.log('Error when hSet', error)
   }
+
+  if (frontend) return NextResponse.redirect(new URL('/', request.url))
 
   return NextResponse.json({ body: 'SUCCESS' })
 }
