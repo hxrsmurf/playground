@@ -41,7 +41,8 @@ def convert_title(file, root):
                 split_file = ' '.join(file.split(' ')[0:2]) + ' ' + year
                 return datetime.datetime.strptime(split_file, "%B %d %Y").strftime('%Y-%m-%d')
             except:
-                print(f'Convert Title Exception:', file)
+                full_path = f'{root}\{file}'
+                print(f'Convert Title Exception:', full_path)
         return None
 
 
@@ -54,8 +55,8 @@ def get_all_files():
     for file in json_file:
         for root, dirs, files in os.walk(file['path']):
             for f in files:
-                if "Year In Review" in root:
-                    pass
+                if "Year In Review" in root or "Music" in root or "Movies" in root or "Review" in f or ".png" in f:
+                    continue
 
                 title = convert_title(f, root)
                 if title:
