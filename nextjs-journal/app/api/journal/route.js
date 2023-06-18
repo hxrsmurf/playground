@@ -11,7 +11,13 @@ export async function POST(request) {
   await client.connect()
 
   const data = await request.json()
-  const redis_key = data['user'] + '-' + todayPage().today_page
+
+  const headersList = headers()
+  const authorization = headersList.get('authorization')
+  const user = await client.get(authorization, 0)
+  const file = data['file']
+  const redis_key = user + '-' + file
+
   await client.sAdd(redis_key, JSON.stringify(data))
   return NextResponse.json({ body: 'SUCCESS' })
 }
@@ -28,8 +34,6 @@ export async function GET(request) {
   } else {
     api_key = api_key_params
   }
-
-  console.log(api_key)
 
   const client = createClient({
     url: 'redis://' + process.env.REDIS_SERVER + ':6379',

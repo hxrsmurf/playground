@@ -1,5 +1,6 @@
 import os
 import datetime
+import requests
 
 
 def remove_extension(file):
@@ -8,6 +9,19 @@ def remove_extension(file):
     formatted_date = datetime.datetime.strptime(
         only_date, "%m-%d-%Y").strftime('%Y-%m-%d')
     return formatted_date
+
+
+def post(data):
+    headers = {
+        'authorization': 'meow'
+    }
+
+    for d in data:
+        date = d['file']
+        content = d['content']
+        response = requests.post(
+            'http://localhost:3000/api/journal', json=d, headers=headers)
+        print(response)
 
 
 def main():
@@ -31,6 +45,8 @@ def main():
                 'content': output
             }
             all_content.append(data)
+
+    post(all_content)
 
 
 if __name__ == "__main__":
