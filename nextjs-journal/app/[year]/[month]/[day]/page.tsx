@@ -3,13 +3,13 @@ import { User } from '@clerk/nextjs/dist/types/server'
 import Link from 'next/link'
 import { createClient } from 'redis'
 
-async function fetchEntries(user: User | null) {
+async function fetchEntries(user: User | null, year_month_day: string) {
   const client = createClient({
     url: 'redis://' + process.env.REDIS_SERVER + ':6379',
   })
   await client.connect()
-  const user_id: string = user!['id']
-  const entries = await client.sScan(user_id, 0)
+  const redis_key: string = user!['id'] + "-" + year_month_day
+  const entries = await client.sScan(redis_key, 0)
   return entries['members']
 }
 export default async function Page({
@@ -22,8 +22,9 @@ export default async function Page({
   const month = params.month
   const day = params.day
 
+  const year_month_day = year + '/' + month + '/' + day
   const user = await currentUser()
-  const entries = await fetchEntries(user)
+  const entries = await fetchEntries(user, year_month_day)
 
   return (
     <div className='flex justify-center mt-14'>
