@@ -17,6 +17,7 @@ def post(data):
     )
     return response.status_code
 
+
 def convert_title(file):
     # 01-02-2023 - Monday.md
     split_file = file.split(' ')[0]
@@ -29,22 +30,24 @@ def convert_title(file):
 def get_all_files():
     list_all_files = []
 
-    with open('.env', 'r') as file:
-        for line in file:
-            obsidian = line
+    with open('.env', 'r', encoding='utf-8') as file:
+        json_file = json.load(file)
 
-    for root, dirs, files in os.walk(obsidian):
-        for file in files:
-            title = convert_title(file)
-            if title:
-                list_all_files.append({
-                    'full_path': f'{root}\{file}',
-                    'root': root,
-                    'file': file,
-                    'title': title
-                })
+    for file in json_file:
+        for root, dirs, files in os.walk(file['path']):
+            for f in files:
+                title = convert_title(f)
+                if title:
+                    list_all_files.append({
+                        'full_path': f'{root}\{f}',
+                        'root': root,
+                        'file': f,
+                        'title': title,
+                        'tag': file['tag']
+                    })
+                    break
 
-    return list_all_files
+        return list_all_files
 
 
 def get_file_content(full_path):
