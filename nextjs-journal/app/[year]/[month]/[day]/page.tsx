@@ -28,6 +28,9 @@ export default async function Page({
   const day = params.day
 
   const year_month_day: any = year + '-' + month + '-' + day
+  const weekday: string = moment([year, month-1, day]).format('dddd')
+
+  console.log(weekday)
 
   const user = await currentUser()
   const entries: any = await fetchEntries(user, year_month_day)
@@ -44,11 +47,12 @@ export default async function Page({
             Home
           </Link>
         </div>
-        <div>
+        <div className='mt-4'>
           Journal for <Link href={'/' + year}>{year}</Link> {' --> '}
           <Link href={'/' + year + '/' + month}>{month}</Link>
           {' --> '}
-          {day}
+          {day} {' --> '}
+          {weekday}
         </div>
         <div className='mt-4'>
           {content ? (
