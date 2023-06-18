@@ -25,6 +25,14 @@ def post(data):
         print(response)
 
 
+def convert_title(file):
+    # 01-02-2023 - Monday.md
+    split_file = file.split(' ')[0]
+    try:
+        return datetime.datetime.strptime(split_file, "%m-%d-%Y").strftime('%Y-%m-%d')
+    except:
+        return None
+
 def get_all_files():
     list_all_files = []
 
@@ -34,12 +42,22 @@ def get_all_files():
 
     for root, dirs, files in os.walk(obsidian):
         for file in files:
-            list_all_files.append(f'{root}\{file}')
+            title = convert_title(file)
+            if title:
+                list_all_files.append({
+                    'full_path': f'{root}\{file}',
+                    'root': root,
+                    'file': file
+                })
 
     return list_all_files
 
+
 def main():
     all_files = get_all_files()
+    for file in all_files:
+        print(file)
+        break
 
 
 if __name__ == "__main__":
