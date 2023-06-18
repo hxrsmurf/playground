@@ -7,8 +7,9 @@ function getMonths() {
   }
   return months
 }
-export default async function page() {
+export default async function page({ params }: { params: { year: string } }) {
   const months = getMonths()
+  const year = params.year
   return (
     <div className='flex justify-center mt-14'>
       <div>
@@ -17,7 +18,9 @@ export default async function page() {
         </div>
         {months.map((month, key) => (
           <div key={key}>
-            <div>{'2023-' + month}</div>
+            <div>
+              <Link href={year + '/' + month}>{year + '-' + month} </Link>
+            </div>
           </div>
         ))}
       </div>
