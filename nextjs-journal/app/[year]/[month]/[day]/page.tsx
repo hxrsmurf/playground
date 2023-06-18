@@ -30,8 +30,6 @@ export default async function Page({
   const year_month_day: any = year + '-' + month + '-' + day
   const weekday: string = moment([year, Number(month) - 1, day]).format('dddd')
 
-  console.log(weekday)
-
   const user = await currentUser()
   const entries: any = await fetchEntries(user, year_month_day)
 
