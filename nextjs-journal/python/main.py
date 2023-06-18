@@ -57,7 +57,22 @@ def convert_title(file, root):
                         # February 10, 2017
                         return datetime.datetime.strptime(split_file, "%B %d, %Y").strftime('%Y-%m-%d')
                     except:
-                        print(f'Convert Title Exception:', file, root, split_file)
+                        try:
+                            # 05 - May\ May 11th, 2017.md
+                            split_file = file.split(' - ')[0]
+                            split_period = split_file.split('.')[0]
+                            replace_th = split_period.replace('th','')
+                            try:
+                                return datetime.datetime.strptime(replace_th, "%B %d, %Y").strftime('%Y-%m-%d')
+                            except:
+                                try:
+                                    # 05 - May\May 3rd, 2017
+                                    replace_rd = split_period.replace('rd', '')
+                                    return datetime.datetime.strptime(replace_rd, "%B %d, %Y").strftime('%Y-%m-%d')
+                                except:
+                                    print(f'Convert Title Exception:', file, root, split_file)
+                        except:
+                            print(f'Convert Title Exception:', file, root, split_file)
         return None
 
 
@@ -74,6 +89,9 @@ def get_all_files():
                     continue
 
                 if 'Overview' in root:
+                    continue
+
+                if 'References' in f:
                     continue
 
                 title = convert_title(f, root)
