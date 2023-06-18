@@ -1,3 +1,4 @@
+import JournalForm from '@/components/JournalForm'
 import { currentUser } from '@clerk/nextjs'
 import { User } from '@clerk/nextjs/dist/types/server'
 import Link from 'next/link'
@@ -49,7 +50,7 @@ export default async function Page({
           {content ? (
             <div className='whitespace-pre-line'>{content}</div>
           ) : (
-            <>No entries</>
+            <JournalForm entry={year_month_day}/>
           )}
         </div>
       </div>{' '}

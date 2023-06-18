@@ -2,34 +2,33 @@
 
 import { useUser } from '@clerk/nextjs'
 import { useState } from 'react'
-import { todayPage } from '../lib/utils'
 
-export default function JournalForm() {
+export default function JournalForm(entry: { entry: string }) {
   const [journal, setJournal] = useState('')
   const handleUpdate = (e: any) => {
     setJournal(e.target.value)
   }
   const { user } = useUser()
 
-  if (!user) return <div>Not loggined</div>
+  if (!user) return <div>Not logged in</div>
 
   const user_id = user!['id']
 
   const timestamp = new Date().getTime()
-  const today_page = todayPage()
 
   const handleSubmit = async () => {
     const submit_data = {
-      user: user_id,
       timestamp: timestamp,
-      entry: journal,
-      today_page: today_page.today_page,
+      content: journal,
+      title: entry.entry,
     }
+
     await fetch('http://localhost:3000/api/journal', {
       method: 'POST',
       body: JSON.stringify(submit_data),
       headers: {
         'Content-Type': 'application/json',
+        user: user_id,
       },
     })
     setJournal('')

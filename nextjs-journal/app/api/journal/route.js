@@ -11,11 +11,28 @@ export async function POST(request) {
   await client.connect()
 
   const headersList = headers()
-  const authorization = headersList.get('authorization')
-  const user = await client.get(authorization, 0)
 
-  const data = await request.json()
-  await client.hSet(user, data)
+  var user = null
+  var data = null
+
+  try {
+    user = headersList.get('user')
+    const json_response = await request.json()
+    data = { [json_response['title']]: JSON.stringify(json_response) }
+  } catch (error) {
+    console.log('Error with Headers Users: ', error)
+    try {
+      const authorization = headersList.get('authorization')
+      user = await client.get(authorization)
+      data = await request.json()
+    } catch (error) {}
+  }
+
+  try {
+    await client.hSet(user, data)
+  } catch (error) {
+    console.log('Error when hSet', error)
+  }
 
   return NextResponse.json({ body: 'SUCCESS' })
 }
