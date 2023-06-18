@@ -11,11 +11,21 @@ export default function JournalForm() {
   }
   const { user } = useUser()
 
+  if (!user) return <div>Not loggined</div>
+
+  const user_id = user!['id']
+
   const timestamp = new Date().getTime()
   const today_page = todayPage()
 
   const handleSubmit = () => {
-    console.log(user!['id'], timestamp, today_page, journal)
+    const submit_data = {
+      'user': user_id,
+      'timestamp': timestamp,
+      'entry': journal,
+      'today_page': today_page
+    }
+    console.log(submit_data)
     setJournal('')
   }
 
