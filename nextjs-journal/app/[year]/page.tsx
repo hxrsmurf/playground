@@ -13,7 +13,7 @@ export default async function page({ params }: { params: { year: string } }) {
   return (
     <div className='flex justify-center mt-14'>
       <div>
-        <div className='m-4'>
+        <div className='m-4 font-bold'>
           <Link href={'/'}>Home</Link>
         </div>
         {months.map((month, key) => (
