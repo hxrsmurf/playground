@@ -20,7 +20,7 @@ export default async function Home() {
       <div>
         <div>Welcome {user?.firstName}</div>
         <div>
-          Today is {dates.weekday}{' '}
+          <Link href={dates.today_page}>Today</Link> is {dates.weekday}{' '}
           <Link href={'/' + dates.year}>{dates.year}</Link> {' --> '}
           <Link href={'/' + dates.year + '/' + dates.month}>{dates.month}</Link>
           {' --> '}
