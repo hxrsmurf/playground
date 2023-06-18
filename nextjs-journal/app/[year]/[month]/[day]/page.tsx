@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Page({ params }: { params: { slug: string } }) {
   // { year: '2023', month: '06', day: '18' }
   const year = params.year
@@ -7,7 +9,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div className='flex justify-center mt-14'>
       <div className='font-bold'>
-        Journal for {year}-{month}-{day}
+        <Link href={'/'}>Home</Link>
+        <div className='font-bold mt-4'>
+          Journal for {year}-{month}-{day}
+        </div>
       </div>
     </div>
   )
