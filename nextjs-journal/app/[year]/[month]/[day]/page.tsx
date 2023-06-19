@@ -1,7 +1,7 @@
 import EditForm from '@/components/EditForm'
 import JournalForm from '@/components/JournalForm'
 import { PreviousNext } from '@/components/PreviousNext'
-import { currentUser } from '@clerk/nextjs'
+import { SignOutButton, currentUser } from '@clerk/nextjs'
 import { User } from '@clerk/nextjs/dist/types/server'
 import moment from 'moment'
 import Link from 'next/link'
@@ -41,9 +41,18 @@ export default async function Page({
     <div className='flex justify-center mt-14'>
       <div>
         <div className='flex justify-center'>
-          <Link className='font-bold' href={'/'}>
-            Home
-          </Link>
+          <div>
+            <div className='grid grid-cols-2 m-4 p-4'>
+              <div>
+                <Link className='font-bold' href={'/'}>
+                  Home
+                </Link>
+              </div>
+              <div>
+                <SignOutButton />
+              </div>
+            </div>
+          </div>
         </div>
         <div className='flex justify-center mt-4 mb-8'>
           <div>
