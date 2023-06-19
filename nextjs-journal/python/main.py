@@ -4,6 +4,8 @@ import requests
 import concurrent.futures
 import json
 
+from functions.utils import read_json_file
+
 
 def post(data):
     headers = {"authorization": "meow"}
@@ -147,13 +149,6 @@ def testing():
         futures_to_url = {
             executor.submit(post, file): file for file in all_files_with_content
         }
-
-
-def read_json_file(file):
-    with open(file) as file:
-        json_file = json.loads(file.read())
-
-    return json_file
 
 
 def main():
