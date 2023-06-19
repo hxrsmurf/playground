@@ -9,9 +9,10 @@ from functions.utils import (
     get_file_content,
     get_path_files,
     get_contents_all_paths,
+    parse_contents_paths,
 )
 
-from functions.upstash import upload_to_upstash
+from functions.upstash import upload_to_upstash, get_from_upstash
 
 
 def post(data):
@@ -150,10 +151,17 @@ def testing():
         }
 
 
-def main():
+def upload():
     json_file = read_json_file("paths.json")[0]
     list_of_full_paths = get_path_files(json_file["path"])
     list_contents_all_paths = get_contents_all_paths(list_of_full_paths)
+    list_full_contents = parse_contents_paths(list_contents_all_paths)
+    upload_to_upstash(list_full_contents)
+
+
+def main():
+    data = get_from_upstash(os.getenv("USER"))
+    print(data)
 
 if __name__ == "__main__":
     main()

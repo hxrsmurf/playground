@@ -10,6 +10,7 @@ client = redis.Redis(
     port=os.getenv("UPSTASH_PORT"),
     password=os.getenv("UPSTASH_PASSWORD"),
     ssl=True,
+    decode_responses=True,
 )
 
 
@@ -20,3 +21,11 @@ def upload_to_upstash(list_content_all_paths):
         json_path = json.dumps(path)
         client.hset(user, key=title, value=json_path, mapping=None, items=None)
         print(title)
+
+
+def get_from_upstash(user):
+    list_of_results = []
+    results = client.hvals(user)
+    for r in results:
+        list_of_results.append(json.loads(r))
+    return list_of_results
