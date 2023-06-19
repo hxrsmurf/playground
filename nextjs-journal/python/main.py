@@ -4,7 +4,7 @@ import requests
 import concurrent.futures
 import json
 
-from functions.utils import read_json_file
+from functions.utils import read_json_file, get_file_content
 
 
 def post(data):
@@ -129,14 +129,6 @@ def get_all_files():
     return list_all_files
 
 
-def get_file_content(full_path):
-    try:
-        with open(full_path, "r", encoding="utf-8") as file:
-            return file.read()
-    except Exception as e:
-        print("Read File error:", full_path, e)
-
-
 def testing():
     all_files = get_all_files()
     all_files_with_content = []
@@ -153,7 +145,6 @@ def testing():
 
 def main():
     json_file = read_json_file("paths.json")
-    print(json_file)
 
 
 if __name__ == "__main__":
