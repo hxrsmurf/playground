@@ -3,6 +3,7 @@ import datetime
 import requests
 import concurrent.futures
 import json
+import time
 
 from functions.utils import (
     read_json_file,
@@ -12,8 +13,20 @@ from functions.utils import (
     parse_contents_paths,
 )
 
-from functions.upstash import upload_to_upstash, get_from_upstash, get_upstash_field, check_exists_redis
-from functions.dynamodb import get_item, scan, filter_item, check_exists_dynamodb, add_to_dynamodb
+from functions.upstash import (
+    upload_to_upstash,
+    get_from_upstash,
+    get_upstash_field,
+    check_exists_redis,
+)
+from functions.dynamodb import (
+    get_item,
+    scan,
+    filter_item,
+    check_exists_dynamodb,
+    add_to_dynamodb,
+)
+
 
 def post(data):
     headers = {"authorization": "meow"}
@@ -156,20 +169,24 @@ def upload():
     list_of_full_paths = get_path_files(json_file["path"])
     list_contents_all_paths = get_contents_all_paths(list_of_full_paths)
     list_full_contents = parse_contents_paths(list_contents_all_paths)
+    # 16.93926739692688 - without Futures
+    # 1.2172939777374268 - with Futures
     not_in_dynamodb = check_exists_dynamodb(list_full_contents)
-    not_in_redis = check_exists_redis(list_full_contents)
-    add_to_dynamodb(not_in_dynamodb)
-    upload_to_upstash(not_in_redis)
+    # not_in_redis = check_exists_redis(list_full_contents)
+    # add_to_dynamodb(not_in_dynamodb)
+    # upload_to_upstash(not_in_redis)
 
 
 def get_data_from_upstash():
     # data = get_from_upstash(os.getenv("USER"))
     # print(data)
-    data = get_upstash_field(os.getenv("USER"), '2022-06-24')
+    data = get_upstash_field(os.getenv("USER"), "2022-06-24")
     print(data)
+
 
 def main():
     upload()
+
 
 if __name__ == "__main__":
     main()

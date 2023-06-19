@@ -1,6 +1,7 @@
 import boto3
 import os
 import json
+import concurrent.futures
 
 from dotenv import load_dotenv
 
@@ -17,14 +18,22 @@ user = os.getenv("USER")
 
 def check_exists_dynamodb(items):
     list_of_items = []
-    for item in items:
-        title = item["title"]
-        result_query = query(title)
-        if result_query == 1:
-            list_of_items.append(item)
-        else:
-            print(f"Found in DynamoDB: {title}")
-        break
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+        future_items = {executor.submit(query, item["title"]): item for item in items}
+
+    for future in concurrent.futures.as_completed(future_items):
+        future_item = future_items[future]
+        try:
+            exists = future.result()
+            if exists == 0:
+                print(f"Not found in DynamoDB:", future_item["title"])
+                list_of_items.append(future_item)
+            else:
+                print(f"Found in DynamoDB:", future_item["title"])
+        except Exception as e:
+            print("Future Exception:", e)
+
     return list_of_items
 
 
