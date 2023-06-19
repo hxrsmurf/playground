@@ -55,9 +55,13 @@ def check_exists_redis(entries):
 
     for entry in entries:
         title = entry["title"]
+        print("Querying Upstash:", title)
         exists = client.hexists(user, title)
 
         if not exists:
             list_entries.append(entry)
+        else:
+            print("Found in Upstash:", title)
+        break
 
     return list_entries

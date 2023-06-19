@@ -157,9 +157,9 @@ def upload():
     list_contents_all_paths = get_contents_all_paths(list_of_full_paths)
     list_full_contents = parse_contents_paths(list_contents_all_paths)
     not_in_dynamodb = check_exists_dynamodb(list_full_contents)
+    not_in_redis = check_exists_redis(list_full_contents)
     add_to_dynamodb(not_in_dynamodb)
-    # not_in_redis = check_exists_redis(list_full_contents)
-    # upload_to_upstash(not_in_redis)
+    upload_to_upstash(not_in_redis)
 
 
 def get_data_from_upstash():
