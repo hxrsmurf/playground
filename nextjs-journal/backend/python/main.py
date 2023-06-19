@@ -13,6 +13,7 @@ from functions.utils import (
 )
 
 from functions.upstash import upload_to_upstash, get_from_upstash, get_upstash_field, check_exists_redis
+from functions.dynamodb import put_item, get_item, scan, filter_item
 
 
 def post(data):
@@ -167,7 +168,8 @@ def get_data_from_upstash():
     print(data)
 
 def main():
-    upload()
+    # upload()
+    get_item()
 
 if __name__ == "__main__":
     main()
