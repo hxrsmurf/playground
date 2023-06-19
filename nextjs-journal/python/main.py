@@ -12,7 +12,7 @@ from functions.utils import (
     parse_contents_paths,
 )
 
-from functions.upstash import upload_to_upstash, get_from_upstash
+from functions.upstash import upload_to_upstash, get_from_upstash, get_upstash_field
 
 
 def post(data):
@@ -160,7 +160,9 @@ def upload():
 
 
 def main():
-    data = get_from_upstash(os.getenv("USER"))
+    # data = get_from_upstash(os.getenv("USER"))
+    # print(data)
+    data = get_upstash_field(os.getenv("USER"), '2022-06-24')
     print(data)
 
 if __name__ == "__main__":

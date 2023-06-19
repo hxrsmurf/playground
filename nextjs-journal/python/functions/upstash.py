@@ -30,3 +30,7 @@ def get_from_upstash(user):
         value = results[key]
         list_of_results.append(json.loads(value))
     return list_of_results
+
+def get_upstash_field(user, field):
+    results = client.hget(user, field)
+    return json.loads(results)
