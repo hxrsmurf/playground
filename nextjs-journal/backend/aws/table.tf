@@ -4,7 +4,7 @@ resource "aws_dynamodb_table" "table" {
     deletion_protection_enabled = true
     hash_key                    = "user_id"
     name                        = var.project
-    range_key                   = "year"
+    range_key                   = "title"
     read_capacity               = 0
     stream_enabled              = false
     table_class                 = "STANDARD"
@@ -15,11 +15,6 @@ resource "aws_dynamodb_table" "table" {
 
     attribute {
         name = "user_id"
-        type = "S"
-    }
-
-    attribute {
-        name = "year"
         type = "S"
     }
 
