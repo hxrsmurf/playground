@@ -149,8 +149,16 @@ def testing():
         }
 
 
+def read_json_file(file):
+    with open(file) as file:
+        json_file = json.loads(file.read())
+
+    return json_file
+
+
 def main():
-    print("Hello world")
+    json_file = read_json_file("paths.json")
+    print(json_file)
 
 
 if __name__ == "__main__":
