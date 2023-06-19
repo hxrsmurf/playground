@@ -173,7 +173,7 @@ def upload():
     # 1.2172939777374268 - with Futures
     not_in_dynamodb = check_exists_dynamodb(list_full_contents)
     # not_in_redis = check_exists_redis(list_full_contents)
-    # add_to_dynamodb(not_in_dynamodb)
+    add_to_dynamodb(not_in_dynamodb)
     # upload_to_upstash(not_in_redis)
 
 

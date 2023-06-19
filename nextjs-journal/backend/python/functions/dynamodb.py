@@ -49,9 +49,13 @@ def query(title):
 
 
 def add_to_dynamodb(items):
-    for item in items:
-        print("Adding to DynamoDB:", item["title"])
-        client.put_item(
+    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+        future_items = {executor.submit(put_item, item): item for item in items}
+
+
+def put_item(item):
+    try:
+        response = client.put_item(
             TableName=table,
             Item={
                 "user_id": {"S": user},
@@ -61,6 +65,9 @@ def add_to_dynamodb(items):
                 "raw": {"S": json.dumps(item)},
             },
         )
+        print(f"Put Item to DynamoDB:", {item["title"]})
+    except Exception as e:
+        print(f"Failed to Put Item: {item}")
 
 
 def get_item():
