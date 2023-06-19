@@ -13,8 +13,7 @@ from functions.utils import (
 )
 
 from functions.upstash import upload_to_upstash, get_from_upstash, get_upstash_field, check_exists_redis
-from functions.dynamodb import put_item, get_item, scan, filter_item, check_exists_dynamodb
-
+from functions.dynamodb import get_item, scan, filter_item, check_exists_dynamodb, add_to_dynamodb
 
 def post(data):
     headers = {"authorization": "meow"}
@@ -158,6 +157,7 @@ def upload():
     list_contents_all_paths = get_contents_all_paths(list_of_full_paths)
     list_full_contents = parse_contents_paths(list_contents_all_paths)
     not_in_dynamodb = check_exists_dynamodb(list_full_contents)
+    add_to_dynamodb(not_in_dynamodb)
     # not_in_redis = check_exists_redis(list_full_contents)
     # upload_to_upstash(not_in_redis)
 
