@@ -5,13 +5,25 @@ import json
 
 load_dotenv()
 
-client = redis.Redis(
-    host=os.getenv("UPSTASH_SERVER"),
-    port=os.getenv("UPSTASH_PORT"),
-    password=os.getenv("UPSTASH_PASSWORD"),
-    ssl=True,
-    decode_responses=True,
-)
+local = os.getenv("LOCAL")
+
+if local:
+    print('Using Local Redis')
+    client = redis.Redis(
+        host=os.getenv("LOCAL_SERVER"),
+        port=os.getenv("LOCAL_PORT"),
+        decode_responses=True,
+    )
+
+if not local:
+    print('Using Upstash Redis')
+    client = redis.Redis(
+        host=os.getenv("UPSTASH_SERVER"),
+        port=os.getenv("UPSTASH_PORT"),
+        password=os.getenv("UPSTASH_PASSWORD"),
+        ssl=True,
+        decode_responses=True,
+    )
 
 
 def upload_to_upstash(list_content_all_paths):
@@ -30,6 +42,7 @@ def get_from_upstash(user):
         value = results[key]
         list_of_results.append(json.loads(value))
     return list_of_results
+
 
 def get_upstash_field(user, field):
     results = client.hget(user, field)
