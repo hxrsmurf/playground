@@ -19,6 +19,11 @@ resource "aws_dynamodb_table" "table" {
     }
 
     attribute {
+        name = "year"
+        type = "S"
+    }
+
+    attribute {
         name = "month"
         type = "S"
     }
@@ -49,6 +54,12 @@ resource "aws_dynamodb_table" "table" {
         name  = "user_id-tag"
         projection_type = "ALL"
         range_key = "tag"
+    }
+
+    local_secondary_index {
+        name  = "user_id-year"
+        projection_type = "ALL"
+        range_key = "year"
     }
 
     point_in_time_recovery {
