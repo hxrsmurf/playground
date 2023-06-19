@@ -25,7 +25,8 @@ def upload_to_upstash(list_content_all_paths):
 
 def get_from_upstash(user):
     list_of_results = []
-    results = client.hvals(user)
-    for r in results:
-        list_of_results.append(json.loads(r))
+    results = client.hgetall(user)
+    for key in results:
+        value = results[key]
+        list_of_results.append(json.loads(value))
     return list_of_results
