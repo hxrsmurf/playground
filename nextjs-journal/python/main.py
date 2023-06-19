@@ -4,7 +4,7 @@ import requests
 import concurrent.futures
 import json
 
-from functions.utils import read_json_file, get_file_content
+from functions.utils import read_json_file, get_file_content, get_path_files
 
 
 def post(data):
@@ -144,8 +144,8 @@ def testing():
 
 
 def main():
-    json_file = read_json_file("paths.json")
-
+    json_file = read_json_file("paths.json")[0]
+    list_of_full_paths = get_path_files(json_file['path'])
 
 if __name__ == "__main__":
     main()
