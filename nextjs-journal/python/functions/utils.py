@@ -29,3 +29,13 @@ def get_path_files(path):
             ):
                 list_of_full_paths.append(full_path)
     return list_of_full_paths
+
+def get_contents_all_paths(list_of_full_paths):
+    list_contents = []
+    for path in list_of_full_paths:
+        list_contents.append({
+            'path': path,
+            'contents': get_file_content(path)
+        })
+        break
+    return list_contents
