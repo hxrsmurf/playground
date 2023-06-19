@@ -11,6 +11,8 @@ from functions.utils import (
     get_contents_all_paths,
 )
 
+from functions.upstash import upload_to_upstash
+
 
 def post(data):
     headers = {"authorization": "meow"}
@@ -152,8 +154,6 @@ def main():
     json_file = read_json_file("paths.json")[0]
     list_of_full_paths = get_path_files(json_file["path"])
     list_contents_all_paths = get_contents_all_paths(list_of_full_paths)
-    print(list_contents_all_paths)
-
 
 if __name__ == "__main__":
     main()
