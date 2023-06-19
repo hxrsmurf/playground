@@ -46,17 +46,27 @@ def get_contents_all_paths(list_of_full_paths):
 
 
 def convert_file_to_date(file, type):
-    # 12_15_2021
     if type == "underscore":
         return datetime.strptime(file, "%m_%d_%Y").strftime("%Y-%m-%d")
+
+    if type == "dashes":
+        return datetime.strptime(file, "%m-%d-%Y").strftime("%Y-%m-%d")
 
 
 def get_title_from_full_path(full_path):
     underscore_split = full_path.split(" ")
+
+    # 12_15_2021
     try:
         return convert_file_to_date(underscore_split[0], "underscore")
     except Exception as e:
-        print('get_title_from_full_path:', e)
+        pass
+
+    # 10-17-2022
+    try:
+        return convert_file_to_date(underscore_split[0], "dashes")
+    except Exception as e:
+        print("get_title_from_full_path:", e)
 
 
 def parse_contents_paths(contents_paths):
