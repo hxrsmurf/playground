@@ -12,7 +12,7 @@ from functions.utils import (
     parse_contents_paths,
 )
 
-from functions.upstash import upload_to_upstash, get_from_upstash, get_upstash_field
+from functions.upstash import upload_to_upstash, get_from_upstash, get_upstash_field, check_exists_redis
 
 
 def post(data):
@@ -156,14 +156,18 @@ def upload():
     list_of_full_paths = get_path_files(json_file["path"])
     list_contents_all_paths = get_contents_all_paths(list_of_full_paths)
     list_full_contents = parse_contents_paths(list_contents_all_paths)
-    upload_to_upstash(list_full_contents)
+    not_in_redis = check_exists_redis(list_full_contents)
+    upload_to_upstash(not_in_redis)
 
 
-def main():
+def get_data_from_upstash():
     # data = get_from_upstash(os.getenv("USER"))
     # print(data)
     data = get_upstash_field(os.getenv("USER"), '2022-06-24')
     print(data)
+
+def main():
+    upload()
 
 if __name__ == "__main__":
     main()

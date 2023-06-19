@@ -8,7 +8,7 @@ load_dotenv()
 local = os.getenv("LOCAL")
 
 if local:
-    print('Using Local Redis')
+    print("Using Local Redis")
     client = redis.Redis(
         host=os.getenv("LOCAL_SERVER"),
         port=os.getenv("LOCAL_PORT"),
@@ -16,7 +16,7 @@ if local:
     )
 
 if not local:
-    print('Using Upstash Redis')
+    print("Using Upstash Redis")
     client = redis.Redis(
         host=os.getenv("UPSTASH_SERVER"),
         port=os.getenv("UPSTASH_PORT"),
@@ -47,3 +47,17 @@ def get_from_upstash(user):
 def get_upstash_field(user, field):
     results = client.hget(user, field)
     return json.loads(results)
+
+
+def check_exists_redis(entries):
+    user = os.getenv("USER")
+    list_entries = []
+
+    for entry in entries:
+        title = entry["title"]
+        exists = client.hexists(user, title)
+
+        if not exists:
+            list_entries.append(entry)
+
+    return list_entries
