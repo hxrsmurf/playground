@@ -7,7 +7,7 @@ def lambda_handler(event, context):
     event_body = str((base64.b64decode(event['body'])), "utf-8")
     parsed_message = event_body.split("&")
 
-    message_type, actual_message, response_body = None, None
+    message_type, actual_message, response_body = None, None, None
 
     for m in parsed_message:
         equals = m.split('=')[0]
