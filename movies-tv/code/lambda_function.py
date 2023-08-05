@@ -31,7 +31,13 @@ def lambda_handler(event, context):
     if message_type == "Book":
         formatted_message_type = "book"
 
-    response_body = f"Enjoy that {formatted_message_type}!"
+    if message_type == "Journal":
+        formatted_message_type = "journal"
+
+    if not message_type == "Journal":
+        response_body = f"Enjoy that {formatted_message_type}!"
+    else:
+        response_body = f"Nice {formatted_message_type} Entry!"
 
     result = {
         "statusCode": 200,
