@@ -7,7 +7,7 @@ def lambda_handler(event, context):
     event_body = str((base64.b64decode(event['body'])), "utf-8")
     parsed_message = event_body.split("&")
 
-    message_type, actual_message = None, None
+    message_type, actual_message, response_body = None, None, None
 
     for m in parsed_message:
         equals = m.split('=')[0]
@@ -31,7 +31,13 @@ def lambda_handler(event, context):
     if message_type == "Book":
         formatted_message_type = "book"
 
-    response_body = f"Enjoy that {formatted_message_type}!"
+    if message_type == "Journal":
+        formatted_message_type = "journal"
+
+    if not message_type == "Journal":
+        response_body = f"Enjoy that {formatted_message_type}!"
+    else:
+        response_body = f"Nice {formatted_message_type} entry!"
 
     result = {
         "statusCode": 200,
