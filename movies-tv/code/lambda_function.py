@@ -34,6 +34,9 @@ def lambda_handler(event, context):
     if message_type == "Journal":
         formatted_message_type = "journal"
 
+    if message_type == "Movie":
+        formatted_message_type = "movie"
+
     if not message_type == "Journal":
         response_body = f"Enjoy that {formatted_message_type}!"
     else:
