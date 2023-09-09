@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { redis_album } from '../../components/redis_client'
+import Link from 'next/link'
 
 export default async function page({ params }: any) {
   const param_album = params['album'].slice(1)
@@ -10,17 +11,27 @@ export default async function page({ params }: any) {
   return (
     <div className='flex justify-center mt-14'>
       <div>
-        <div className='text-3xl font-bold flex justify-center mb-6'>{decode_album}</div>
+        <div className='text-2xl font-bold flex justify-center mb-6'>
+          <Link href={'/'}>Home</Link>
+        </div>
+        <div className='text-3xl font-bold flex justify-center mb-6'>
+          {decode_album}
+        </div>
         <div className='grid xl:grid-cols-8 md:grid-cols-5 sm:grid-cols-3 mx-10'>
           {album_details.map((image: any, id: any) => (
             <div className='m-4' key={id}>
-              <Image
-                src={process.env.CDN_URL + image.folder + '/' + image.file}
-                height={300}
-                width={300}
-                alt=''
-                quality={25}
-              />
+              <Link
+                href={process.env.CDN_URL + image.folder + '/' + image.file}
+                target='_blank'
+              >
+                <Image
+                  src={process.env.CDN_URL + image.folder + '/' + image.file}
+                  height={300}
+                  width={300}
+                  alt=''
+                  quality={25}
+                />
+              </Link>
             </div>
           ))}
         </div>
