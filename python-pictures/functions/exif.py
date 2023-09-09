@@ -1,5 +1,6 @@
 import exiftool
 
+
 def get_exif_data(file):
     image_meta = {}
 
