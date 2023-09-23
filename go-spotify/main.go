@@ -23,6 +23,7 @@ func main() {
 
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/login", login)
+	http.HandleFunc("/callback", callback)
 	fmt.Println("http://localhost:8000/login")
 	http.ListenAndServe(":8000", nil)
 }
@@ -43,4 +44,11 @@ func login(w http.ResponseWriter, r *http.Request) {
 	queryString := values.Encode()
 	url := spotifyUrl + queryString
 	http.Redirect(w, r, url, http.StatusFound)
+}
+
+func callback(w http.ResponseWriter, r *http.Request) {
+	queryValues := r.URL.Query()
+	code := queryValues.Get("code")
+	fmt.Fprint(w, code)
+	fmt.Println(code)
 }
