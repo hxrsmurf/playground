@@ -17,10 +17,6 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	clientId := os.Getenv("clientId")
-	clientSecret := os.Getenv("clientSecret")
-	fmt.Println(clientId, clientSecret)
-
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/callback", callback)
@@ -37,7 +33,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	const spotifyUrl = "https://accounts.spotify.com/authorize?"
 	values := url.Values{}
 	values.Add("response_type", "code")
-	values.Add("client_id", os.Getenv("clientId"))
+	values.Add("client_id", os.Getenv("SPOTIFY_ID"))
 	values.Add("scope", "user-read-email")
 	values.Add("redirect_uri", redirectUri)
 	values.Add("state", "1234")
