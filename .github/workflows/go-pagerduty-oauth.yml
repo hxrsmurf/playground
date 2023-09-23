@@ -30,3 +30,8 @@ jobs:
 
     - name: Build
       run: go build
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: pd-oauth-go
