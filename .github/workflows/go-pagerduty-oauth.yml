@@ -37,4 +37,4 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: pd-oauth-go
+        path: ./go-pagerduty-oauth/pd-oauth-go
