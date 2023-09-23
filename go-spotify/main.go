@@ -1,15 +1,26 @@
 package main
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
+
+type TokenResponse struct {
+	AccessToken  string `json:"access_token"`
+	TokenType    string `json:"token_type"`
+	ExpiresIn    string `json:"expires_in"`
+	RefreshToken string `json:"refresh_token"`
+	Scope        string `json:"scope"`
+}
 
 func main() {
 	err := godotenv.Load()
@@ -45,6 +56,45 @@ func login(w http.ResponseWriter, r *http.Request) {
 func callback(w http.ResponseWriter, r *http.Request) {
 	queryValues := r.URL.Query()
 	code := queryValues.Get("code")
-	fmt.Fprint(w, code)
-	fmt.Println(code)
+
+	clientID := os.Getenv("SPOTIFY_ID")
+	clientSecret := os.Getenv("SPOTIFY_SECRET")
+	redirectURI := "http://localhost:8000/callback"
+
+	authOptions := url.Values{}
+	authOptions.Add("code", code)
+	authOptions.Add("redirect_uri", redirectURI)
+	authOptions.Add("grant_type", "authorization_code")
+
+	// ChatGPT :)
+
+	req, err := http.NewRequest("POST", "https://accounts.spotify.com/api/token", strings.NewReader(authOptions.Encode()))
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	req.Header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(clientID+":"+clientSecret)))
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	defer resp.Body.Close()
+
+	bytes, _ := io.ReadAll(resp.Body)
+
+	var tokenResponse TokenResponse
+
+	json.Unmarshal(bytes, &tokenResponse)
+	accessToken := tokenResponse.AccessToken
+	fmt.Fprint(w, accessToken)
+	fmt.Println(accessToken)
 }
