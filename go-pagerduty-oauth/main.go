@@ -36,7 +36,21 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, url, http.StatusFound)
 }
 
+func checkEnv() int {
+	_, err := os.Stat("./.env")
+
+	if err != nil {
+		fmt.Println(".env does not exist")
+		return 0
+	} else {
+		return 1
+	}
+}
 func main() {
+	envFile := checkEnv()
+	if envFile == 0 {
+		return
+	}
 	fmt.Println("http://localhost:8000/auth")
 	http.HandleFunc("/auth", auth)
 	http.HandleFunc("/", code)
