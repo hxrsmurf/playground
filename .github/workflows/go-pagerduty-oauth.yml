@@ -34,4 +34,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: pd-oauth-go
-        path: ./go-pagerduty-oauth/pd-oauth-go.exe
+        path: |
+          ./go-pagerduty-oauth/pd-oauth-go.exe
+          ./go-pagerduty-oauth/.env.sample
+          ./go-pagerduty-oauth/ReadMe.md
