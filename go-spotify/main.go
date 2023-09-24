@@ -4,8 +4,9 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"go-spotify/player"
+	"go-spotify/user"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -23,14 +24,19 @@ type TokenResponse struct {
 	Scope        string `json:"scope"`
 }
 
-type User struct {
-	DisplayName string `json:"display_name"`
-}
-
 func main() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
+	}
+
+	accessToken := os.Getenv("ACCESS_TOKEN")
+
+	if len(accessToken) != 0 {
+		fmt.Println("Have access token")
+		user.Me(accessToken)
+		player.Player(accessToken)
+		return
 	}
 
 	http.HandleFunc("/hello", helloHandler)
@@ -50,11 +56,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 	values := url.Values{}
 	values.Add("response_type", "code")
 	values.Add("client_id", os.Getenv("SPOTIFY_ID"))
-	values.Add("scope", "user-read-email")
+	values.Add("scope", "user-read-email user-read-playback-state")
 	values.Add("redirect_uri", redirectUri)
 	values.Add("state", "1234")
 	queryString := values.Encode()
 	url := spotifyUrl + queryString
+	fmt.Println(url)
 	http.Redirect(w, r, url, http.StatusFound)
 }
 
@@ -100,24 +107,8 @@ func callback(w http.ResponseWriter, r *http.Request) {
 
 	json.Unmarshal(bytes, &tokenResponse)
 	accessToken := tokenResponse.AccessToken
-	userResp := user(accessToken)
+	userResp := user.Me(accessToken)
 	message := "Welcome " + userResp.DisplayName
 	fmt.Fprint(w, message)
-}
-
-func user(accessToken string) User {
-	url := "https://api.spotify.com/v1/me"
-	token := "Bearer " + accessToken
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Set("Authorization", token)
-
-	client := &http.Client{}
-	resp, _ := client.Do(req)
-
-	body, _ := ioutil.ReadAll(resp.Body)
-	var user User
-	json.Unmarshal(body, &user)
-	return user
+	fmt.Fprint(w, "\n\nHere is your access token\n"+accessToken)
 }
