@@ -88,7 +88,7 @@ jobs:
       id: current_date
       run: | 
         year_month=$(date +'%Y-%m')
-        year=$(date +'%Y-%m')
+        year=$(date +'%Y')
         echo "year_month=$year_month" >> $GITHUB_OUTPUT
         echo "year=$year" >> $GITHUB_OUTPUT
 
