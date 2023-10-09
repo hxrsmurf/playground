@@ -31,8 +31,8 @@ on:
     # * is a special character in YAML so you have to quote this string
     - cron:  '0 7-22/6 * * *'
 
-  # push:
-  #   branches: [ "nextjs-spotify-public/*"]
+  push:
+    branches: [ "nextjs-spotify-public/*"]
 
   workflow_dispatch:
 
@@ -82,6 +82,16 @@ jobs:
       run: rm -rf pages/2022.tsx
       if: true
 
+    - name: Get Current Month
+      working-directory: nextjs-spotify-public
+      if: true
+      id: current_date
+      run: | 
+        year_month=$(date +'%Y-%m')
+        year=$(date +'%Y')
+        echo "year_month=$year_month" >> $GITHUB_OUTPUT
+        echo "year=$year" >> $GITHUB_OUTPUT
+
     - name: Build and push Docker image
       id: build-and-push
       # uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
@@ -108,8 +118,8 @@ jobs:
           DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
           DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
           DEVICE_SAMSUNG=${{ secrets.DEVICE_SAMSUNG }}
-          LATEST_MONTH=${{ secrets.LATEST_MONTH }}
-          LATEST_YEAR=${{ secrets.LATEST_YEAR }}
+          LATEST_MONTH=${{ steps.current_date.outputs.year_month }}
+          LATEST_YEAR=${{ steps.current_date.outputs.year }}
 
     - name: EC2 List AutoScaling Group
       id: listASG
