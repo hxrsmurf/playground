@@ -85,16 +85,12 @@ jobs:
     - name: Get Current Month
       working-directory: nextjs-spotify-public
       if: true
-      id: current_month
+      id: current_date
       run: | 
-        current_month=$(date +'%Y-%m')
-        echo "current_month=$current_month" >> $GITHUB_OUTPUT
-
-    - name: Echo that month
-      working-directory: nextjs-spotify-public
-      if: true
-      run: | 
-        echo "current_month=${{ steps.current_month.outputs.current_month }}"
+        year_month=$(date +'%Y-%m')
+        year=$(date +'%Y-%m')
+        echo "year_month=$year_month" >> $GITHUB_OUTPUT
+        echo "year=$year" >> $GITHUB_OUTPUT
 
     - name: Build and push Docker image
       id: build-and-push
@@ -102,7 +98,7 @@ jobs:
       uses: docker/build-push-action@v4
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      if: false
+      if: true
       with:
         context: nextjs-spotify-public
         file: ./nextjs-spotify-public/Dockerfile
@@ -122,12 +118,12 @@ jobs:
           DEVICE_LAPTOP=${{ secrets.DEVICE_LAPTOP }}
           DEVICE_TABLET=${{ secrets.DEVICE_TABLET }}
           DEVICE_SAMSUNG=${{ secrets.DEVICE_SAMSUNG }}
-          LATEST_MONTH=${{ secrets.LATEST_MONTH }}
-          LATEST_YEAR=${{ secrets.LATEST_YEAR }}
+          LATEST_MONTH=${{ steps.current_date.outputs.year_month }}
+          LATEST_YEAR=${{ steps.current_date.outputs.year }}
 
     - name: EC2 List AutoScaling Group
       id: listASG
-      if: false
+      if: true
       run: |
         asg=$(aws autoscaling describe-auto-scaling-instances --query "AutoScalingInstances[?AutoScalingGroupName=='nextjs-spotify-public'].InstanceId" --output text)
         echo "asg=$asg" >> $GITHUB_OUTPUT
@@ -137,7 +133,7 @@ jobs:
       id: setASGUnhealthy
       env:
         instance_id: ${{ steps.listAsg.outputs.asg }}
-      if: false
+      if: true
       run: |
         aws autoscaling set-instance-health --instance-id $instance_id --health-status "Unhealthy" --no-should-respect-grace-period
 
