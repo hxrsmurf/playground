@@ -17,6 +17,7 @@ func main() {
 	destinationFile := formattedDate + ".md"
 	fullPath := directoryPath + destinationFile
 
+	createMonthlyFiles(directoryPath, now)
 	checkFileExists(fullPath)
 
 	file, _ := os.OpenFile(fullPath, os.O_APPEND, 0777)
@@ -25,7 +26,7 @@ func main() {
 
 	writer := bufio.NewWriter(file)
 
-	fmt.Printf("Writing to: %v\n", destinationFile)
+	fmt.Printf("Writing to: %v\n", fullPath)
 
 	fmt.Println("Enter text to write. Type 'exit' to quit")
 	scanner := bufio.NewScanner(os.Stdin)
@@ -45,8 +46,24 @@ func checkFileExists(fullPath string) {
 	_, err := os.Stat(fullPath)
 
 	if os.IsNotExist(err) {
-		fmt.Println("File does not exist")
+		fmt.Printf("File does not exist: %v \n", fullPath)
 		file, _ := os.Create(fullPath)
 		defer file.Close()
+	}
+}
+
+func createMonthlyFiles(fullPath string, now time.Time) {
+	firstDayOfMonth := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, time.Local)
+	lastDayOfMonth := firstDayOfMonth.AddDate(0, 1, -1)
+	currentDay := firstDayOfMonth
+
+	for currentDay.Before(lastDayOfMonth) || currentDay.Equal(lastDayOfMonth) {
+		formattedDate := currentDay.Format("01-02-2006 - Monday")
+		destinationFile := formattedDate + ".md"
+		targetPath := fullPath + destinationFile
+
+		checkFileExists(targetPath)
+
+		currentDay = currentDay.AddDate(0, 0, 1)
 	}
 }

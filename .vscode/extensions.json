@@ -2,7 +2,6 @@
     "recommendations": [
         "hashicorp.terraform",
         "github.vscode-pull-request-github",
-        "vscodevim.vim",
         "dsznajder.es7-react-js-snippets"
     ]
 }
