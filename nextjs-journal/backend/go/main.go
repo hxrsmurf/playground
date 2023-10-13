@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -18,6 +19,7 @@ func main() {
 	fullPath := directoryPath + destinationFile
 
 	createMonthlyFiles(directoryPath, now)
+	createMonthlyFolders(directoryPath, now)
 	checkFileExists(fullPath)
 
 	file, _ := os.OpenFile(fullPath, os.O_APPEND, 0777)
@@ -46,9 +48,14 @@ func checkFileExists(fullPath string) {
 	_, err := os.Stat(fullPath)
 
 	if os.IsNotExist(err) {
-		fmt.Printf("File does not exist: %v \n", fullPath)
-		file, _ := os.Create(fullPath)
-		defer file.Close()
+		if !(strings.HasSuffix(fullPath, ".md")) {
+			fmt.Printf("Folder does not exist: %v \n", fullPath)
+			os.MkdirAll(fullPath, os.ModePerm)
+		} else {
+			fmt.Printf("File does not exist: %v \n", fullPath)
+			file, _ := os.Create(fullPath)
+			defer file.Close()
+		}
 	}
 }
 
@@ -65,5 +72,20 @@ func createMonthlyFiles(fullPath string, now time.Time) {
 		checkFileExists(targetPath)
 
 		currentDay = currentDay.AddDate(0, 0, 1)
+	}
+}
+
+func createMonthlyFolders(fullPath string, now time.Time) {
+	year := now.Year()
+	months := []string{}
+
+	for month := time.January; month <= time.December; month++ {
+		firstDayOfMonth := time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
+		months = append(months, firstDayOfMonth.Format("01 - January"))
+	}
+
+	for _, month := range months {
+		targetPath := fullPath + month
+		checkFileExists(targetPath)
 	}
 }
