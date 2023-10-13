@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "terraform" {
-  name     = "terraform"
+  name     = var.name
   location = "East Us"
 }
