@@ -9,7 +9,7 @@ terraform {
     organization = "playground-repo"
 
     workspaces {
-      name = "aws-scp"
+      name = "aws-scp-testing"
     }
   }
 }
