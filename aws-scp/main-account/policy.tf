@@ -8,7 +8,8 @@ resource "aws_organizations_policy" "policy" {
             ArnNotLike = {
               "aws:PrincipalArn" = [
                 "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_*",
-                "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess-Custom_*"
+                "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess-Custom_*",
+                "arn:aws:iam::*:role/aws-scp-testing-sns"
               ]
             }
             Bool = {
