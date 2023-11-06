@@ -1,10 +1,10 @@
-module "lambda" {
+module "query-database" {
   source     = "./modules/lambda"
-  source_dir = "./functions/main"
-  name       = var.lambda_function_name
+  source_dir = "functions/query-database"
+  name       = "${var.lambda_function_name}-query-database"
   role       = aws_iam_role.iam_for_lambda.arn
   handler    = "index.handler"
-  timeout    = 60
+  timeout    = 300
   runtime    = "python3.10"
   layers = [
     "arn:aws:lambda:us-east-1:195663387853:layer:requests-python-clerk:2",

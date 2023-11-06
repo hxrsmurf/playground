@@ -1,3 +1,7 @@
+output "api" {
+  value = aws_apigatewayv2_api.api.api_endpoint
+}
+
 resource "aws_apigatewayv2_api" "api" {
   api_key_selection_expression = "$request.header.x-api-key"
   description                  = var.lambda_function_name
@@ -21,27 +25,27 @@ resource "aws_apigatewayv2_stage" "api" {
   name   = "api"
 }
 
-resource "aws_apigatewayv2_route" "api" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "$default"
-  target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
-}
-
-resource "aws_apigatewayv2_integration" "lambda" {
-  api_id                 = aws_apigatewayv2_api.api.id
-  connection_type        = "INTERNET"
-  integration_method     = "POST"
-  integration_type       = "AWS_PROXY"
-  integration_uri        = aws_lambda_function.function.arn
-  payload_format_version = "2.0"
-  request_parameters     = {}
-  request_templates      = {}
-  timeout_milliseconds   = 30000
-}
-
 resource "aws_lambda_permission" "api" {
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.function.arn
+  function_name = module.lambda.arn
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api.execution_arn}/*/$default"
+}
+
+module "route-main" {
+  source          = "./modules/api-route"
+  api_id          = aws_apigatewayv2_api.api.id
+  route_key       = "$default"
+  integration_uri = module.lambda.arn
+  function_name   = module.lambda.arn
+  execution_arn   = "${aws_apigatewayv2_api.api.execution_arn}/*/$default"
+}
+
+module "route-query-database" {
+  source          = "./modules/api-route"
+  api_id          = aws_apigatewayv2_api.api.id
+  route_key       = "GET /api/query-database"
+  integration_uri = module.query-database.arn
+  function_name   = module.query-database.arn
+  execution_arn   = "${aws_apigatewayv2_api.api.execution_arn}/*/*/api/query-database"
 }

@@ -1,0 +1,8 @@
+module "route-main" {
+  source          = "./modules/api-route"
+  api_id          = aws_apigatewayv2_api.api.id
+  route_key       = "$default"
+  integration_uri = module.lambda.arn
+  function_name   = module.lambda.arn
+  execution_arn   = "${aws_apigatewayv2_api.api.execution_arn}/*/$default"
+}
