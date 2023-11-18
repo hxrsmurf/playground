@@ -3,6 +3,7 @@ import Songs from '../components/Songs.astro';
 import Artists from '../components/Artists.astro';
 import Albums from '../components/Albums.astro';
 import Playlists from '../components/Playlists.astro';
+import Devices from '../components/Devices.astro';
 
 export function getStaticPaths() {
   return [
@@ -20,21 +21,7 @@ console.log(data)
 
 <p>
 <div>
-<div>Date: {data.year_month}</div>
-<table>
-    <th>device</th>
-    <th>count</th>
-{data.top_devices.map((device)=> (
-    <tr>
-    <td>
-        {device.device}
-    </td>
-    <td>
-        {device.count}
-    </td>
-    </tr>
-))}
-</table>
+    <Devices stat={data.top_devices}/>
 </div>
 </p>
 
