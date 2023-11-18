@@ -2,6 +2,7 @@
 import Songs from '../components/Songs.astro';
 import Artists from '../components/Artists.astro';
 import Albums from '../components/Albums.astro';
+import Playlists from '../components/Playlists.astro';
 
 export function getStaticPaths() {
   return [
@@ -52,5 +53,11 @@ console.log(data)
 <p>
 <div>
     <Albums stat={data.top_albums}/>
+</div>
+</p>
+
+<p>
+<div>
+    <Playlists stat={data.top_playlists}/>
 </div>
 </p>
