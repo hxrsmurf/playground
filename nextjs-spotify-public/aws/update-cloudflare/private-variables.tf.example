@@ -1,4 +1,0 @@
-variable "cloudflare-account-id" {}
-variable "cloudflare-api" {}
-variable "cloudflare-zone" {}
-variable "fqdn" {}
