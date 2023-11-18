@@ -1,4 +1,6 @@
 ---
+import Songs from '../components/Songs.astro';
+
 export function getStaticPaths() {
   return [
     {params: {year_month: '2023-10'}},
@@ -10,8 +12,11 @@ const { year_month } = Astro.params;
 const response = await fetch('https://api.spotify-public.homelabwithkevin.com?year_month=' + year_month);
 const data = await response.json();
 
+console.log(data)
 ---
 
+<p>
+<div>
 <div>Date: {data.year_month}</div>
 <table>
     <th>device</th>
@@ -27,3 +32,11 @@ const data = await response.json();
     </tr>
 ))}
 </table>
+</div>
+</p>
+
+<p>
+<div>
+    <Songs stat={data.top_songs}/>
+</div>
+</p>
