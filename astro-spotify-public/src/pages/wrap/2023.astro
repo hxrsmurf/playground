@@ -5,6 +5,10 @@ import Albums from '../../components/Albums.astro';
 import Playlists from '../../components/Playlists.astro';
 import Devices from '../../components/Devices.astro';
 
+import {Image} from 'astro:assets'
+import image_artists from '../../images/wrap/2023/artists.png'
+import image_albums from '../../images/wrap/2023/albums.png'
+
 import data from '../../file.json';
 ---
 
@@ -19,7 +23,25 @@ import data from '../../file.json';
 
 <p>
 <div>
+    <Playlists stat={data.top_playlists}/>
+</div>
+</p>
+
+<p>
+<div>
     <Songs stat={data.top_songs}/>
+</div>
+</p>
+
+<p>
+<div>
+    <h1>Top Artists</h1>
+    <Image src={image_artists} alt=""/>
+</div>
+
+<div>
+    <h1>Top Albums</h1>
+    <Image src={image_albums} alt=""/>
 </div>
 </p>
 
@@ -32,12 +54,6 @@ import data from '../../file.json';
 <p>
 <div>
     <Albums stat={data.top_albums}/>
-</div>
-</p>
-
-<p>
-<div>
-    <Playlists stat={data.top_playlists}/>
 </div>
 </p>
 
