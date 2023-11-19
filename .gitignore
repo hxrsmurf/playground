@@ -21,3 +21,4 @@ docker-compose.yaml
 aws-ecs-spot/build.sh
 nginx-rtmp/tmp/
 go-pagerduty-oauth/pd-oauth-go
+file.json
