@@ -10,19 +10,23 @@ const api_url = import.meta.env.API_URL
 for (let key in stat) {
     let artist_name = (stat[key]['artist'])
     const response = await fetch(api_url + '?artist=' + artist_name)
-    const artist_id = await response.json()
-    stat[key].artist_id=artist_id.artist_id
+    const artist = await response.json()
+    stat[key].artist_image=artist.artist_image
 }
 
 ---
 
 <h1>Top Artists</h1>
 <table>
+<th>artist_image</th>
 <th>artist</th>
 <th>count</th>
 
 {stat.map((s: any)=>(
     <tr>
+        <td>
+            {s.artist_image ? <img src={s.artist_image} width="320" height="320" alt=""/> : <></>}
+        </td>
         <td>
             {s.artist}
         </td>
@@ -56,8 +60,8 @@ for (let key in stat) {
 
     }
     .long:hover{
-        overflow: visible; 
+        overflow: visible;
         white-space: normal;
-        height:auto;  
+        height:auto;
     }
 </style>
