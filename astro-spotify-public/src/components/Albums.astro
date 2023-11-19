@@ -4,15 +4,28 @@ interface Props {
 }
 
 const { stat } = Astro.props
+
+const api_url = import.meta.env.API_URL
+
+for (let key in stat) {
+    let album_id = (stat[key]['albumID'])
+    const response = await fetch(api_url + '?album_id=' + album_id)
+    const album = await response.json()
+    stat[key].album_image=album.album_image
+}
 ---
 
 <h1>Top Albums</h1>
 <table>
+<th>album_image</th>
 <th>albums</th>
 <th>count</th>
 
 {stat.map((s: any)=>(
     <tr>
+       <td>
+            {s.album_image ? <img src={s.album_image} width="320" height="320" alt=""/> : <></>}
+        </td>
         <td>
             {s.album}
         </td>
