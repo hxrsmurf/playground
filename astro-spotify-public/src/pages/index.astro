@@ -1,0 +1,48 @@
+---
+const year_month = [
+	'2023-01',
+	'2023-02',
+	'2023-03',
+	'2023-04',
+	'2023-05',
+	'2023-06',
+	'2023-07',
+	'2023-08',
+	'2023-09',
+	'2023-10',
+	'2023-11',
+]
+---
+
+<h1>Stats for 2023</h1>
+
+<ul>
+ 	<li><a href="/2023-11">Latest</a></li>
+
+	{year_month.map((item)=> (
+		<li><a href={item}>{item}</a></li>
+	))}
+</ul>
+
+<style>
+	:root, a {
+		background-color: black;
+		color: white;
+        display: flex;
+        justify-content: center;
+    }
+	
+	h1 {
+		text-decoration: underline;
+	}
+	
+	a {
+		text-decoration: none;
+	}
+	ul, li {
+		list-style: none;
+		padding-left: 0;
+		padding-top: 1em;
+		text-decoration: none;
+	}
+</style>

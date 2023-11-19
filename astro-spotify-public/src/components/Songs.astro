@@ -1,0 +1,61 @@
+---
+interface Props {
+    stat: any;
+}
+
+const { stat } = Astro.props
+---
+
+<h1>Top Songs</h1>
+<table>
+<th>artist</th>
+<th>song</th>
+<th>album</th>
+<th>count</th>
+
+{stat.map((s: any)=>(
+    <tr>
+        <td>
+            {s.artist}
+        </td>
+        <td class="long">
+            {s.song}
+        </td>
+        <td class="long">
+            {s.album}
+        </td>
+        <td>
+            {s.count}
+        </td>
+    </tr>
+))}
+</table>
+
+<style>
+    table, th, td, tr, .long {
+        border: 1px solid;
+    }
+
+    th {
+        text-align: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    tr {
+        text-align: center;
+    }
+
+    .long {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 350px;
+
+    }
+    .long:hover{
+        overflow: visible; 
+        white-space: normal;
+        height:auto;  
+    }
+</style>

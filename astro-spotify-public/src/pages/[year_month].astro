@@ -1,0 +1,69 @@
+---
+import Songs from '../components/Songs.astro';
+import Artists from '../components/Artists.astro';
+import Albums from '../components/Albums.astro';
+import Playlists from '../components/Playlists.astro';
+import Devices from '../components/Devices.astro';
+
+export function getStaticPaths() {
+  return [
+    {params: {year_month: '2023-01'}},
+    {params: {year_month: '2023-02'}},
+    {params: {year_month: '2023-03'}},
+    {params: {year_month: '2023-04'}},
+    {params: {year_month: '2023-05'}},
+    {params: {year_month: '2023-06'}},
+    {params: {year_month: '2023-07'}},
+    {params: {year_month: '2023-08'}},
+    {params: {year_month: '2023-09'}},
+    {params: {year_month: '2023-10'}},
+    {params: {year_month: '2023-11'}},
+  ];
+}
+
+const { year_month } = Astro.params;
+
+const response = await fetch('https://api.spotify-public.homelabwithkevin.com?year_month=' + year_month);
+const data = await response.json();
+---
+
+<h1><a href="/">Home</a></h1>
+
+<p>
+<div>
+    <Devices stat={data.top_devices}/>
+</div>
+</p>
+
+<p>
+<div>
+    <Songs stat={data.top_songs}/>
+</div>
+</p>
+
+<p>
+<div>
+    <Artists stat={data.top_artists}/>
+</div>
+</p>
+
+<p>
+<div>
+    <Albums stat={data.top_albums}/>
+</div>
+</p>
+
+<p>
+<div>
+    <Playlists stat={data.top_playlists}/>
+</div>
+</p>
+
+<style>
+    :root, a {
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+    }
+</style>
